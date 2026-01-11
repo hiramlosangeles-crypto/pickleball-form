@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reserve Your Spot - I Wanna Play Pickleball</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Hero Banner (Desktop Only) -->
+    <div class="hero-banner">
+        <img src="banner.jpg" alt="Pickleball players in action" class="hero-image">
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo-container">
+            <img src="logo.png" alt="I Wanna Play Pickleball" class="logo">
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text" id="progressText">Step 1 of 2</div>
+        </div>
+
+        <!-- Form -->
+        <form id="pickleballForm">
+            
+            <!-- STEP 1: SUNDAY SIGNUP -->
+            <div class="form-step active" id="step1">
+                <div class="step-header">
+                    <div class="step-icon">✓</div>
+                    <h2>Reserve Your Spot</h2>
+                    <p class="step-subtitle">Sign up for this week's Sunday Pickleball! Steven will organize the games and match you with players.</p>
+                </div>
+
+                <div class="form-group">
+                    <label for="names">Name(s) / Nickname(s) *</label>
+                    <input 
+                        type="text" 
+                        id="names" 
+                        name="names" 
+                        placeholder="e.g., Hiram or Hiram & Steven"
+                        required
+                    >
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
