@@ -53,7 +53,7 @@ window.scrollTo({ top: 0, behavior: 'smooth' });
 // Redirect to main website after 3 seconds
 setTimeout(function() {
     window.location.href = 'https://iwannaplaypickleball.com';
-}, 3000);
+}, 8000);
 }
 
 function goToStep1() {
