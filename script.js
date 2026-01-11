@@ -3,7 +3,7 @@
 // ===================================
 
 // Replace this with your Google Apps Script Web App URL after deployment
-const SCRIPT_URL = 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8LaPCSEaU54WUfVW7Ko4g08qBZJuDO4Ah_9rV-P0QIgJSwxHRk24Dwd7uQJwp_2Ds/exec';
 
 // ===================================
 // STATE MANAGEMENT
