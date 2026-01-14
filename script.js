@@ -39,6 +39,68 @@ function goToStep2() {
     if (!validateStep1()) {
         return;
     }
+function skipToWebsite() {
+    // Validate Step 1 first
+    if (!validateStep1()) {
+        return;
+    }
+    
+    // Show loading
+    showLoading();
+    
+    // Collect Step 1 data with "No VIP" choice
+    const formData = {
+        timestamp: new Date().toISOString(),
+        names: document.getElementById('names').value.trim(),
+        phone: document.getElementById('phone').value.trim(),
+        email: document.getElementById('email').value.trim(),
+        timeSlots: getSelectedCheckboxes('timeSlot').join(', '),
+        paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
+        vipChoice: 'No thanks, just Sunday for now',
+        homeCourt: '',
+        skillLevel: '',
+        bestDays: '',
+        bestTimes: ''
+    };
+    
+    // Submit to backend
+    submitToGoogleSheets(formData).then(() => {
+        // Redirect to main website
+        window.location.href = 'https://iwannaplaypickleball.com';
+    }).catch((error) => {
+        hideLoading();
+        alert('Oops! Something went wrong. Please try again.\n\nError: ' + error.message);
+    });
+}
+```
+
+---
+
+## **WHAT THIS DOES:**
+
+**User Journey 1 (Quick Exit):**
+1. Fills out Step 1 (name, phone, time, payment)
+2. Clicks **"DONE"**
+3. Data saves to Google Sheets as "Sunday Only"
+4. Immediately redirected to main website
+5. Gets Sunday-only confirmation email
+
+**User Journey 2 (VIP Interested):**
+1. Fills out Step 1
+2. Clicks **"Next: GET VIP Access →"**
+3. Goes to Step 2 (VIP upsell)
+4. Can choose YES or NO
+5. Gets appropriate confirmation
+
+---
+
+## **VISUAL LAYOUT:**
+```
+┌─────────────┬───────────────────────────┐
+│   DONE      │  Next: GET VIP Access →   │
+│  (Gray)     │     (Pink/Cyan Gradient)  │
+└─────────────┴───────────────────────────┘
+    
     
     // Hide step 1, show step 2
     document.getElementById('step1').classList.remove('active');
