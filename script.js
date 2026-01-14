@@ -65,15 +65,13 @@ function skipToWebsite() {
     
     // Submit to backend
     submitToGoogleSheets(formData).then(() => {
-        // Redirect to main website
-        window.location.href = 'https://iwannaplaypickleball.com';
+        // Show confirmation screen instead of immediate redirect
+        showConfirmation(formData);
     }).catch((error) => {
         hideLoading();
         alert('Oops! Something went wrong. Please try again.\n\nError: ' + error.message);
     });
 }
-```
-
 ---
 
 ## **WHAT THIS DOES:**
