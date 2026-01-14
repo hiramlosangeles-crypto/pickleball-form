@@ -96,40 +96,54 @@
                         </label>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label>Contribution Method *</label>
-                    <div class="radio-group">
-                        <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="Cash App" required>
-                            <div class="radio-content">
-                                <span class="radio-icon">💵</span>
-                                <span class="radio-label">Cash App</span>
-                            </div>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="Venmo">
-                            <div class="radio-content">
-                                <span class="radio-icon">💳</span>
-                                <span class="radio-label">Venmo</span>
-                            </div>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="Zelle">
-                            <div class="radio-content">
-                                <span class="radio-icon">🏦</span>
-                                <span class="radio-label">Zelle</span>
-                            </div>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="In person">
-                            <div class="radio-content">
-                                <span class="radio-icon">💵</span>
-                                <span class="radio-label">In Person</span>
-                            </div>
-                        </label>
-                    </div>
-                </div>
+                
+          <div class="form-group">
+               <div class="form-group">
+    <label>Contribution Method *</label>
+    <div class="radio-group">
+        <label class="radio-card">
+            <input type="radio" name="paymentMethod" value="Cash App" required onclick="showPaymentInfo('cashapp')">
+            <div class="radio-content">
+                <span class="radio-icon">💵</span>
+                <span class="radio-label">Cash App</span>
+            </div>
+        </label>
+        <label class="radio-card">
+            <input type="radio" name="paymentMethod" value="Venmo" onclick="showPaymentInfo('venmo')">
+            <div class="radio-content">
+                <span class="radio-icon">💳</span>
+                <span class="radio-label">Venmo</span>
+            </div>
+        </label>
+        <label class="radio-card">
+            <input type="radio" name="paymentMethod" value="Zelle" onclick="showPaymentInfo('zelle')">
+            <div class="radio-content">
+                <span class="radio-icon">🏦</span>
+                <span class="radio-label">Zelle</span>
+            </div>
+        </label>
+        <label class="radio-card">
+            <input type="radio" name="paymentMethod" value="PayPal" onclick="showPaymentInfo('paypal')">
+            <div class="radio-content">
+                <span class="radio-icon">🌐</span>
+                <span class="radio-label">PayPal</span>
+            </div>
+        </label>
+        <label class="radio-card">
+            <input type="radio" name="paymentMethod" value="In person" onclick="showPaymentInfo('inperson')">
+            <div class="radio-content">
+                <span class="radio-icon">💵</span>
+                <span class="radio-label">In Person</span>
+            </div>
+        </label>
+    </div>
+    
+    <!-- Payment Info Box (appears after selection) -->
+    <div id="paymentInfo" style="display: none; margin-top: 16px; padding: 20px; background: rgba(0, 217, 255, 0.1); border-left: 4px solid #00D9FF; border-radius: 12px;">
+        <div id="paymentDetails"></div>
+    </div>
+</div>
+           
 
                 <button type="button" class="btn btn-primary" onclick="goToStep2()">
                     Next: VIP Access →
