@@ -439,4 +439,57 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Prevent form resubmission on page refresh
 if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
+
+// ===================================
+// PAYMENT INFO DISPLAY
+// ===================================
+
+function showPaymentInfo(method) {
+    const infoBox = document.getElementById('paymentInfo');
+    const detailsDiv = document.getElementById('paymentDetails');
+    
+    const paymentDetails = {
+        cashapp: {
+            title: '💵 Cash App',
+            info: '<strong style="color: #00D9FF; font-size: 18px;">$HyruhmUlyssisGrant</strong>',
+            note: 'Send payment to Cash App'
+        },
+        venmo: {
+            title: '💳 Venmo',
+            info: '<a href="https://venmo.com/Steven-Bettencourt-4" target="_blank" style="color: #00D9FF; font-size: 18px; text-decoration: none; font-weight: bold;">@Steven-Bettencourt-4</a>',
+            note: 'Click to open Venmo'
+        },
+        zelle: {
+            title: '🏦 Zelle',
+            info: '<strong style="color: #00D9FF; font-size: 18px;">(310) 433-8281</strong><br><span style="font-size: 16px;">or bettencourtdesign@me.com</span>',
+            note: 'Send via phone number or email'
+        },
+        paypal: {
+            title: '🌐 PayPal',
+            info: '<strong style="color: #00D9FF; font-size: 18px;">hyruhm@hyruhm.com</strong>',
+            note: 'Send payment to PayPal email'
+        },
+        inperson: {
+            title: '💵 In Person',
+            info: '<strong style="color: #00D9FF; font-size: 18px;">Pay at the court</strong>',
+            note: 'Bring cash or card to the game'
+        }
+    };
+    
+    const selected = paymentDetails[method];
+    
+    if (selected) {
+        detailsDiv.innerHTML = `
+            <h4 style="margin: 0 0 12px 0; color: #ffffff; font-size: 16px;">${selected.title}</h4>
+            <p style="margin: 8px 0; color: #ffffff; line-height: 1.6;">${selected.info}</p>
+            <p style="margin: 8px 0 0 0; color: #b8b8d1; font-size: 14px;">${selected.note}</p>
+        `;
+        infoBox.style.display = 'block';
+        
+        // Smooth scroll to show the info
+        setTimeout(() => {
+            infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+    }
+}
 }
