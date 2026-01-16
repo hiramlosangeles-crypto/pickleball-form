@@ -281,3 +281,60 @@
                                 </div>
                             </label>
                             <label class="checkbox-card">
+                                <input type="checkbox" name="bestTimes" value="Midday (10 AM–2 PM)">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">☀️</span>
+                                    <span class="checkbox-label">Midday (10 AM–2 PM)</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="bestTimes" value="Afternoon (2–6 PM)">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🌤️</span>
+                                    <span class="checkbox-label">Afternoon (2–6 PM)</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="bestTimes" value="Evening (6–9 PM)">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🌆</span>
+                                    <span class="checkbox-label">Evening (6–9 PM)</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" onclick="goToStep1()">
+                        ← Back
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        Complete Signup 🎉
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3: CONFIRMATION -->
+            <div class="form-step" id="confirmation" style="display: none;">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon">🎉</div>
+                    <h2>You're All Set!</h2>
+                    <p class="confirmation-message" id="confirmationMessage"></p>
+                    <div class="confirmation-details" id="confirmationDetails"></div>
+                    <a href="https://iwannaplaypickleball.com" class="btn btn-primary">Back to Home</a>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Submitting your signup...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
