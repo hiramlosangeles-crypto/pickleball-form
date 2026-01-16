@@ -39,7 +39,7 @@
                     <div class="step-icon">✓</div>
                     <h2>Reserve Your Spot</h2>
                     <p class="step-subtitle">Sign up for this week's Sunday Pickleball! Steven will organize the games and match you with players.</p>
-                    <p class="step-subtitle" style="margin-top: 18px; font-weight: 700; color: #00D9FF; line-height: 1.6;">JAN 18 • 7:00–9:00 PM<br>PLUMMER PARK · COURTS 6B & 7A</p>
+                    <p class="step-subtitle" style="margin-top: 18px; font-size: 18px; font-weight: 700; color: #00D9FF; line-height: 1.6;">JAN 18 • 7:00–9:00 PM<br>PLUMMER PARK · COURTS 6B & 7A</p>
                 </div>
 
                 <div class="form-group">
@@ -83,74 +83,69 @@
                         <label class="checkbox-card">
                             <input type="checkbox" name="timeSlot" value="7:00–8:00 PM">
                             <div class="checkbox-content">
-                                <span class="checkbox-icon">🕢</span>
+                                <span class="checkbox-icon">🕖</span>
                                 <span class="checkbox-label">7:00–8:00 PM</span>
                             </div>
                         </label>
                         <label class="checkbox-card">
                             <input type="checkbox" name="timeSlot" value="8:00–9:00 PM">
                             <div class="checkbox-content">
-                                <span class="checkbox-icon">🕣</span>
+                                <span class="checkbox-icon">🕗</span>
                                 <span class="checkbox-label">8:00–9:00 PM</span>
                             </div>
                         </label>
                     </div>
                 </div>
                 
-          <div class="form-group">
-            
-            <label>Contribution Method *</label>
-            <div class="radio-group">
-                <label class="radio-card">
-                    <input type="radio" name="paymentMethod" value="Cash App" required onclick="showPaymentInfo('cashapp')">
-                    <div class="radio-content">
-                <span class="radio-icon">💵</span>
-                <span class="radio-label">Cash App</span>
-            </div>
-        </label>
-        <label class="radio-card">
-            <input type="radio" name="paymentMethod" value="Venmo" onclick="showPaymentInfo('venmo')">
-            <div class="radio-content">
-                <span class="radio-icon">💳</span>
-                <span class="radio-label">Venmo</span>
-            </div>
-        </label>
-        <label class="radio-card">
-            <input type="radio" name="paymentMethod" value="Zelle" onclick="showPaymentInfo('zelle')">
-            <div class="radio-content">
-                <span class="radio-icon">🏦</span>
-                <span class="radio-label">Zelle</span>
-            </div>
-        </label>
-        <label class="radio-card">
-            <input type="radio" name="paymentMethod" value="PayPal" onclick="showPaymentInfo('paypal')">
-            <div class="radio-content">
-                <span class="radio-icon">🌐</span>
-                <span class="radio-label">PayPal</span>
-            </div>
-        </label>
-        <label class="radio-card">
-            <input type="radio" name="paymentMethod" value="In person" onclick="showPaymentInfo('inperson')">
-            <div class="radio-content">
-                <span class="radio-icon">💵</span>
-                <span class="radio-label">In Person</span>
-            </div>
-        </label>
-    </div>
-    
-    <!-- Payment Info Box (appears after selection) -->
-    <div id="paymentInfo" style="display: none; margin-top: 16px; padding: 20px; background: rgba(0, 217, 255, 0.1); border-left: 4px solid #00D9FF; border-radius: 12px;">
-        <div id="paymentDetails"></div>
-    </div>
-</div>
-     <div class="button-group">
-        <button type="button" class="btn btn-secondary" onclick="skipToWebsite()">
-            DONE
-        </button>
-        <button type="button" class="btn btn-primary" onclick="goToStep2()">
-            Learn More & Get VIP Access →
-        </button>
-    </div>
+                <div class="form-group">
+                    <label>Contribution Method *</label>
+                    <div class="radio-group">
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="Cash App" required onclick="showPaymentInfo('cashapp')">
+                            <div class="radio-content">
+                                <span class="radio-icon">💵</span>
+                                <span class="radio-label">Cash App</span>
+                            </div>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="Venmo" onclick="showPaymentInfo('venmo')">
+                            <div class="radio-content">
+                                <span class="radio-icon">💳</span>
+                                <span class="radio-label">Venmo</span>
+                            </div>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="Zelle" onclick="showPaymentInfo('zelle')">
+                            <div class="radio-content">
+                                <span class="radio-icon">🏦</span>
+                                <span class="radio-label">Zelle</span>
+                            </div>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="PayPal" onclick="showPaymentInfo('paypal')">
+                            <div class="radio-content">
+                                <span class="radio-icon">🌐</span>
+                                <span class="radio-label">PayPal</span>
+                            </div>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="In person" onclick="showPaymentInfo('inperson')">
+                            <div class="radio-content">
+                                <span class="radio-icon">💵</span>
+                                <span class="radio-label">In Person</span>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <!-- Payment Info Box (appears after selection) -->
+                    <div id="paymentInfo" style="display: none; margin-top: 16px; padding: 20px; background: rgba(0, 217, 255, 0.1); border-left: 4px solid #00D9FF; border-radius: 12px;">
+                        <div id="paymentDetails"></div>
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-primary" onclick="goToStep2()">
+                    Continue to Step 2 →
+                </button>
             </div>
 
             <!-- STEP 2: VIP UPSELL -->
@@ -286,60 +281,3 @@
                                 </div>
                             </label>
                             <label class="checkbox-card">
-                                <input type="checkbox" name="bestTimes" value="Midday (10 AM–2 PM)">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-icon">☀️</span>
-                                    <span class="checkbox-label">Midday (10 AM–2 PM)</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestTimes" value="Afternoon (2–6 PM)">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-icon">🌤️</span>
-                                    <span class="checkbox-label">Afternoon (2–6 PM)</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestTimes" value="Evening (6–9 PM)">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-icon">🌆</span>
-                                    <span class="checkbox-label">Evening (6–9 PM)</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" class="btn btn-secondary" onclick="goToStep1()">
-                        ← Back
-                    </button>
-                    <button type="submit" class="btn btn-primary" id="submitBtn">
-                        Complete Signup 🎉
-                    </button>
-                </div>
-            </div>
-
-            <!-- STEP 3: CONFIRMATION -->
-            <div class="form-step" id="confirmation" style="display: none;">
-                <div class="confirmation-content">
-                    <div class="confirmation-icon">🎉</div>
-                    <h2>You're All Set!</h2>
-                    <p class="confirmation-message" id="confirmationMessage"></p>
-                    <div class="confirmation-details" id="confirmationDetails"></div>
-                    <a href="https://iwannaplaypickleball.com" class="btn btn-primary">Back to Home</a>
-                </div>
-            </div>
-
-        </form>
-    </div>
-
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-spinner"></div>
-        <p>Submitting your signup...</p>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
