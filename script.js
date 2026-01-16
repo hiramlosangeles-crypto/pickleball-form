@@ -39,66 +39,6 @@ function goToStep2() {
     if (!validateStep1()) {
         return;
     }
-function skipToWebsite() {
-    // Validate Step 1 first
-    if (!validateStep1()) {
-        return;
-    }
-    
-    // Show loading
-    showLoading();
-    
-    // Collect Step 1 data with "No VIP" choice
-    const formData = {
-        timestamp: new Date().toISOString(),
-        names: document.getElementById('names').value.trim(),
-        phone: document.getElementById('phone').value.trim(),
-        email: document.getElementById('email').value.trim(),
-        timeSlots: getSelectedCheckboxes('timeSlot').join(', '),
-        paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
-        vipChoice: 'No thanks, just Sunday for now',
-        homeCourt: '',
-        skillLevel: '',
-        bestDays: '',
-        bestTimes: ''
-    };
-    
-    // Submit to backend
-    submitToGoogleSheets(formData).then(() => {
-        // Show confirmation screen instead of immediate redirect
-        showConfirmation(formData);
-    }).catch((error) => {
-        hideLoading();
-        alert('Oops! Something went wrong. Please try again.\n\nError: ' + error.message);
-    });
-}
----
-
-## **WHAT THIS DOES:**
-
-**User Journey 1 (Quick Exit):**
-1. Fills out Step 1 (name, phone, time, payment)
-2. Clicks **"DONE"**
-3. Data saves to Google Sheets as "Sunday Only"
-4. Immediately redirected to main website
-5. Gets Sunday-only confirmation email
-
-**User Journey 2 (VIP Interested):**
-1. Fills out Step 1
-2. Clicks **"Next: GET VIP Access →"**
-3. Goes to Step 2 (VIP upsell)
-4. Can choose YES or NO
-5. Gets appropriate confirmation
-
----
-
-## **VISUAL LAYOUT:**
-```
-┌─────────────┬───────────────────────────┐
-│   DONE      │  Next: GET VIP Access →   │
-│  (Gray)     │     (Pink/Cyan Gradient)  │
-└─────────────┴───────────────────────────┘
-    
     
     // Hide step 1, show step 2
     document.getElementById('step1').classList.remove('active');
@@ -108,7 +48,7 @@ function skipToWebsite() {
     updateProgressBar();
     
     // Scroll to top
-window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function goToStep1() {
@@ -170,9 +110,6 @@ function setupVIPChoiceListener() {
 
 function makeVIPFieldsRequired(required) {
     const homeCourt = document.getElementById('homeCourt');
-    const skillLevel = document.querySelectorAll('input[name="skillLevel"]');
-    const bestDays = document.querySelectorAll('input[name="bestDays"]');
-    const bestTimes = document.querySelectorAll('input[name="bestTimes"]');
     
     if (required) {
         homeCourt.setAttribute('required', 'required');
@@ -307,7 +244,7 @@ function isValidPhone(phone) {
 
 function formatPhoneNumber(e) {
     const input = e.target;
-    const value = input.value.replace(/\D/g, '');
+    let value = input.value.replace(/\D/g, '');
     let formatted = '';
     
     if (value.length > 0) {
@@ -451,7 +388,7 @@ function showConfirmation(formData) {
     const details = document.getElementById('confirmationDetails');
     
     if (isVIP) {
-        message.textContent = "You're all set for Sunday AND you're now part of the VIP network! We'll send you a confirmation email with details.";
+        message.textContent = "You're all set for Sunday AND you're now part of the VIP network! Check your email for details.";
         details.innerHTML = `
             <p><strong>Name:</strong> ${formData.names}</p>
             <p><strong>Sunday Time:</strong> ${formData.timeSlots}</p>
@@ -461,7 +398,7 @@ function showConfirmation(formData) {
             <p><strong>Skill Level:</strong> ${formData.skillLevel}</p>
         `;
     } else {
-        message.textContent = "You're all set for Sunday! We'll send you court details via text message.";
+        message.textContent = "You're all set for Sunday! Check your email for game details.";
         details.innerHTML = `
             <p><strong>Name:</strong> ${formData.names}</p>
             <p><strong>Time:</strong> ${formData.timeSlots}</p>
@@ -475,30 +412,7 @@ function showConfirmation(formData) {
     
     // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Redirect to main website after 3 seconds
-   setTimeout(function() {
-       window.location.href = 'https://iwannaplaypickleball.com';
-   }, 3000);
 }
-
-// ===================================
-// HELPER FUNCTIONS
-// ===================================
-
-// Add smooth scroll for better UX
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
-
-// Prevent form resubmission on page refresh
-if (window.history.replaceState) {
-    window.history.replaceState(null, null, window.location.href);
 
 // ===================================
 // PAYMENT INFO DISPLAY
@@ -552,4 +466,23 @@ function showPaymentInfo(method) {
         }, 100);
     }
 }
+
+// ===================================
+// HELPER FUNCTIONS
+// ===================================
+
+// Add smooth scroll for better UX
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
+});
+
+// Prevent form resubmission on page refresh
+if (window.history.replaceState) {
+    window.history.replaceState(null, null, window.location.href);
 }
