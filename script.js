@@ -466,7 +466,22 @@ function showPaymentInfo(method) {
         }, 100);
     }
 }
+// ===================================
+// DONATION INFO TOGGLE
+// ===================================
 
+function toggleDonationInfo() {
+    const infoBox = document.getElementById('donationInfo');
+    if (infoBox.style.display === 'none' || infoBox.style.display === '') {
+        infoBox.style.display = 'block';
+        // Smooth scroll to show the info
+        setTimeout(() => {
+            infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+    } else {
+        infoBox.style.display = 'none';
+    }
+}
 // ===================================
 // HELPER FUNCTIONS
 // ===================================
