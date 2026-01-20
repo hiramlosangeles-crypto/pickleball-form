@@ -97,9 +97,38 @@
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label>Contribution Method *</label>
-                    <p class="field-description" style="margin-top: -8px; margin-bottom: 12px; font-size: 14px; color: #94A3B8;">Please contribute $2-4 per person to help cover court costs.</p>
+               <div class="form-group">
+                    <label>
+                        Contribution Method * 
+                        <span class="info-icon" onclick="toggleDonationInfo()">💡</span>
+                    </label>
+                    
+                    <!-- Donation Info Tooltip (Hidden by default) -->
+                    <div id="donationInfo" class="donation-info" style="display: none;">
+                        <div class="donation-info-content">
+                            <h4>💡 Why $2–4?</h4>
+                            <p>We reserve courts in advance so you're guaranteed a spot for organized play. This is a <strong>community-run, not-for-profit group</strong> – donations simply cover our costs.</p>
+                            
+                            <div class="donation-breakdown">
+                                <p><strong>📊 The Math:</strong></p>
+                                <ul>
+                                    <li>Court rental: $5.60/hour (discounted rate)</li>
+                                    <li>4 players per court = <strong>$1.40 per person/hour</strong></li>
+                                </ul>
+                                
+                                <p><strong>⏱️ Your Contribution:</strong></p>
+                                <ul>
+                                    <li><strong>$2</strong> = covers 1 hour of play</li>
+                                    <li><strong>$4</strong> = covers 2 hours of play</li>
+                                </ul>
+                                
+                                <p class="donation-highlight">✨ Pay what you can – no one is turned away! Every contribution helps keep pickleball accessible for everyone.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="field-description" style="margin-top: 8px; margin-bottom: 12px; font-size: 14px; color: #94A3B8;">Please contribute $2-4 per person to help cover court costs.</p>
+                    
                     <div class="radio-group">
                         <label class="radio-card">
                             <input type="radio" name="paymentMethod" value="Cash App" required onclick="showPaymentInfo('cashapp')">
@@ -137,6 +166,12 @@
                             </div>
                         </label>
                     </div>
+                    
+                    <!-- Payment Info Box (appears after selection) -->
+                    <div id="paymentInfo" style="display: none; margin-top: 16px; padding: 20px; background: rgba(0, 217, 255, 0.1); border-left: 4px solid #00D9FF; border-radius: 12px;">
+                        <div id="paymentDetails"></div>
+                    </div>
+                </div>
                     
                     <!-- Payment Info Box (appears after selection) -->
                     <div id="paymentInfo" style="display: none; margin-top: 16px; padding: 20px; background: rgba(0, 217, 255, 0.1); border-left: 4px solid #00D9FF; border-radius: 12px;">
