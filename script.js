@@ -466,6 +466,7 @@ function showPaymentInfo(method) {
         }, 100);
     }
 }
+
 // ===================================
 // DONATION INFO TOGGLE
 // ===================================
@@ -482,6 +483,7 @@ function toggleDonationInfo() {
         infoBox.style.display = 'none';
     }
 }
+
 // ===================================
 // HELPER FUNCTIONS
 // ===================================
