@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserve Your Spot - I Wanna Play Pickleball</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_jan25_sunset.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -39,7 +39,7 @@
                     <div class="step-icon">✓</div>
                     <h2>Reserve Your Spot</h2>
                     <p class="step-subtitle">Sign up for this week's Sunday Pickleball! Steven will organize the games and match you with players.</p>
-                    <p class="step-subtitle" style="margin-top: 18px; font-size: 18px; font-weight: 700; color: #00D9FF; line-height: 1.6;">JAN 25 • 7:00–9:00 PM<br>PLUMMER PARK · COURTS 6A & 7A</p>
+                    <p class="step-subtitle" style="margin-top: 18px; font-size: 18px; font-weight: 700; color: #FFE500; line-height: 1.6;">JAN 26 • 7:00–9:00 PM<br>PLUMMER PARK · COURTS 6A & 7A</p>
                 </div>
 
                 <div class="form-group">
@@ -155,7 +155,7 @@
                             </div>
                         </label>
                         <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="In person" onclick="showPaymentInfo('inperson')">
+                            <input type="radio" name="paymentMethod" value="In Person" onclick="showPaymentInfo('inperson')">
                             <div class="radio-content">
                                 <span class="radio-icon">💵</span>
                                 <span class="radio-label">In Person</span>
@@ -163,51 +163,55 @@
                         </label>
                     </div>
                     
-                    <!-- Payment Info Box (appears after selection) -->
-                    <div id="paymentInfo" style="display: none; margin-top: 16px; padding: 20px; background: rgba(0, 217, 255, 0.1); border-left: 4px solid #00D9FF; border-radius: 12px;">
+                    <!-- Payment Info Box (Appears after selection) -->
+                    <div id="paymentInfo" class="donation-info" style="display: none; margin-top: 16px;">
                         <div id="paymentDetails"></div>
                     </div>
                 </div>
 
-                <button type="button" class="btn btn-primary" onclick="goToStep2()">
-                    Continue to Step 2 →
-                </button>
+                <div class="button-group">
+                    <button type="button" class="btn btn-primary" onclick="goToStep2()">
+                        Continue to Step 2 →
+                    </button>
+                </div>
             </div>
 
-            <!-- STEP 2: VIP UPSELL -->
+            <!-- STEP 2: VIP CHOICE & DETAILS -->
             <div class="form-step" id="step2">
                 <div class="step-header vip">
-                    <div class="step-icon">🏆</div>
-                    <h2>Unlock VIP Access</h2>
-                    <p class="step-subtitle">Get invited to 15+ weekly games across LA. Join 100+ players in the network!</p>
+                    <div class="step-icon">⭐</div>
+                    <h2>Join the VIP Network</h2>
+                    <p class="step-subtitle">Get matched with players for games beyond just Sunday. Build your pickleball community!</p>
                 </div>
 
-                <div class="vip-choice">
-                    <label class="choice-card choice-yes">
-                        <input type="radio" name="vipChoice" value="Yes! Get me on the VIP list" id="vipYes">
-                        <div class="choice-content">
-                            <div class="choice-header">
-                                <span class="choice-icon">✨</span>
-                                <span class="choice-title">YES! VIP Me</span>
+                <div class="form-group">
+                    <label>Want VIP Network Access?</label>
+                    <div class="vip-choice">
+                        <label class="choice-card choice-yes">
+                            <input type="radio" name="vipChoice" value="Yes - VIP Network ($5/month)" id="vipYes">
+                            <div class="choice-content">
+                                <div class="choice-header">
+                                    <span class="choice-icon">✨</span>
+                                    <span class="choice-title">Yes - VIP Network</span>
+                                </div>
+                                <p class="choice-description">Get matched for games throughout the week + Sunday access ($5/month)</p>
                             </div>
-                            <p class="choice-description">30 seconds to unlock games citywide</p>
-                        </div>
-                    </label>
-
-                    <label class="choice-card choice-no">
-                        <input type="radio" name="vipChoice" value="No thanks, just Sunday for now" id="vipNo">
-                        <div class="choice-content">
-                            <div class="choice-header">
-                                <span class="choice-icon">⏭️</span>
-                                <span class="choice-title">Sunday Only</span>
+                        </label>
+                        <label class="choice-card choice-no">
+                            <input type="radio" name="vipChoice" value="No - Sunday Only ($5)" id="vipNo">
+                            <div class="choice-content">
+                                <div class="choice-header">
+                                    <span class="choice-icon">🎾</span>
+                                    <span class="choice-title">No - Sunday Only</span>
+                                </div>
+                                <p class="choice-description">Just sign up for this Sunday ($5)</p>
                             </div>
-                            <p class="choice-description">I'll stick with Sunday games for now</p>
-                        </div>
-                    </label>
+                        </label>
+                    </div>
                 </div>
 
-                <!-- VIP Details (Shown only if YES selected) -->
-                <div class="vip-details" id="vipDetails" style="display: none;">
+                <!-- VIP Details (Shown if YES is selected) -->
+                <div id="vipDetails" style="display: none;">
                     <div class="form-group">
                         <label for="homeCourt">Home Court / City *</label>
                         <input 
