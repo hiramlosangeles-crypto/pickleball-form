@@ -462,6 +462,13 @@ input::placeholder {
     color: var(--text-primary);
 }
 
+.choice-card.choice-yes .choice-title {
+    font-size: 16px;
+    line-height: 1.4;
+    display: block;
+}
+
+.choice-description {
 .choice-description {
     color: var(--text-secondary);
     font-size: 14px;
