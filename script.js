@@ -398,12 +398,12 @@ function showConfirmation(formData) {
             <p><strong>Skill Level:</strong> ${formData.skillLevel}</p>
         `;
     } else {
-        message.textContent = "You're all set for Sunday! Check your email for game details.";
+        message.textContent = "You're all set for Sunday! "This confirmation has been sent to your email.";
         details.innerHTML = `
             <p><strong>Name:</strong> ${formData.names}</p>
             <p><strong>Time:</strong> ${formData.timeSlots}</p>
             <p><strong>Payment:</strong> ${formData.paymentMethod}</p>
-            <p style="margin-top: 16px; color: var(--text-secondary);">Want to join VIP later? Check your email for a special link!</p>
+            <p style="margin-top: 16px; color: var(--text-secondary);">"Want to join VIP later? Use the link in your confirmation email."</p>
         `;
     }
     
