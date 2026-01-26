@@ -429,9 +429,9 @@ input::placeholder {
 }
 
 .choice-card.choice-yes input[type="radio"]:checked + .choice-content {
-    background: linear-gradient(135deg, rgba(255, 229, 0, 0.15), rgba(255, 165, 0, 0.15));
-    border-color: var(--primary-yellow);
-    box-shadow: var(--shadow-sunset-glow);
+    background: linear-gradient(135deg, rgba(0, 255, 163, 0.15), rgba(0, 217, 255, 0.15));
+    border-color: #00FFA3;
+    box-shadow: 0 8px 32px rgba(0, 255, 163, 0.3);
 }
 
 .choice-card.choice-no input[type="radio"]:checked + .choice-content {
