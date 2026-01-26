@@ -3,7 +3,7 @@
 // ===================================
 
 // Replace this with your Google Apps Script Web App URL after deployment
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4LseN1EdsVjG-4gzyAkmEYhO1_7kpP2ghQOYrd75qkql-NmJ6VQu3DBI8B6995FAI/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8LaPCSEaU54WUfVW7Ko4g08qBZJuDO4Ah_9rV-P0QIgJSwxHRk24Dwd7uQJwp_2Ds/exec';
 
 // ===================================
 // STATE MANAGEMENT
@@ -398,12 +398,12 @@ function showConfirmation(formData) {
             <p><strong>Skill Level:</strong> ${formData.skillLevel}</p>
         `;
     } else {
-        message.textContent = "You're all set for Sunday! "This confirmation has been sent to your email.";
+        message.textContent = "This confirmation has been sent to your email.";
         details.innerHTML = `
             <p><strong>Name:</strong> ${formData.names}</p>
             <p><strong>Time:</strong> ${formData.timeSlots}</p>
             <p><strong>Payment:</strong> ${formData.paymentMethod}</p>
-            <p style="margin-top: 16px; color: var(--text-secondary);">"Want to join VIP later? Use the link in your confirmation email."</p>
+            <p style="margin-top: 16px; color: var(--text-secondary);">Want to join VIP later? Use the link in your confirmation email.</p>
         `;
     }
     
