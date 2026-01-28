@@ -97,77 +97,75 @@
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label>
-                        Contribution Method * 
-                        <span class="info-icon" onclick="toggleDonationInfo()">💡</span>
-                    </label>
-                    
-                    <!-- Donation Info Tooltip (Hidden by default) -->
-                    <div id="donationInfo" class="donation-info" style="display: none;">
-                        <div class="donation-info-content">
-                            <h4>💡 Why $5/hr?</h4>
-                            <p>Your $5/hr contribution covers <strong>court reservations, game organization, and all the logistics</strong> so you can just show up and play.</p>
-                            
-                            <div class="donation-breakdown">
-                                <p><strong>What Your Contribution Covers:</strong></p>
-                                <ul>
-                                    <li>Reserved court time at Plummer Park</li>
-                                    <li>Organized games with matched players</li>
-                                    <li>Communication and coordination</li>
-                                    <li>Equipment and supplies</li>
-                                </ul>
-                                
-                                <p class="donation-highlight">✨ Pay what you can – no one is turned away!</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <p class="field-description" style="margin-top: 8px; margin-bottom: 12px; font-size: 14px; color: #94A3B8;">Please contribute $5/hr per person to help cover costs.</p>
-                    
-                    <div class="radio-group">
-                        <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="Cash App" required onclick="showPaymentInfo('cashapp')">
-                            <div class="radio-content">
-                                <span class="radio-icon">💵</span>
-                                <span class="radio-label">Cash App</span>
-                            </div>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="Venmo" onclick="showPaymentInfo('venmo')">
-                            <div class="radio-content">
-                                <span class="radio-icon">💳</span>
-                                <span class="radio-label">Venmo</span>
-                            </div>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="Zelle" onclick="showPaymentInfo('zelle')">
-                            <div class="radio-content">
-                                <span class="radio-icon">🏦</span>
-                                <span class="radio-label">Zelle</span>
-                            </div>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="PayPal" onclick="showPaymentInfo('paypal')">
-                            <div class="radio-content">
-                                <span class="radio-icon">🌐</span>
-                                <span class="radio-label">PayPal</span>
-                            </div>
-                        </label>
-                        <label class="radio-card">
-                            <input type="radio" name="paymentMethod" value="In Person" onclick="showPaymentInfo('inperson')">
-                            <div class="radio-content">
-                                <span class="radio-icon">💵</span>
-                                <span class="radio-label">In Person</span>
-                            </div>
-                        </label>
-                    </div>
-                    
-                    <!-- Payment Info Box (Appears after selection) -->
-                    <div id="paymentInfo" class="donation-info" style="display: none; margin-top: 16px;">
-                        <div id="paymentDetails"></div>
-                    </div>
-                </div>
+                <!-- ========================================
+   UPDATED PAYMENT SECTION FOR index.html
+   Replace lines 100-170 with this
+   ======================================== -->
+
+<div class="form-group">
+    <label>
+        Payment Required to Reserve Spot * 
+        <span class="info-icon" onclick="toggleDonationInfo()">💡</span>
+    </label>
+    
+    <!-- Donation Info Tooltip -->
+    <div id="donationInfo" class="donation-info" style="display: none;">
+        <div class="donation-info-content">
+            <h4>💡 Payment Details</h4>
+            <p><strong>$5/hour per person</strong> to cover court reservations and game organization.</p>
+            
+            <div class="donation-breakdown">
+                <p><strong>How Much to Pay:</strong></p>
+                <ul>
+                    <li><strong>1 hour:</strong> $5 per person</li>
+                    <li><strong>2 hours (full game):</strong> $10 per person ← MOST COMMON</li>
+                </ul>
+                
+                <p class="donation-highlight">✨ Pay what you can – no one is turned away!</p>
+            </div>
+        </div>
+    </div>
+    
+    <p class="field-description" style="margin-top: 8px; margin-bottom: 16px; font-size: 14px; color: #FF6B00; font-weight: 700;">
+        ⚠️ IMPORTANT: Your spot is <strong>PENDING</strong> until payment is verified. Pay within 24 hours to secure your reservation.
+    </p>
+    
+    <!-- Payment Method Selection -->
+    <div class="radio-group">
+        <label class="radio-card">
+            <input type="radio" name="paymentMethod" value="Venmo" required onclick="showVenmoPayment()">
+            <div class="radio-content">
+                <span class="radio-icon">💳</span>
+                <span class="radio-label">Venmo</span>
+            </div>
+        </label>
+        
+        <label class="radio-card">
+            <input type="radio" name="paymentMethod" value="Zelle" required onclick="showZellePayment()">
+            <div class="radio-content">
+                <span class="radio-icon">🏦</span>
+                <span class="radio-label">Zelle</span>
+            </div>
+        </label>
+        
+        <label class="radio-card">
+            <input type="radio" name="paymentMethod" value="Cash (In Person)" required onclick="showCashPayment()">
+            <div class="radio-content">
+                <span class="radio-icon">💵</span>
+                <span class="radio-label">Cash</span>
+            </div>
+        </label>
+    </div>
+    
+    <!-- Payment Instructions (Appears after selection) -->
+    <div id="paymentInstructions" class="payment-instructions" style="display: none; margin-top: 24px;">
+        <div id="paymentDetails"></div>
+    </div>
+</div>
+
+
+
+                        
 
                 <div class="button-group">
                     <button type="button" class="btn btn-primary" onclick="goToStep2()">
