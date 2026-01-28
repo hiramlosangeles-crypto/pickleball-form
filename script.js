@@ -472,13 +472,24 @@ function updatePaymentAmount() {
     }
 }
 
+// REPLACE showVenmoPayment() function with this FIXED version
+// This detects mobile vs desktop and uses appropriate link
+
 function showVenmoPayment(presetAmount = null, presetHours = null) {
     const instructionsBox = document.getElementById('paymentInstructions');
     const detailsDiv = document.getElementById('paymentDetails');
     
     // Calculate amount based on selected time slots
-    const hours = presetHours || selectedTimeSlots.length || 2; // Default to 2 hours
+    const hours = presetHours || selectedTimeSlots.length || 2;
     const amount = presetAmount || (hours * 5);
+    
+    // Detect if mobile device
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+    // Use deep link for mobile, web link for desktop
+    const venmoLink = isMobile 
+        ? `venmo://paycharge?txn=pay&recipients=Steven-Bettencourt-4&amount=${amount}&note=Pickleball%20-%20${hours}%20hour${hours > 1 ? 's' : ''}`
+        : `https://venmo.com/Steven-Bettencourt-4?txn=pay&amount=${amount}&note=Pickleball`;
     
     detailsDiv.innerHTML = `
         <h4 style="margin: 0 0 16px 0; color: #FFE500; font-size: 20px;">💳 Pay $${amount} via Venmo</h4>
@@ -496,15 +507,17 @@ function showVenmoPayment(presetAmount = null, presetHours = null) {
             <strong>Send to:</strong> <a href="https://venmo.com/Steven-Bettencourt-4" target="_blank" style="color: #00D9FF; font-size: 18px; text-decoration: none; font-weight: bold;">@Steven-Bettencourt-4</a>
         </p>
         
-        <a href="venmo://paycharge?txn=pay&recipients=Steven-Bettencourt-4&amount=${amount}&note=Pickleball%20-%20${hours}%20hour${hours > 1 ? 's' : ''}" 
+        <a href="${venmoLink}" 
            class="payment-btn-large" 
            target="_blank"
            style="display: block; padding: 20px; background: linear-gradient(135deg, #00D9FF 0%, #9B51E0 100%); border-radius: 12px; color: white; text-decoration: none; text-align: center; font-weight: 800; font-size: 24px; margin: 20px 0; box-shadow: 0 8px 24px rgba(0, 217, 255, 0.4);">
-            Pay $${amount} Now →
+            ${isMobile ? '📱' : '💻'} Pay $${amount} on Venmo →
         </a>
         
         <p style="margin: 16px 0 0 0; color: #b8b8d1; font-size: 14px; text-align: center;">
-            <strong>No Venmo app?</strong> Search "@Steven-Bettencourt-4" in Venmo or use the link above.
+            ${isMobile 
+                ? '<strong>Opens Venmo app</strong> with amount pre-filled' 
+                : '<strong>Opens Venmo website</strong> - you can send payment there or use your Venmo app'}
         </p>
         
         <div style="margin-top: 20px; padding: 16px; background: rgba(255, 107, 0, 0.15); border-left: 3px solid #FF6B00; border-radius: 8px;">
@@ -519,12 +532,10 @@ function showVenmoPayment(presetAmount = null, presetHours = null) {
     
     instructionsBox.style.display = 'block';
     
-    // Smooth scroll
     setTimeout(() => {
         instructionsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
 }
-
 function showZellePayment(presetAmount = null, presetHours = null) {
     const instructionsBox = document.getElementById('paymentInstructions');
     const detailsDiv = document.getElementById('paymentDetails');
