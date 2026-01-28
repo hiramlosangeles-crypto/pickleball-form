@@ -475,6 +475,9 @@ function updatePaymentAmount() {
 // REPLACE showVenmoPayment() function with this FIXED version
 // This detects mobile vs desktop and uses appropriate link
 
+// REPLACE showVenmoPayment() function with this FIXED version
+// This detects mobile vs desktop and uses appropriate link
+
 function showVenmoPayment(presetAmount = null, presetHours = null) {
     const instructionsBox = document.getElementById('paymentInstructions');
     const detailsDiv = document.getElementById('paymentDetails');
@@ -535,6 +538,7 @@ function showVenmoPayment(presetAmount = null, presetHours = null) {
     setTimeout(() => {
         instructionsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
+}
 }
 function showZellePayment(presetAmount = null, presetHours = null) {
     const instructionsBox = document.getElementById('paymentInstructions');
