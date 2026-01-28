@@ -2,7 +2,6 @@
 // CONFIGURATION
 // ===================================
 
-// Replace this with your Google Apps Script Web App URL after deployment
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4LseN1EdsVjG-4gzyAkmEYhO1_7kpP2ghQOYrd75qkql-NmJ6VQu3DBI8B6995FAI/exec';
 
 // ===================================
@@ -10,21 +9,21 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4LseN1EdsVjG-4gzyA
 // ===================================
 
 let currentStep = 1;
-let gameInfo = null; // Store game info globally
-let selectedTimeSlots = []; // Track selected time slots for payment
+let gameInfo = null;
+let selectedTimeSlots = [];
 
 // ===================================
 // INITIALIZATION
 // ===================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadGameInfo(); // NEW: Load dynamic game info first
+    loadGameInfo();
     initializeForm();
     setupVIPChoiceListener();
 });
 
 // ===================================
-// NEW: DYNAMIC GAME INFO LOADER
+// DYNAMIC GAME INFO LOADER
 // ===================================
 
 async function loadGameInfo() {
@@ -37,25 +36,31 @@ async function loadGameInfo() {
             updateGameInfoInForm();
         } else {
             console.error('Failed to load game info:', data);
-            // Form will show default text if this fails
         }
     } catch (error) {
         console.error('Error loading game info:', error);
-        // Form will show default text if this fails
     }
 }
 
 function updateGameInfoInForm() {
     if (!gameInfo) return;
     
-    // Update Step 1 header with dynamic game info
     const step1Subtitle = document.querySelector('#step1 .step-subtitle:last-of-type');
     if (step1Subtitle) {
         step1Subtitle.innerHTML = `${gameInfo.dateShort} • ${gameInfo.time}<br>${gameInfo.location} · ${gameInfo.courts}`;
     }
+}
+
+function initializeForm() {
+    updateProgressBar();
     
-    // Update any other places that display game info
-    // (If you have other locations in the form that show game details, update them here)
+    document.getElementById('pickleballForm').addEventListener('submit', handleFormSubmit);
+    document.getElementById('phone').addEventListener('input', formatPhoneNumber);
+    
+    // Track time slot changes for payment calculation
+    document.querySelectorAll('input[name="timeSlot"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updatePaymentAmount);
+    });
 }
 
 // ===================================
@@ -63,31 +68,26 @@ function updateGameInfoInForm() {
 // ===================================
 
 function goToStep2() {
-    // Validate Step 1 fields
     if (!validateStep1()) {
         return;
     }
     
-    // Hide step 1, show step 2
     document.getElementById('step1').classList.remove('active');
     document.getElementById('step2').classList.add('active');
     
     currentStep = 2;
     updateProgressBar();
     
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function goToStep1() {
-    // Hide step 2, show step 1
     document.getElementById('step2').classList.remove('active');
     document.getElementById('step1').classList.add('active');
     
     currentStep = 1;
     updateProgressBar();
     
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -120,7 +120,6 @@ function setupVIPChoiceListener() {
     vipYes.addEventListener('change', function() {
         if (this.checked) {
             vipDetails.style.display = 'block';
-            // Make VIP fields required
             makeVIPFieldsRequired(true);
         }
     });
@@ -128,9 +127,7 @@ function setupVIPChoiceListener() {
     vipNo.addEventListener('change', function() {
         if (this.checked) {
             vipDetails.style.display = 'none';
-            // Make VIP fields optional
             makeVIPFieldsRequired(false);
-            // Clear VIP fields
             clearVIPFields();
         }
     });
@@ -224,7 +221,6 @@ function validateStep2() {
         return false;
     }
     
-    // If they chose VIP, validate VIP fields
     if (vipChoice.value.includes('Yes')) {
         const homeCourt = document.getElementById('homeCourt').value.trim();
         const skillLevel = document.querySelector('input[name="skillLevel"]:checked');
@@ -300,19 +296,15 @@ function getSelectedCheckboxes(name) {
 async function handleFormSubmit(e) {
     e.preventDefault();
     
-    // Validate Step 2
     if (!validateStep2()) {
         return;
     }
     
-    // Show loading overlay
     showLoading();
     
-    // Collect form data
     const formData = collectFormData();
     
     try {
-        // Submit to Google Apps Script
         const response = await submitToGoogleSheets(formData);
         
         if (response.success) {
@@ -340,12 +332,11 @@ function collectFormData() {
         names: names,
         phone: phone,
         email: email,
-        timeSlot: timeSlots, // Changed from timeSlots to match backend
+        timeSlot: timeSlots,
         paymentMethod: paymentMethod,
         vipChoice: vipChoice
     };
     
-    // Add VIP fields if they chose VIP
     if (vipChoice.includes('Yes')) {
         data.homeCourt = document.getElementById('homeCourt').value.trim();
         data.skillLevel = document.querySelector('input[name="skillLevel"]:checked').value;
@@ -359,15 +350,13 @@ function collectFormData() {
 async function submitToGoogleSheets(formData) {
     const response = await fetch(SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors', // ← ADD THIS LINE
+        mode: 'no-cors',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
     });
     
-    // Note: no-cors means we can't read the response
-    // We'll assume success if no error was thrown
     return { success: true };
 }
 
@@ -386,15 +375,12 @@ function hideLoading() {
 function showConfirmation(formData) {
     hideLoading();
     
-    // Hide form steps
     document.getElementById('step1').classList.remove('active');
     document.getElementById('step2').classList.remove('active');
     
-    // Show confirmation
     const confirmation = document.getElementById('confirmation');
     confirmation.style.display = 'block';
     
-    // Update confirmation message
     const isVIP = formData.vipChoice.includes('Yes');
     const message = document.getElementById('confirmationMessage');
     const details = document.getElementById('confirmationDetails');
@@ -421,44 +407,22 @@ function showConfirmation(formData) {
         `;
     }
     
-    // Hide progress bar on confirmation
     document.querySelector('.progress-container').style.display = 'none';
     
-    // Scroll to top
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ===================================
-// UPDATED PAYMENT FUNCTIONS - 3 OPTIONS
-// Add these to your script.js
-// Replace the old payment functions
+// PAYMENT FUNCTIONS - UPDATED
 // ===================================
 
-// Update this in your initializeForm function
-function initializeForm() {
-    updateProgressBar();
-    
-    // Add form submission handler
-    document.getElementById('pickleballForm').addEventListener('submit', handleFormSubmit);
-    
-    // Format phone number as user types
-    document.getElementById('phone').addEventListener('input', formatPhoneNumber);
-    
-    // Track time slot changes for payment calculation
-    document.querySelectorAll('input[name="timeSlot"]').forEach(checkbox => {
-        checkbox.addEventListener('change', updatePaymentAmount);
-    });
-}
-
-// Calculate payment based on selected time slots
 function updatePaymentAmount() {
     selectedTimeSlots = Array.from(document.querySelectorAll('input[name="timeSlot"]:checked'))
         .map(cb => cb.value);
     
     const hours = selectedTimeSlots.length;
-    const amount = hours * 5; // $5 per hour
+    const amount = hours * 5;
     
-    // Update payment buttons if payment method is already selected
     const venmoSelected = document.querySelector('input[name="paymentMethod"][value="Venmo"]:checked');
     const zelleSelected = document.querySelector('input[name="paymentMethod"][value="Zelle"]:checked');
     const cashSelected = document.querySelector('input[name="paymentMethod"][value="Cash (In Person)"]:checked');
@@ -472,17 +436,10 @@ function updatePaymentAmount() {
     }
 }
 
-// REPLACE showVenmoPayment() function with this FIXED version
-// This detects mobile vs desktop and uses appropriate link
-
-// REPLACE showVenmoPayment() function with this FIXED version
-// This detects mobile vs desktop and uses appropriate link
-
 function showVenmoPayment(presetAmount = null, presetHours = null) {
     const instructionsBox = document.getElementById('paymentInstructions');
     const detailsDiv = document.getElementById('paymentDetails');
     
-    // Calculate amount based on selected time slots
     const hours = presetHours || selectedTimeSlots.length || 2;
     const amount = presetAmount || (hours * 5);
     
@@ -539,13 +496,12 @@ function showVenmoPayment(presetAmount = null, presetHours = null) {
         instructionsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
 }
-}
+
 function showZellePayment(presetAmount = null, presetHours = null) {
     const instructionsBox = document.getElementById('paymentInstructions');
     const detailsDiv = document.getElementById('paymentDetails');
     
-    // Calculate amount based on selected time slots
-    const hours = presetHours || selectedTimeSlots.length || 2; // Default to 2 hours
+    const hours = presetHours || selectedTimeSlots.length || 2;
     const amount = presetAmount || (hours * 5);
     
     detailsDiv.innerHTML = `
@@ -590,7 +546,6 @@ function showZellePayment(presetAmount = null, presetHours = null) {
     
     instructionsBox.style.display = 'block';
     
-    // Smooth scroll
     setTimeout(() => {
         instructionsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
@@ -600,8 +555,7 @@ function showCashPayment(presetAmount = null, presetHours = null) {
     const instructionsBox = document.getElementById('paymentInstructions');
     const detailsDiv = document.getElementById('paymentDetails');
     
-    // Calculate amount based on selected time slots
-    const hours = presetHours || selectedTimeSlots.length || 2; // Default to 2 hours
+    const hours = presetHours || selectedTimeSlots.length || 2;
     const amount = presetAmount || (hours * 5);
     
     detailsDiv.innerHTML = `
@@ -644,13 +598,10 @@ function showCashPayment(presetAmount = null, presetHours = null) {
     
     instructionsBox.style.display = 'block';
     
-    // Smooth scroll
     setTimeout(() => {
         instructionsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }, 100);
 }
-
-// Remove the old showPaymentInfo function completely
 
 // ===================================
 // DONATION INFO TOGGLE
@@ -660,7 +611,6 @@ function toggleDonationInfo() {
     const infoBox = document.getElementById('donationInfo');
     if (infoBox.style.display === 'none' || infoBox.style.display === '') {
         infoBox.style.display = 'block';
-        // Smooth scroll to show the info
         setTimeout(() => {
             infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 100);
@@ -673,7 +623,6 @@ function toggleDonationInfo() {
 // HELPER FUNCTIONS
 // ===================================
 
-// Add smooth scroll for better UX
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -684,7 +633,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Prevent form resubmission on page refresh
 if (window.history.replaceState) {
     window.history.replaceState(null, null, window.location.href);
 }
