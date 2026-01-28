@@ -3,22 +3,59 @@
 // ===================================
 
 // Replace this with your Google Apps Script Web App URL after deployment
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz8LaPCSEaU54WUfVW7Ko4g08qBZJuDO4Ah_9rV-P0QIgJSwxHRk24Dwd7uQJwp_2Ds/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4LseN1EdsVjG-4gzyAkmEYhO1_7kpP2ghQOYrd75qkql-NmJ6VQu3DBI8B6995FAI/exec';
 
 // ===================================
 // STATE MANAGEMENT
 // ===================================
 
 let currentStep = 1;
+let gameInfo = null; // Store game info globally
 
 // ===================================
 // INITIALIZATION
 // ===================================
 
 document.addEventListener('DOMContentLoaded', function() {
+    loadGameInfo(); // NEW: Load dynamic game info first
     initializeForm();
     setupVIPChoiceListener();
 });
+
+// ===================================
+// NEW: DYNAMIC GAME INFO LOADER
+// ===================================
+
+async function loadGameInfo() {
+    try {
+        const response = await fetch(SCRIPT_URL + '?action=getNextGame');
+        const data = await response.json();
+        
+        if (data.success) {
+            gameInfo = data.game;
+            updateGameInfoInForm();
+        } else {
+            console.error('Failed to load game info:', data);
+            // Form will show default text if this fails
+        }
+    } catch (error) {
+        console.error('Error loading game info:', error);
+        // Form will show default text if this fails
+    }
+}
+
+function updateGameInfoInForm() {
+    if (!gameInfo) return;
+    
+    // Update Step 1 header with dynamic game info
+    const step1Subtitle = document.querySelector('#step1 .step-subtitle:last-of-type');
+    if (step1Subtitle) {
+        step1Subtitle.innerHTML = `${gameInfo.dateShort} • ${gameInfo.time}<br>${gameInfo.location} · ${gameInfo.courts}`;
+    }
+    
+    // Update any other places that display game info
+    // (If you have other locations in the form that show game details, update them here)
+}
 
 function initializeForm() {
     updateProgressBar();
@@ -312,7 +349,7 @@ function collectFormData() {
         names: names,
         phone: phone,
         email: email,
-        timeSlots: timeSlots.join(', '),
+        timeSlot: timeSlots, // Changed from timeSlots to match backend
         paymentMethod: paymentMethod,
         vipChoice: vipChoice
     };
@@ -321,42 +358,24 @@ function collectFormData() {
     if (vipChoice.includes('Yes')) {
         data.homeCourt = document.getElementById('homeCourt').value.trim();
         data.skillLevel = document.querySelector('input[name="skillLevel"]:checked').value;
-        data.bestDays = getSelectedCheckboxes('bestDays').join(', ');
-        data.bestTimes = getSelectedCheckboxes('bestTimes').join(', ');
-    } else {
-        data.homeCourt = '';
-        data.skillLevel = '';
-        data.bestDays = '';
-        data.bestTimes = '';
+        data.bestDays = getSelectedCheckboxes('bestDays');
+        data.bestTimes = getSelectedCheckboxes('bestTimes');
     }
     
     return data;
 }
 
 async function submitToGoogleSheets(formData) {
-    // Check if script URL is configured
-    if (!SCRIPT_URL || SCRIPT_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
-        console.warn('Google Apps Script URL not configured. Form data:', formData);
-        // For testing without backend
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve({ success: true, message: 'Test mode - no actual submission' });
-            }, 1500);
-        });
-    }
-    
     const response = await fetch(SCRIPT_URL, {
         method: 'POST',
-        mode: 'no-cors', // Required for Google Apps Script
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
     });
     
-    // Note: no-cors means we can't read the response
-    // We'll assume success if no error was thrown
-    return { success: true };
+    const result = await response.json();
+    return result;
 }
 
 // ===================================
@@ -387,11 +406,13 @@ function showConfirmation(formData) {
     const message = document.getElementById('confirmationMessage');
     const details = document.getElementById('confirmationDetails');
     
+    const timeSlots = Array.isArray(formData.timeSlot) ? formData.timeSlot.join(', ') : formData.timeSlot;
+    
     if (isVIP) {
-        message.textContent = "You're all set for Sunday AND you're now part of the VIP network! Check your email for details.";
+        message.textContent = "This confirmation has been sent to your email.";
         details.innerHTML = `
             <p><strong>Name:</strong> ${formData.names}</p>
-            <p><strong>Sunday Time:</strong> ${formData.timeSlots}</p>
+            <p><strong>Sunday Time:</strong> ${timeSlots}</p>
             <p><strong>Payment:</strong> ${formData.paymentMethod}</p>
             <p><strong>VIP Status:</strong> Active ✨</p>
             <p><strong>Home Court:</strong> ${formData.homeCourt}</p>
@@ -401,7 +422,7 @@ function showConfirmation(formData) {
         message.textContent = "This confirmation has been sent to your email.";
         details.innerHTML = `
             <p><strong>Name:</strong> ${formData.names}</p>
-            <p><strong>Time:</strong> ${formData.timeSlots}</p>
+            <p><strong>Time:</strong> ${timeSlots}</p>
             <p><strong>Payment:</strong> ${formData.paymentMethod}</p>
             <p style="margin-top: 16px; color: var(--text-secondary);">Want to join VIP later? Use the link in your confirmation email.</p>
         `;
