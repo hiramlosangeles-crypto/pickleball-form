@@ -359,14 +359,16 @@ function collectFormData() {
 async function submitToGoogleSheets(formData) {
     const response = await fetch(SCRIPT_URL, {
         method: 'POST',
+        mode: 'no-cors', // ← ADD THIS LINE
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData)
     });
     
-    const result = await response.json();
-    return result;
+    // Note: no-cors means we can't read the response
+    // We'll assume success if no error was thrown
+    return { success: true };
 }
 
 // ===================================
