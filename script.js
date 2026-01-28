@@ -436,57 +436,216 @@ function showConfirmation(formData) {
 }
 
 // ===================================
-// PAYMENT INFO DISPLAY
+// UPDATED PAYMENT FUNCTIONS - 3 OPTIONS
+// Add these to your script.js
+// Replace the old payment functions
 // ===================================
 
-function showPaymentInfo(method) {
-    const infoBox = document.getElementById('paymentInfo');
-    const detailsDiv = document.getElementById('paymentDetails');
+// Global variable to track selected time slots
+let selectedTimeSlots = [];
+
+// Update this in your initializeForm function
+function initializeForm() {
+    updateProgressBar();
     
-    const paymentDetails = {
-        cashapp: {
-            title: '💵 Cash App',
-            info: '<strong style="color: #00D9FF; font-size: 18px;">$HyruhmUlyssisGrant</strong>',
-            note: 'Send payment to Cash App'
-        },
-        venmo: {
-            title: '💳 Venmo',
-            info: '<a href="https://venmo.com/Steven-Bettencourt-4" target="_blank" style="color: #00D9FF; font-size: 18px; text-decoration: none; font-weight: bold;">@Steven-Bettencourt-4</a>',
-            note: 'Click to open Venmo'
-        },
-        zelle: {
-            title: '🏦 Zelle',
-            info: '<strong style="color: #00D9FF; font-size: 18px;">(310) 433-8281</strong><br><span style="font-size: 16px;">or bettencourtdesign@me.com</span>',
-            note: 'Send via phone number or email'
-        },
-        paypal: {
-            title: '🌐 PayPal',
-            info: '<strong style="color: #00D9FF; font-size: 18px;">hyruhm@hyruhm.com</strong>',
-            note: 'Send payment to PayPal email'
-        },
-        inperson: {
-            title: '💵 In Person',
-            info: '<strong style="color: #00D9FF; font-size: 18px;">Pay at the court</strong>',
-            note: 'Bring cash or card to the game'
-        }
-    };
+    // Add form submission handler
+    document.getElementById('pickleballForm').addEventListener('submit', handleFormSubmit);
     
-    const selected = paymentDetails[method];
+    // Format phone number as user types
+    document.getElementById('phone').addEventListener('input', formatPhoneNumber);
     
-    if (selected) {
-        detailsDiv.innerHTML = `
-            <h4 style="margin: 0 0 12px 0; color: #ffffff; font-size: 16px;">${selected.title}</h4>
-            <p style="margin: 8px 0; color: #ffffff; line-height: 1.6;">${selected.info}</p>
-            <p style="margin: 8px 0 0 0; color: #b8b8d1; font-size: 14px;">${selected.note}</p>
-        `;
-        infoBox.style.display = 'block';
-        
-        // Smooth scroll to show the info
-        setTimeout(() => {
-            infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 100);
+    // Track time slot changes for payment calculation
+    document.querySelectorAll('input[name="timeSlot"]').forEach(checkbox => {
+        checkbox.addEventListener('change', updatePaymentAmount);
+    });
+}
+
+// Calculate payment based on selected time slots
+function updatePaymentAmount() {
+    selectedTimeSlots = Array.from(document.querySelectorAll('input[name="timeSlot"]:checked'))
+        .map(cb => cb.value);
+    
+    const hours = selectedTimeSlots.length;
+    const amount = hours * 5; // $5 per hour
+    
+    // Update payment buttons if payment method is already selected
+    const venmoSelected = document.querySelector('input[name="paymentMethod"][value="Venmo"]:checked');
+    const zelleSelected = document.querySelector('input[name="paymentMethod"][value="Zelle"]:checked');
+    const cashSelected = document.querySelector('input[name="paymentMethod"][value="Cash (In Person)"]:checked');
+    
+    if (venmoSelected) {
+        showVenmoPayment(amount, hours);
+    } else if (zelleSelected) {
+        showZellePayment(amount, hours);
+    } else if (cashSelected) {
+        showCashPayment(amount, hours);
     }
 }
+
+function showVenmoPayment(presetAmount = null, presetHours = null) {
+    const instructionsBox = document.getElementById('paymentInstructions');
+    const detailsDiv = document.getElementById('paymentDetails');
+    
+    // Calculate amount based on selected time slots
+    const hours = presetHours || selectedTimeSlots.length || 2; // Default to 2 hours
+    const amount = presetAmount || (hours * 5);
+    
+    detailsDiv.innerHTML = `
+        <h4 style="margin: 0 0 16px 0; color: #FFE500; font-size: 20px;">💳 Pay $${amount} via Venmo</h4>
+        
+        <div style="background: rgba(255, 229, 0, 0.1); padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin: 0; color: #FFE500; font-weight: 700; font-size: 18px;">
+                Amount Due: $${amount}
+            </p>
+            <p style="margin: 8px 0 0 0; color: #ffffff; font-size: 14px;">
+                (${hours} hour${hours > 1 ? 's' : ''} × $5/hour)
+            </p>
+        </div>
+        
+        <p style="margin: 12px 0; color: #ffffff; line-height: 1.6;">
+            <strong>Send to:</strong> <a href="https://venmo.com/Steven-Bettencourt-4" target="_blank" style="color: #00D9FF; font-size: 18px; text-decoration: none; font-weight: bold;">@Steven-Bettencourt-4</a>
+        </p>
+        
+        <a href="venmo://paycharge?txn=pay&recipients=Steven-Bettencourt-4&amount=${amount}&note=Pickleball%20-%20${hours}%20hour${hours > 1 ? 's' : ''}" 
+           class="payment-btn-large" 
+           target="_blank"
+           style="display: block; padding: 20px; background: linear-gradient(135deg, #00D9FF 0%, #9B51E0 100%); border-radius: 12px; color: white; text-decoration: none; text-align: center; font-weight: 800; font-size: 24px; margin: 20px 0; box-shadow: 0 8px 24px rgba(0, 217, 255, 0.4);">
+            Pay $${amount} Now →
+        </a>
+        
+        <p style="margin: 16px 0 0 0; color: #b8b8d1; font-size: 14px; text-align: center;">
+            <strong>No Venmo app?</strong> Search "@Steven-Bettencourt-4" in Venmo or use the link above.
+        </p>
+        
+        <div style="margin-top: 20px; padding: 16px; background: rgba(255, 107, 0, 0.15); border-left: 3px solid #FF6B00; border-radius: 8px;">
+            <p style="margin: 0; color: #FFA500; font-weight: 700; font-size: 14px;">
+                ⚠️ IMPORTANT: Your spot is PENDING until payment is verified
+            </p>
+            <p style="margin: 8px 0 0 0; color: #ffffff; font-size: 13px;">
+                Complete payment within 24 hours to secure your reservation.
+            </p>
+        </div>
+    `;
+    
+    instructionsBox.style.display = 'block';
+    
+    // Smooth scroll
+    setTimeout(() => {
+        instructionsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+}
+
+function showZellePayment(presetAmount = null, presetHours = null) {
+    const instructionsBox = document.getElementById('paymentInstructions');
+    const detailsDiv = document.getElementById('paymentDetails');
+    
+    // Calculate amount based on selected time slots
+    const hours = presetHours || selectedTimeSlots.length || 2; // Default to 2 hours
+    const amount = presetAmount || (hours * 5);
+    
+    detailsDiv.innerHTML = `
+        <h4 style="margin: 0 0 16px 0; color: #FFE500; font-size: 20px;">🏦 Pay $${amount} via Zelle</h4>
+        
+        <div style="background: rgba(255, 229, 0, 0.1); padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin: 0; color: #FFE500; font-weight: 700; font-size: 18px;">
+                Amount Due: $${amount}
+            </p>
+            <p style="margin: 8px 0 0 0; color: #ffffff; font-size: 14px;">
+                (${hours} hour${hours > 1 ? 's' : ''} × $5/hour)
+            </p>
+        </div>
+        
+        <p style="margin: 12px 0; color: #ffffff; line-height: 1.6;">
+            <strong>Send to:</strong><br>
+            <span style="color: #00D9FF; font-size: 20px; font-weight: bold;">(310) 433-8281</span><br>
+            <span style="font-size: 16px;">or bettencourtdesign@me.com</span>
+        </p>
+        
+        <div style="margin: 16px 0; padding: 16px; background: rgba(255, 229, 0, 0.1); border-radius: 8px; border-left: 3px solid var(--primary-yellow);">
+            <p style="margin: 0 0 12px 0; color: var(--primary-yellow); font-weight: 700; font-size: 15px;">📱 How to Send via Zelle:</p>
+            <ol style="margin: 0; padding-left: 20px; color: var(--text-secondary); line-height: 1.8;">
+                <li>Open your bank's mobile app</li>
+                <li>Find "Send Money with Zelle"</li>
+                <li>Enter: <strong style="color: #ffffff;">(310) 433-8281</strong></li>
+                <li>Enter amount: <strong style="color: #ffffff;">$${amount}</strong></li>
+                <li>Add note: "Pickleball [Your Name]"</li>
+                <li>Send payment</li>
+            </ol>
+        </div>
+        
+        <div style="margin-top: 20px; padding: 16px; background: rgba(255, 107, 0, 0.15); border-left: 3px solid #FF6B00; border-radius: 8px;">
+            <p style="margin: 0; color: #FFA500; font-weight: 700; font-size: 14px;">
+                ⚠️ IMPORTANT: Your spot is PENDING until payment is verified
+            </p>
+            <p style="margin: 8px 0 0 0; color: #ffffff; font-size: 13px;">
+                Complete payment within 24 hours to secure your reservation.
+            </p>
+        </div>
+    `;
+    
+    instructionsBox.style.display = 'block';
+    
+    // Smooth scroll
+    setTimeout(() => {
+        instructionsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+}
+
+function showCashPayment(presetAmount = null, presetHours = null) {
+    const instructionsBox = document.getElementById('paymentInstructions');
+    const detailsDiv = document.getElementById('paymentDetails');
+    
+    // Calculate amount based on selected time slots
+    const hours = presetHours || selectedTimeSlots.length || 2; // Default to 2 hours
+    const amount = presetAmount || (hours * 5);
+    
+    detailsDiv.innerHTML = `
+        <h4 style="margin: 0 0 16px 0; color: #FFE500; font-size: 20px;">💵 Bring $${amount} Cash to the Court</h4>
+        
+        <div style="background: rgba(255, 229, 0, 0.1); padding: 16px; border-radius: 8px; margin-bottom: 20px;">
+            <p style="margin: 0; color: #FFE500; font-weight: 700; font-size: 18px;">
+                Amount to Bring: $${amount}
+            </p>
+            <p style="margin: 8px 0 0 0; color: #ffffff; font-size: 14px;">
+                (${hours} hour${hours > 1 ? 's' : ''} × $5/hour)
+            </p>
+        </div>
+        
+        <div style="margin: 16px 0; padding: 20px; background: rgba(0, 217, 255, 0.1); border-radius: 8px; border-left: 3px solid #00D9FF;">
+            <p style="margin: 0 0 12px 0; color: #00D9FF; font-weight: 700; font-size: 16px;">💵 Payment at the Court:</p>
+            <ul style="margin: 0; padding-left: 20px; color: var(--text-secondary); line-height: 1.8;">
+                <li>Bring <strong style="color: #ffffff;">$${amount} cash</strong> to the game</li>
+                <li>Pay Steven or Hiram when you arrive</li>
+                <li>Please bring exact change if possible</li>
+                <li>Your spot is confirmed once payment is received</li>
+            </ul>
+        </div>
+        
+        <div style="margin-top: 20px; padding: 16px; background: rgba(255, 107, 0, 0.15); border-left: 3px solid #FF6B00; border-radius: 8px;">
+            <p style="margin: 0; color: #FFA500; font-weight: 700; font-size: 14px;">
+                ⚠️ IMPORTANT: Your spot is PENDING until payment is received
+            </p>
+            <p style="margin: 8px 0 0 0; color: #ffffff; font-size: 13px;">
+                We'll confirm your spot when you pay at the court. Please arrive a few minutes early!
+            </p>
+        </div>
+        
+        <div style="margin-top: 16px; padding: 12px; background: rgba(255, 229, 0, 0.05); border-radius: 8px; text-align: center;">
+            <p style="margin: 0; color: #b8b8d1; font-size: 13px;">
+                💡 <strong>Prefer to pay now?</strong> Choose Venmo or Zelle above for instant confirmation!
+            </p>
+        </div>
+    `;
+    
+    instructionsBox.style.display = 'block';
+    
+    // Smooth scroll
+    setTimeout(() => {
+        instructionsBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+}
+
+// Remove the old showPaymentInfo function completely
 
 // ===================================
 // DONATION INFO TOGGLE
