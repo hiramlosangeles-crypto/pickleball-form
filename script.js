@@ -11,6 +11,7 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4LseN1EdsVjG-4gzyA
 
 let currentStep = 1;
 let gameInfo = null; // Store game info globally
+let selectedTimeSlots = []; // Track selected time slots for payment
 
 // ===================================
 // INITIALIZATION
@@ -55,16 +56,6 @@ function updateGameInfoInForm() {
     
     // Update any other places that display game info
     // (If you have other locations in the form that show game details, update them here)
-}
-
-function initializeForm() {
-    updateProgressBar();
-    
-    // Add form submission handler
-    document.getElementById('pickleballForm').addEventListener('submit', handleFormSubmit);
-    
-    // Format phone number as user types
-    document.getElementById('phone').addEventListener('input', formatPhoneNumber);
 }
 
 // ===================================
@@ -440,9 +431,6 @@ function showConfirmation(formData) {
 // Add these to your script.js
 // Replace the old payment functions
 // ===================================
-
-// Global variable to track selected time slots
-let selectedTimeSlots = [];
 
 // Update this in your initializeForm function
 function initializeForm() {
