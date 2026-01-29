@@ -775,47 +775,7 @@ button:disabled {
         transition-duration: 0.01ms !important;
     }
 }
-/* ===================================
-   MOBILE BUTTON FIXES
-   =================================== */
 
-/* Make Continue/Back/Submit buttons bigger on mobile */
-@media (max-width: 768px) {
-    .btn {
-        padding: 18px 32px !important;
-        font-size: 18px !important;
-        min-height: 56px;
-    }
-    
-    .btn-primary,
-    .btn-secondary {
-        padding: 18px 32px !important;
-        font-size: 18px !important;
-        min-height: 56px;
-    }
-    
-    /* Make button group stack on mobile */
-    .button-group {
-        flex-direction: column;
-        gap: 12px;
-    }
-    
-    .button-group .btn {
-        width: 100%;
-    }
-}
-
-/* Ensure buttons are always tappable size on mobile */
-@media (max-width: 480px) {
-    .btn,
-    .btn-primary,
-    .btn-secondary {
-        padding: 20px 36px !important;
-        font-size: 19px !important;
-        min-height: 60px;
-        font-weight: 700 !important;
-    }
-}
 /* ===================================
    MOBILE BUTTON FIXES
    Makes buttons bigger and easier to tap on mobile
