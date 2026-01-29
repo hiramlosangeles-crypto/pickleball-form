@@ -564,8 +564,10 @@ input::placeholder {
 }
 
 /* ===================================
-   BUTTONS
+   BUTTONS - SUNSET THEME WITH PROPER SIZING
+   Replace the entire BUTTONS section in your CSS (around line 615-680)
    =================================== */
+
 .btn {
     padding: 16px 32px;
     border: none;
@@ -581,26 +583,40 @@ input::placeholder {
     text-decoration: none;
 }
 
+/* PRIMARY BUTTON - SUNSET GRADIENT */
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-purple) 0%, #D946EF 30%, var(--primary-orange) 100%);
+    background: linear-gradient(90deg, 
+        #9B51E0 0%,      /* Purple */
+        #D946EF 20%,     /* Magenta */
+        #FF6B9D 40%,     /* Pink */
+        #FF8C69 60%,     /* Coral */
+        #FFB84D 80%,     /* Orange */
+        #FFE500 100%     /* Yellow */
+    );
     color: #ffffff;
-    box-shadow: var(--shadow-glow);
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 32px rgba(255, 107, 157, 0.5);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    font-weight: 800;
 }
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 48px rgba(155, 81, 224, 0.5);
+    box-shadow: 0 12px 48px rgba(255, 107, 157, 0.7);
+    filter: brightness(1.1);
 }
 
 .btn-primary:active {
     transform: translateY(0);
 }
 
+/* SECONDARY BUTTON - Smaller, Purple Border */
 .btn-secondary {
     background: var(--bg-card);
     color: var(--text-primary);
     border: 2px solid var(--primary-purple);
+    padding: 12px 24px;  /* Smaller than primary */
+    font-size: 15px;     /* Smaller than primary */
+    font-weight: 600;
 }
 
 .btn-secondary:hover {
@@ -608,6 +624,7 @@ input::placeholder {
     transform: translateY(-2px);
 }
 
+/* BUTTON GROUP LAYOUT */
 .button-group {
     display: grid;
     grid-template-columns: 1fr;
@@ -615,19 +632,89 @@ input::placeholder {
     margin-top: 24px;
 }
 
+/* Desktop: Back button smaller, side-by-side */
 @media (min-width: 540px) {
     .button-group {
         grid-template-columns: auto 1fr;
+        align-items: center;
     }
     
-    .btn {
+    .btn-primary {
         width: auto;
+        min-width: 200px;
     }
     
     .btn-secondary {
         width: auto;
+        min-width: 120px;
     }
 }
+
+/* ===================================
+   MOBILE BUTTON FIXES
+   Makes buttons bigger and easier to tap on mobile
+   =================================== */
+
+/* Tablets and smaller */
+@media (max-width: 768px) {
+    .btn {
+        padding: 18px 32px !important;
+        font-size: 18px !important;
+        min-height: 56px;
+        font-weight: 700;
+    }
+    
+    .btn-primary {
+        padding: 18px 32px !important;
+        font-size: 18px !important;
+        min-height: 56px;
+        font-weight: 800 !important;
+    }
+    
+    .btn-secondary {
+        padding: 16px 28px !important;
+        font-size: 16px !important;
+        min-height: 50px;
+        font-weight: 600 !important;
+    }
+    
+    /* Make button groups stack vertically on mobile */
+    .button-group {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+    
+    .button-group .btn {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+/* Phones and smaller */
+@media (max-width: 480px) {
+    .btn-primary {
+        padding: 20px 36px !important;
+        font-size: 19px !important;
+        min-height: 60px;
+        font-weight: 800 !important;
+        letter-spacing: 0.5px;
+    }
+    
+    .btn-secondary {
+        padding: 16px 28px !important;
+        font-size: 17px !important;
+        min-height: 52px;
+    }
+    
+    /* Extra padding for finger-friendly tap targets */
+    .button-group {
+        gap: 16px;
+        margin-top: 24px;
+    }
+}
+
 
 /* ===================================
    CONFIRMATION SCREEN - RAINBOW BORDER MAINTAINED
