@@ -57,14 +57,23 @@ function initializeForm() {
     document.getElementById('pickleballForm').addEventListener('submit', handleFormSubmit);
     document.getElementById('phone').addEventListener('input', formatPhoneNumber);
     
-    // Track time slot changes for payment calculation
     document.querySelectorAll('input[name="timeSlot"]').forEach(checkbox => {
         checkbox.addEventListener('change', updatePaymentAmount);
     });
+    
+    // Auto-scroll to form on mobile (initial page load) - UX FIX
+    setTimeout(() => {
+        if (window.innerWidth <= 768) {
+            const firstFormGroup = document.querySelector('#step1 .form-group');
+            if (firstFormGroup) {
+                firstFormGroup.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+    }, 500);
 }
 
 // ===================================
-// STEP NAVIGATION
+// STEP NAVIGATION - UPDATED WITH AUTO-SCROLL
 // ===================================
 
 function goToStep2() {
@@ -78,7 +87,16 @@ function goToStep2() {
     currentStep = 2;
     updateProgressBar();
     
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top first
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
+    // Then scroll down to show VIP choices (mobile fix)
+    setTimeout(() => {
+        const vipSection = document.querySelector('#step2 .form-group');
+        if (vipSection && window.innerWidth <= 768) {
+            vipSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, 100);
 }
 
 function goToStep1() {
@@ -88,7 +106,16 @@ function goToStep1() {
     currentStep = 1;
     updateProgressBar();
     
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Scroll to top first
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    
+    // Then scroll down to show form fields (mobile fix)
+    setTimeout(() => {
+        const firstFormGroup = document.querySelector('#step1 .form-group');
+        if (firstFormGroup && window.innerWidth <= 768) {
+            firstFormGroup.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }, 100);
 }
 
 // ===================================
@@ -290,7 +317,7 @@ function getSelectedCheckboxes(name) {
 }
 
 // ===================================
-// FORM SUBMISSION - FIXED FOR INSTANT LOADING
+// FORM SUBMISSION - INSTANT LOADING FIX
 // ===================================
 
 async function handleFormSubmit(e) {
