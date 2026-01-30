@@ -290,7 +290,7 @@ function getSelectedCheckboxes(name) {
 }
 
 // ===================================
-// FORM SUBMISSION
+// FORM SUBMISSION - FIXED FOR INSTANT LOADING
 // ===================================
 
 async function handleFormSubmit(e) {
@@ -300,9 +300,14 @@ async function handleFormSubmit(e) {
         return;
     }
     
+    // Collect form data FIRST (faster)
+    const formData = collectFormData();
+    
+    // Show loading overlay IMMEDIATELY
     showLoading();
     
-    const formData = collectFormData();
+    // Small delay to ensure loading shows before fetch
+    await new Promise(resolve => setTimeout(resolve, 100));
     
     try {
         const response = await submitToGoogleSheets(formData);
@@ -413,7 +418,7 @@ function showConfirmation(formData) {
 }
 
 // ===================================
-// PAYMENT FUNCTIONS - UPDATED
+// PAYMENT FUNCTIONS
 // ===================================
 
 function updatePaymentAmount() {
@@ -443,10 +448,8 @@ function showVenmoPayment(presetAmount = null, presetHours = null) {
     const hours = presetHours || selectedTimeSlots.length || 2;
     const amount = presetAmount || (hours * 5);
     
-    // Detect if mobile device
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
-    // Use deep link for mobile, web link for desktop
     const venmoLink = isMobile 
         ? `venmo://paycharge?txn=pay&recipients=Steven-Bettencourt-4&amount=${amount}&note=Pickleball%20-%20${hours}%20hour${hours > 1 ? 's' : ''}`
         : `https://venmo.com/Steven-Bettencourt-4?txn=pay&amount=${amount}&note=Pickleball`;
