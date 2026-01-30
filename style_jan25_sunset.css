@@ -868,3 +868,42 @@ button:disabled {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* ===================================
+   CONFIRMATION BUTTON FIX - MOBILE
+   Prevents "Back to Home" button from bleeding off screen
+   =================================== */
+
+/* Make "Back to Home" button fit on mobile */
+.confirmation-content .btn {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px 24px;
+    font-size: 18px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .confirmation-content {
+        padding: 32px 16px;
+    }
+    
+    .confirmation-content .btn {
+        padding: 22px 20px !important;
+        font-size: 19px !important;
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .confirmation-content {
+        padding: 24px 12px;
+    }
+    
+    .confirmation-content .btn {
+        padding: 24px 16px !important;
+        font-size: 20px !important;
+    }
+}
