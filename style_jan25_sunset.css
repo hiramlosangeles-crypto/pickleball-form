@@ -907,3 +907,62 @@ button:disabled {
         font-size: 20px !important;
     }
 }
+/* ===================================
+   STEP 1 HEADER SIZE REDUCTION - MOBILE
+   Makes header more compact so users see name field
+   Title size UNCHANGED per user request
+   =================================== */
+
+@media (max-width: 768px) {
+    /* Reduce Step 1 header padding */
+    #step1 .step-header {
+        padding: 16px 20px;
+        margin-bottom: 24px;
+    }
+    
+    /* Make checkmark smaller and closer to title */
+    #step1 .step-icon {
+        font-size: 36px;
+        margin-bottom: 8px;
+    }
+    
+    /* Keep title size the same - DON'T change h2 font-size */
+    #step1 .step-header h2 {
+        margin-bottom: 6px;
+    }
+    
+    /* Make subtitle more compact */
+    #step1 .step-subtitle {
+        font-size: 14px;
+        line-height: 1.4;
+        margin-bottom: 0;
+    }
+    
+    /* Add spacing between subtitle paragraphs */
+    #step1 .step-subtitle + .step-subtitle {
+        margin-top: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Extra compact for small phones */
+    #step1 .step-header {
+        padding: 12px 16px;
+        margin-bottom: 20px;
+    }
+    
+    #step1 .step-icon {
+        font-size: 32px;
+        margin-bottom: 6px;
+    }
+    
+    /* Keep title size - don't reduce */
+    #step1 .step-header h2 {
+        margin-bottom: 6px;
+    }
+    
+    #step1 .step-subtitle {
+        font-size: 13px;
+        line-height: 1.4;
+    }
+}
