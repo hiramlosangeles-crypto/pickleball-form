@@ -61,19 +61,11 @@ function initializeForm() {
         checkbox.addEventListener('change', updatePaymentAmount);
     });
     
-    // Auto-scroll to form on mobile (initial page load) - UX FIX
-    setTimeout(() => {
-        if (window.innerWidth <= 768) {
-            const firstFormGroup = document.querySelector('#step1 .form-group');
-            if (firstFormGroup) {
-                firstFormGroup.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }
-        }
-    }, 500);
+    // NO AUTO-SCROLL on Step 1 - header is now compact, users can see everything
 }
 
 // ===================================
-// STEP NAVIGATION - UPDATED WITH AUTO-SCROLL
+// STEP NAVIGATION
 // ===================================
 
 function goToStep2() {
@@ -90,7 +82,7 @@ function goToStep2() {
     // Scroll to top first
     window.scrollTo({ top: 0, behavior: 'instant' });
     
-    // Then scroll down to show VIP choices (mobile fix)
+    // Then scroll down to show VIP choices (mobile fix - KEEP THIS)
     setTimeout(() => {
         const vipSection = document.querySelector('#step2 .form-group');
         if (vipSection && window.innerWidth <= 768) {
@@ -106,16 +98,8 @@ function goToStep1() {
     currentStep = 1;
     updateProgressBar();
     
-    // Scroll to top first
-    window.scrollTo({ top: 0, behavior: 'instant' });
-    
-    // Then scroll down to show form fields (mobile fix)
-    setTimeout(() => {
-        const firstFormGroup = document.querySelector('#step1 .form-group');
-        if (firstFormGroup && window.innerWidth <= 768) {
-            firstFormGroup.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    }, 100);
+    // Just scroll to top - NO auto-scroll down (header is compact now)
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 // ===================================
