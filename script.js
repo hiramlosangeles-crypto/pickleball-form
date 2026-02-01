@@ -493,15 +493,6 @@ function showVenmoPayment(presetAmount = null, presetHours = null) {
                 ? '<strong>Opens Venmo app</strong> with amount pre-filled' 
                 : '<strong>Opens Venmo website</strong> - you can send payment there or use your Venmo app'}
         </p>
-        
-        <div style="margin-top: 20px; padding: 16px; background: rgba(255, 107, 0, 0.15); border-left: 3px solid #FF6B00; border-radius: 8px;">
-            <p style="margin: 0; color: #FFA500; font-weight: 700; font-size: 14px;">
-                ⚠️ IMPORTANT: Your spot is PENDING until payment is verified
-            </p>
-            <p style="margin: 8px 0 0 0; color: #ffffff; font-size: 13px;">
-                Complete payment within 24 hours to secure your reservation.
-            </p>
-        </div>
     `;
     
     instructionsBox.style.display = 'block';
@@ -547,15 +538,6 @@ function showZellePayment(presetAmount = null, presetHours = null) {
                 <li>Send payment</li>
             </ol>
         </div>
-        
-        <div style="margin-top: 20px; padding: 16px; background: rgba(255, 107, 0, 0.15); border-left: 3px solid #FF6B00; border-radius: 8px;">
-            <p style="margin: 0; color: #FFA500; font-weight: 700; font-size: 14px;">
-                ⚠️ IMPORTANT: Your spot is PENDING until payment is verified
-            </p>
-            <p style="margin: 8px 0 0 0; color: #ffffff; font-size: 13px;">
-                Complete payment within 24 hours to secure your reservation.
-            </p>
-        </div>
     `;
     
     instructionsBox.style.display = 'block';
@@ -592,15 +574,6 @@ function showCashPayment(presetAmount = null, presetHours = null) {
                 <li>Please bring exact change if possible</li>
                 <li>Your spot is confirmed once payment is received</li>
             </ul>
-        </div>
-        
-        <div style="margin-top: 20px; padding: 16px; background: rgba(255, 107, 0, 0.15); border-left: 3px solid #FF6B00; border-radius: 8px;">
-            <p style="margin: 0; color: #FFA500; font-weight: 700; font-size: 14px;">
-                ⚠️ IMPORTANT: Your spot is PENDING until payment is received
-            </p>
-            <p style="margin: 8px 0 0 0; color: #ffffff; font-size: 13px;">
-                We'll confirm your spot when you pay at the court. Please arrive a few minutes early!
-            </p>
         </div>
         
         <div style="margin-top: 16px; padding: 12px; background: rgba(255, 229, 0, 0.05); border-radius: 8px; text-align: center;">
