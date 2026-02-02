@@ -963,3 +963,133 @@ button:disabled {
         line-height: 1.4;
     }
 }
+/* ========================================
+   DATE PICKER STYLES
+   ======================================== */
+
+/* Date Choice Cards */
+.date-choice {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.date-card {
+    background: rgba(155, 81, 224, 0.05);
+    border: 2px solid rgba(155, 81, 224, 0.2);
+    border-radius: 16px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.date-card:hover {
+    border-color: rgba(155, 81, 224, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(155, 81, 224, 0.2);
+}
+
+.date-card.selected {
+    background: linear-gradient(135deg, rgba(155, 81, 224, 0.15), rgba(255, 107, 157, 0.15));
+    border-color: #FFE500;
+    box-shadow: 0 12px 32px rgba(255, 229, 0, 0.3);
+}
+
+.date-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.date-card-content {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: center;
+}
+
+.date-icon {
+    font-size: 48px;
+    line-height: 1;
+}
+
+.date-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.date-title {
+    font-size: 24px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.2;
+}
+
+.date-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.date-info-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+}
+
+.date-info-icon {
+    font-size: 16px;
+}
+
+/* Loading State */
+.loading-dates {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 4px solid rgba(255, 229, 0, 0.2);
+    border-top-color: #FFE500;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-dates p {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .date-card {
+        padding: 20px;
+    }
+
+    .date-card-content {
+        gap: 16px;
+    }
+
+    .date-icon {
+        font-size: 36px;
+    }
+
+    .date-title {
+        font-size: 20px;
+    }
+
+    .date-info-row {
+        font-size: 13px;
+    }
+}
