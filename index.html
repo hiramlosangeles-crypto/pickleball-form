@@ -48,7 +48,7 @@
                         type="text" 
                         id="names" 
                         name="names" 
-                        placeholder=" first and last name "
+                        placeholder="enter your name here (first and last)"
                         required
                     >
                 </div>
@@ -60,7 +60,7 @@
                             type="tel" 
                             id="phone" 
                             name="phone" 
-                            placeholder="(000) 000-0000"
+                            placeholder=""
                             required
                         >
                     </div>
@@ -350,7 +350,28 @@
                     <h2>You're All Set!</h2>
                     <p class="confirmation-message" id="confirmationMessage"></p>
                     <div class="confirmation-details" id="confirmationDetails"></div>
-                    <a href="https://iwannaplaypickleball.com/warmup" class="btn btn-primary">Remember to Warm-Up 🟡</a>
+                    <a href="https://iwannaplaypickleball.com/warmup" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px;">
+    Remember to Warm-Up 
+    <svg width="24" height="24" viewBox="0 0 100 100" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+        <defs>
+            <radialGradient id="pickleballGradient">
+                <stop offset="0%" style="stop-color:#E8FF00"/>
+                <stop offset="50%" style="stop-color:#C8E600"/>
+                <stop offset="100%" style="stop-color:#9ACD32"/>
+            </radialGradient>
+        </defs>
+        <circle cx="50" cy="50" r="45" fill="url(#pickleballGradient)"/>
+        <circle cx="30" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
+        <circle cx="50" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
+        <circle cx="70" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
+        <circle cx="30" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
+        <circle cx="50" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
+        <circle cx="70" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
+        <circle cx="30" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
+        <circle cx="50" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
+        <circle cx="70" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
+    </svg>
+</a>
                 </div>
             </div>
 
