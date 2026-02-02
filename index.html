@@ -32,9 +32,37 @@
 
         <!-- Form -->
         <form id="pickleballForm">
-            
+
+    <!-- ========================================
+     STEP 0: DATE PICKER
+     ======================================== -->
+
+<div class="form-step active" id="step0">
+    <div class="step-header">
+        <div class="step-icon">📅</div>
+        <h2>Pick Your Game Date</h2>
+        <p class="step-subtitle">Select which Sunday you'd like to play. We'll show you the next three available games!</p>
+    </div>
+
+    <div class="form-group">
+        <label>Which Sunday would you like to play? *</label>
+        <div class="date-choice" id="dateChoiceContainer">
+            <!-- Dates will be loaded dynamically from Google Apps Script -->
+            <div class="loading-dates">
+                <div class="spinner"></div>
+                <p>Loading available game dates...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="button-group">
+        <button type="button" class="btn btn-primary" onclick="goToStep1FromDatePicker()" id="datePickerContinue" disabled>
+            Continue to Step 1 →
+        </button>
+    </div>
+</div>
             <!-- STEP 1: SUNDAY SIGNUP -->
-            <div class="form-step active" id="step1">
+            <div class="form-step" id="step1">
                 <div class="step-header">
                     <div class="step-icon">✓</div>
                     <h2>Reserve Your Spot</h2>
