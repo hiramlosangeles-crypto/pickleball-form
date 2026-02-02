@@ -8,7 +8,7 @@
 // ========================================
 
 // ⚠️ IMPORTANT: Replace YOUR_DEPLOYMENT_ID with your actual Google Apps Script deployment ID
-const SCRIPT_URL = 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4LseN1EdsVjG-4gzyAkmEYhO1_7kpP2ghQOYrd75qkql-NmJ6VQu3DBI8B6995FAI/exec';
 
 // Store selected game data
 let selectedGameData = null;
