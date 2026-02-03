@@ -274,24 +274,13 @@ function setupFormEventListeners() {
 
 function makeVIPFieldsRequired() {
     document.getElementById('homeCourt').required = true;
-    const skillLevels = document.querySelectorAll('input[name="skillLevel"]');
-    const bestDays = document.querySelectorAll('input[name="bestDays"]');
-    const bestTimes = document.querySelectorAll('input[name="bestTimes"]');
-    
-    skillLevels.forEach(input => input.required = true);
-    bestDays.forEach(input => input.required = true);
-    bestTimes.forEach(input => input.required = true);
+    // Note: Checkboxes can't use required attribute properly
+    // Validation happens in handleFormSubmit instead
 }
 
 function makeVIPFieldsOptional() {
     document.getElementById('homeCourt').required = false;
-    const skillLevels = document.querySelectorAll('input[name="skillLevel"]');
-    const bestDays = document.querySelectorAll('input[name="bestDays"]');
-    const bestTimes = document.querySelectorAll('input[name="bestTimes"]');
-    
-    skillLevels.forEach(input => input.required = false);
-    bestDays.forEach(input => input.required = false);
-    bestTimes.forEach(input => input.required = false);
+    // No need to set required on checkboxes
 }
 
 // ========================================
@@ -377,13 +366,26 @@ function handleFormSubmit(event) {
     const vipChoice = document.querySelector('input[name="vipChoice"]:checked')?.value;
     
     if (vipChoice === 'Yes - VIP Network') {
-        const homeCourt = document.getElementById('homeCourt').value;
+        const homeCourt = document.getElementById('homeCourt').value.trim();
         const skillLevel = document.querySelector('input[name="skillLevel"]:checked');
         const bestDays = document.querySelectorAll('input[name="bestDays"]:checked');
         const bestTimes = document.querySelectorAll('input[name="bestTimes"]:checked');
         
-        if (!homeCourt || !skillLevel || bestDays.length === 0 || bestTimes.length === 0) {
-            alert('Please fill in all VIP fields');
+        // Check each required field
+        if (!homeCourt) {
+            alert('Please enter your Home Court / City');
+            return;
+        }
+        if (!skillLevel) {
+            alert('Please select your Skill Level');
+            return;
+        }
+        if (bestDays.length === 0) {
+            alert('Please select at least one Best Day');
+            return;
+        }
+        if (bestTimes.length === 0) {
+            alert('Please select at least one Best Time');
             return;
         }
     }
