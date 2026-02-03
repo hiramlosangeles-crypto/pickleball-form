@@ -1,6 +1,7 @@
 // ========================================
-// PICKLEBALL FORM - COMPLETE SCRIPT v3.0
+// PICKLEBALL FORM - COMPLETE SCRIPT v3.1 UPDATED
 // With 3-Sunday Date Picker System
+// ALL FIXES APPLIED
 // ========================================
 
 // ========================================
@@ -21,6 +22,7 @@ let selectedGameData = null;
 window.addEventListener('DOMContentLoaded', function() {
     loadGameDates();
     setupFormEventListeners();
+    setupPhoneFormatting();  // ✅ FIX #8: Phone formatting
 });
 
 async function loadGameDates() {
@@ -112,6 +114,11 @@ function goToStep1FromDatePicker() {
     
     // Update progress bar
     updateProgress(1, 3);
+    
+    // ✅ FIX #9: Prevent URL flash - use replaceState instead of pushState
+    if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, '', window.location.pathname);
+    }
 }
 
 function updateStep1WithSelectedDate() {
@@ -141,6 +148,56 @@ function showDateLoadError(message) {
 }
 
 // ========================================
+// PHONE NUMBER FORMATTING
+// ✅ FIX #8: US Phone Number Formatting (XXX) XXX-XXXX
+// ========================================
+
+function setupPhoneFormatting() {
+    const phoneInput = document.getElementById('phone');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', formatPhoneNumber);
+        phoneInput.addEventListener('keydown', handlePhoneKeydown);
+    }
+}
+
+function formatPhoneNumber(e) {
+    let value = e.target.value.replace(/\D/g, ''); // Remove all non-digits
+    
+    if (value.length === 0) {
+        e.target.value = '';
+        return;
+    }
+    
+    // Format as (XXX) XXX-XXXX
+    if (value.length <= 3) {
+        e.target.value = `(${value}`;
+    } else if (value.length <= 6) {
+        e.target.value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
+    } else {
+        e.target.value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+    }
+}
+
+function handlePhoneKeydown(e) {
+    // Allow backspace, delete, tab, escape, enter
+    if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1 ||
+        // Allow Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+        (e.keyCode === 65 && e.ctrlKey === true) ||
+        (e.keyCode === 67 && e.ctrlKey === true) ||
+        (e.keyCode === 86 && e.ctrlKey === true) ||
+        (e.keyCode === 88 && e.ctrlKey === true) ||
+        // Allow home, end, left, right
+        (e.keyCode >= 35 && e.keyCode <= 39)) {
+        return;
+    }
+    
+    // Prevent input if not a number
+    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+    }
+}
+
+// ========================================
 // FORM NAVIGATION FUNCTIONS
 // ========================================
 
@@ -148,6 +205,7 @@ function goToStep1() {
     document.getElementById('step2').style.display = 'none';
     document.getElementById('step1').style.display = 'block';
     updateProgress(1, 3);
+    scrollToTop();
 }
 
 function goToStep2() {
@@ -177,6 +235,7 @@ function goToStep2() {
     document.getElementById('step1').style.display = 'none';
     document.getElementById('step2').style.display = 'block';
     updateProgress(2, 3);
+    scrollToTop();
 }
 
 function updateProgress(step, total) {
@@ -293,6 +352,8 @@ function toggleDonationInfo() {
 
 // ========================================
 // FORM SUBMISSION
+// ✅ FIX #2: VIP Submission Bug Fix
+// ✅ FIX #4: Loading Spinner Restored
 // ========================================
 
 // Setup form submission
@@ -327,6 +388,15 @@ function handleFormSubmit(event) {
         }
     }
     
+    // ✅ FIX #4: Show loading spinner & disable submit button
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    loadingOverlay.classList.add('active');
+    submitBtn.disabled = true;
+    submitBtn.style.opacity = '0.5';
+    submitBtn.style.cursor = 'not-allowed';
+    
     // Collect all form data
     const formData = {
         // Selected game date from Step 0
@@ -358,9 +428,6 @@ function handleFormSubmit(event) {
             .map(cb => cb.value)
     };
     
-    // Show loading
-    document.getElementById('loadingOverlay').style.display = 'flex';
-    
     // Submit to Google Apps Script
     submitToGoogleScript(formData);
 }
@@ -382,14 +449,23 @@ async function submitToGoogleScript(formData) {
         
     } catch (error) {
         console.error('Submission error:', error);
-        document.getElementById('loadingOverlay').style.display = 'none';
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        loadingOverlay.classList.remove('active');
+        submitBtn.disabled = false;
+        submitBtn.style.opacity = '1';
+        submitBtn.style.cursor = 'pointer';
+        
         alert('There was an error submitting your signup. Please try again or contact us directly.');
     }
 }
 
+// ✅ FIX #5: Enhanced Confirmation Message Emphasis
 function showConfirmation(formData) {
     // Hide loading
-    document.getElementById('loadingOverlay').style.display = 'none';
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    loadingOverlay.classList.remove('active');
     
     // Hide Step 2
     document.getElementById('step2').style.display = 'none';
@@ -405,7 +481,7 @@ function showConfirmation(formData) {
     
     document.getElementById('confirmationMessage').textContent = message;
     
-    // Add confirmation details
+    // Add confirmation details with ENHANCED email emphasis
     const timeSlots = Array.isArray(formData.timeSlot) 
         ? formData.timeSlot.join(', ') 
         : formData.timeSlot;
@@ -418,15 +494,31 @@ function showConfirmation(formData) {
             <p style="margin: 8px 0;"><strong>Courts:</strong> ${formData.selectedCourts}</p>
             <p style="margin: 8px 0;"><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
         </div>
-        <p style="margin-top: 20px; font-size: 14px; color: rgba(255,255,255,0.7);">
-            A confirmation email with payment details has been sent to ${formData.email}
-        </p>
+        
+        <div style="background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 229, 0, 0.2)); 
+                    border: 3px solid #FFE500; 
+                    padding: 24px; 
+                    border-radius: 12px; 
+                    margin: 24px 0;
+                    box-shadow: 0 8px 24px rgba(255, 229, 0, 0.3);">
+            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
+                <span style="font-size: 32px;">📧</span>
+                <h3 style="margin: 0; color: #FFE500; font-size: 20px; font-weight: 800;">CHECK YOUR EMAIL</h3>
+            </div>
+            <p style="margin: 8px 0; font-size: 16px; font-weight: 700; color: #ffffff; line-height: 1.6;">
+                A confirmation email with payment details has been sent to:<br>
+                <span style="color: #FFE500; font-size: 18px;">${formData.email}</span>
+            </p>
+            <p style="margin: 16px 0 0 0; font-size: 15px; color: rgba(255, 255, 255, 0.9); font-weight: 600;">
+                ⚠️ <strong>Payment is required within 24 hours to secure your Sunday spot.</strong>
+            </p>
+        </div>
     `;
     
     document.getElementById('confirmationDetails').innerHTML = detailsHTML;
     
     // Scroll to top
-    window.scrollTo(0, 0);
+    scrollToTop();
 }
 
 // ========================================
@@ -442,5 +534,5 @@ function scrollToTop() {
 }
 
 // Log for debugging
-console.log('Pickleball Form Script v3.0 Loaded with Date Picker');
+console.log('Pickleball Form Script v3.1 UPDATED - All Fixes Applied');
 console.log('Script URL:', SCRIPT_URL);
