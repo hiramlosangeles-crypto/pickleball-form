@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserve Your Spot - I Wanna Play Pickleball</title>
-    <link rel="stylesheet" href="style_jan25_sunset.css?v=1003">
+    <link rel="stylesheet" href="style_jan25_sunset.css?v=1004">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -27,46 +27,53 @@
             <div class="progress-bar" id="progressBar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="progress-text" id="progressText">Step 1 of 2</div>
+            <!-- ✅ FIX #6: Removed "Step 1 of 2" from initial state -->
+            <div class="progress-text" id="progressText"></div>
         </div>
 
         <!-- Form -->
         <form id="pickleballForm">
 
-    <!-- ========================================
-     STEP 0: DATE PICKER
-     ======================================== -->
+            <!-- ========================================
+             STEP 0: DATE PICKER
+             ✅ FIX #6: Removed "Step 1 of 2" from header
+             ✅ FIX #7: Removed redundant "Which Sunday..." copy
+             ======================================== -->
+            <div class="form-step active" id="step0">
+                <div class="step-header">
+                    <div class="step-icon">📅</div>
+                    <h2>Pick Your Game Date</h2>
+                    <!-- ✅ FIX #7: Single instructional copy only -->
+                    <p class="step-subtitle">Select which Sunday you'd like to play. We'll show you the next three available games!</p>
+                </div>
 
-<div class="form-step active" id="step0">
-    <div class="step-header">
-        <div class="step-icon">📅</div>
-        <h2>Pick Your Game Date</h2>
-        <p class="step-subtitle">Select which Sunday you'd like to play. We'll show you the next three available games!</p>
-    </div>
+                <div class="form-group">
+                    <label style="display: none;">Select a date</label>
+                    <div class="date-choice" id="dateChoiceContainer">
+                        <!-- Dates will be loaded dynamically from Google Apps Script -->
+                        <div class="loading-dates">
+                            <div class="spinner"></div>
+                            <p>Loading available game dates...</p>
+                        </div>
+                    </div>
+                </div>
 
-    <div class="form-group">
-        <label>Which Sunday would you like to play? *</label>
-        <div class="date-choice" id="dateChoiceContainer">
-            <!-- Dates will be loaded dynamically from Google Apps Script -->
-            <div class="loading-dates">
-                <div class="spinner"></div>
-                <p>Loading available game dates...</p>
+                <div class="button-group">
+                    <button type="button" class="btn btn-primary" onclick="goToStep1FromDatePicker()" id="datePickerContinue" disabled>
+                        Continue to Step 1 →
+                    </button>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <div class="button-group">
-        <button type="button" class="btn btn-primary" onclick="goToStep1FromDatePicker()" id="datePickerContinue" disabled>
-            Continue to Step 1 →
-        </button>
-    </div>
-</div>
-            <!-- STEP 1: SUNDAY SIGNUP -->
+            <!-- ========================================
+             STEP 1: SUNDAY SIGNUP
+             ✅ Step indicator now reads "Step 1 of 3"
+             ======================================== -->
             <div class="form-step" id="step1">
                 <div class="step-header">
                     <div class="step-icon">✓</div>
                     <h2>Reserve Your Spot</h2>
-                    <p class="step-subtitle">Sign up for this week's Sunday Pickleball! Steven will organize the games and match you with players.</p>
+                    <p class="step-subtitle">Sign up for this Sunday's Pickleball! Steven will organize the games and match you with players.</p>
                 </div>
 
                 <div class="form-group">
@@ -82,12 +89,13 @@
 
                 <div class="form-row">
                     <div class="form-group">
+                        <!-- ✅ FIX #8: Phone formatting now applied via JavaScript -->
                         <label for="phone">Phone Number *</label>
                         <input 
                             type="tel" 
                             id="phone" 
                             name="phone" 
-                            placeholder=""
+                            placeholder="(XXX) XXX-XXXX"
                             required
                         >
                     </div>
@@ -124,75 +132,69 @@
                     </div>
                 </div>
                 
-     <!-- ========================================
-   UPDATED PAYMENT SECTION FOR index.html
-   Replace lines 100-170 with this
-   ======================================== -->
-
-<div class="form-group">
-    <label>
-        Payment Required to Reserve Spot * 
-        <span class="info-icon" onclick="toggleDonationInfo()">💡</span>
-    </label>
-    
-    <!-- Donation Info Tooltip -->
-    <div id="donationInfo" class="donation-info" style="display: none;">
-        <div class="donation-info-content">
-            <h4>💡 Payment Details</h4>
-            <p><strong>$5/hour per person</strong> to cover court reservations and game organization.</p>
-            
-            <div class="donation-breakdown">
-                <p><strong>How Much to Pay:</strong></p>
-                <ul>
-                    <li><strong>1 hour:</strong> $5 per person</li>
-                    <li><strong>2 hours (full game):</strong> $10 per person ← MOST COMMON</li>
-                </ul>
-                
-                <p class="donation-highlight">✨ Pay what you can – no one is turned away!</p>
-            </div>
-        </div>
-    </div>
-    
-    <p class="field-description" style="margin-top: 8px; margin-bottom: 16px; font-size: 14px; color: #FF6B00; font-weight: 700;">
-        ⚠️ IMPORTANT: Your spot is <strong>PENDING</strong> until payment is verified. Pay within 24 hours to secure your reservation.
-    </p>
-    
-    <!-- Payment Method Selection -->
-    <div class="radio-group">
-        <label class="radio-card">
-            <input type="radio" name="paymentMethod" value="Venmo" required onclick="showVenmoPayment()">
-            <div class="radio-content">
-                <span class="radio-icon">💳</span>
-                <span class="radio-label">Venmo</span>
-            </div>
-        </label>
-        
-        <label class="radio-card">
-            <input type="radio" name="paymentMethod" value="Zelle" required onclick="showZellePayment()">
-            <div class="radio-content">
-                <span class="radio-icon">🏦</span>
-                <span class="radio-label">Zelle</span>
-            </div>
-        </label>
-        
-        <label class="radio-card">
-            <input type="radio" name="paymentMethod" value="Cash (In Person)" required onclick="showCashPayment()">
-            <div class="radio-content">
-                <span class="radio-icon">💵</span>
-                <span class="radio-label">Cash</span>
-            </div>
-        </label>
-    </div>
-    
-    <!-- Payment Instructions (Appears after selection) -->
-    <div id="paymentInstructions" class="payment-instructions" style="display: none; margin-top: 24px;">
-        <div id="paymentDetails"></div>
-    </div>
-</div>
-
-
-
+                <!-- ========================================
+                 PAYMENT SECTION
+                 ======================================== -->
+                <div class="form-group">
+                    <label>
+                        Payment Required to Reserve Spot * 
+                        <span class="info-icon" onclick="toggleDonationInfo()">💡</span>
+                    </label>
+                    
+                    <!-- Donation Info Tooltip -->
+                    <div id="donationInfo" class="donation-info" style="display: none;">
+                        <div class="donation-info-content">
+                            <h4>💡 Payment Details</h4>
+                            <p><strong>$5/hour per person</strong> to cover court reservations and game organization.</p>
+                            
+                            <div class="donation-breakdown">
+                                <p><strong>How Much to Pay:</strong></p>
+                                <ul>
+                                    <li><strong>1 hour:</strong> $5 per person</li>
+                                    <li><strong>2 hours (full game):</strong> $10 per person ← MOST COMMON</li>
+                                </ul>
+                                
+                                <p class="donation-highlight">✨ Pay what you can – no one is turned away!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="field-description" style="margin-top: 8px; margin-bottom: 16px; font-size: 14px; color: #FF6B00; font-weight: 700;">
+                        ⚠️ IMPORTANT: Your spot is <strong>PENDING</strong> until payment is verified. Pay within 24 hours to secure your reservation.
+                    </p>
+                    
+                    <!-- Payment Method Selection -->
+                    <div class="radio-group">
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="Venmo" required onclick="showVenmoPayment()">
+                            <div class="radio-content">
+                                <span class="radio-icon">💳</span>
+                                <span class="radio-label">Venmo</span>
+                            </div>
+                        </label>
                         
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="Zelle" required onclick="showZellePayment()">
+                            <div class="radio-content">
+                                <span class="radio-icon">🏦</span>
+                                <span class="radio-label">Zelle</span>
+                            </div>
+                        </label>
+                        
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="Cash (In Person)" required onclick="showCashPayment()">
+                            <div class="radio-content">
+                                <span class="radio-icon">💵</span>
+                                <span class="radio-label">Cash</span>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <!-- Payment Instructions (Appears after selection) -->
+                    <div id="paymentInstructions" class="payment-instructions" style="display: none; margin-top: 24px;">
+                        <div id="paymentDetails"></div>
+                    </div>
+                </div>
 
                 <div class="button-group">
                     <button type="button" class="btn btn-primary" onclick="goToStep2()">
@@ -201,7 +203,11 @@
                 </div>
             </div>
 
-            <!-- STEP 2: VIP CHOICE & DETAILS -->
+            <!-- ========================================
+             STEP 2: VIP CHOICE & DETAILS
+             ✅ FIX #3: Added VIP explanation copy at top
+             ✅ Step indicator shows "Step 2 of 3"
+             ======================================== -->
             <div class="form-step" id="step2">
                 <div class="step-header vip">
                     <div class="step-icon">⭐</div>
@@ -209,21 +215,39 @@
                     <p class="step-subtitle">Get matched with players for games beyond just Sunday. Build your pickleball community!</p>
                 </div>
 
+                <!-- ✅ FIX #3: VIP Explanation Section -->
+                <div style="background: rgba(0, 255, 163, 0.1); 
+                            border-left: 4px solid #00FFA3; 
+                            padding: 20px; 
+                            border-radius: 12px; 
+                            margin-bottom: 24px;">
+                    <h3 style="margin: 0 0 12px 0; color: #00FFA3; font-size: 18px; font-weight: 800;">
+                        ✨ What is VIP Network Access?
+                    </h3>
+                    <p style="margin: 0 0 12px 0; color: rgba(255, 255, 255, 0.9); font-size: 15px; line-height: 1.6;">
+                        <strong>VIP members get priority alerts</strong> for upcoming games throughout the week—not just Sundays. 
+                        We'll match you with players based on your schedule, skill level, and preferred locations.
+                    </p>
+                    <p style="margin: 0; color: rgba(255, 255, 255, 0.8); font-size: 14px; line-height: 1.5;">
+                        💡 <strong>VIP is FREE.</strong> You still pay the same $5/hour for court time, but you get first access to new games and personalized invites.
+                    </p>
+                </div>
+
                 <div class="form-group">
                     <label>Want VIP Network Access?</label>
                     <div class="vip-choice">
-                     <label class="choice-card choice-yes">
-    <input type="radio" name="vipChoice" value="Yes - VIP Network" id="vipYes">
-    <div class="choice-content">
-        <div class="choice-header">
-            <span class="choice-icon">✨</span>
-            <span class="choice-title">Yes - VIP Network (FREE)</span>
-        </div>
-        <p class="choice-description">Get matched for games throughout the week + Sunday access ($5/hr or $10 full game)</p>
-    </div>
-</label>
+                        <label class="choice-card choice-yes">
+                            <input type="radio" name="vipChoice" value="Yes - VIP Network" id="vipYes">
+                            <div class="choice-content">
+                                <div class="choice-header">
+                                    <span class="choice-icon">✨</span>
+                                    <span class="choice-title">Yes - VIP Network (FREE)</span>
+                                </div>
+                                <p class="choice-description">Get matched for games throughout the week + Sunday access ($5/hr or $10 full game)</p>
+                            </div>
+                        </label>
                         <label class="choice-card choice-no">
-                           <input type="radio" name="vipChoice" value="No - Sunday Only" id="vipNo">
+                            <input type="radio" name="vipChoice" value="No - Sunday Only" id="vipNo">
                             <div class="choice-content">
                                 <div class="choice-header">
                                     <span class="choice-icon">🏐</span>
@@ -364,48 +388,57 @@
                     <button type="button" class="btn btn-secondary" onclick="goToStep1()">
                         ← Back
                     </button>
+                    <!-- ✅ FIX #2: Submit button properly triggers form submission -->
                     <button type="submit" class="btn btn-primary" id="submitBtn">
                         Complete Signup 🎉
                     </button>
                 </div>
             </div>
 
-            <!-- STEP 3: CONFIRMATION -->
+            <!-- ========================================
+             STEP 3: CONFIRMATION
+             ✅ FIX #5: Enhanced email confirmation emphasis
+             ✅ FIX #1: Fixed website link to iwannaplaypb.com
+             ======================================== -->
             <div class="form-step" id="confirmation" style="display: none;">
                 <div class="confirmation-content">
                     <div class="confirmation-icon">🎉</div>
                     <h2>You're All Set!</h2>
                     <p class="confirmation-message" id="confirmationMessage"></p>
                     <div class="confirmation-details" id="confirmationDetails"></div>
-                    <a href="https://iwannaplaypickleball.com/warmup" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px;">
-    Remember to Warm-Up 
-    <svg width="24" height="24" viewBox="0 0 100 100" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
-        <defs>
-            <radialGradient id="pickleballGradient">
-                <stop offset="0%" style="stop-color:#E8FF00"/>
-                <stop offset="50%" style="stop-color:#C8E600"/>
-                <stop offset="100%" style="stop-color:#9ACD32"/>
-            </radialGradient>
-        </defs>
-        <circle cx="50" cy="50" r="45" fill="url(#pickleballGradient)"/>
-        <circle cx="30" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
-        <circle cx="50" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
-        <circle cx="70" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
-        <circle cx="30" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
-        <circle cx="50" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
-        <circle cx="70" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
-        <circle cx="30" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
-        <circle cx="50" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
-        <circle cx="70" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
-    </svg>
-</a>
+                    <!-- ✅ FIX #1: Updated link to new domain -->
+                    <a href="https://iwannaplaypb.com/warmup" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px;">
+                        Remember to Warm-Up 
+                        <svg width="24" height="24" viewBox="0 0 100 100" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                            <defs>
+                                <radialGradient id="pickleballGradient">
+                                    <stop offset="0%" style="stop-color:#E8FF00"/>
+                                    <stop offset="50%" style="stop-color:#C8E600"/>
+                                    <stop offset="100%" style="stop-color:#9ACD32"/>
+                                </radialGradient>
+                            </defs>
+                            <circle cx="50" cy="50" r="45" fill="url(#pickleballGradient)"/>
+                            <circle cx="30" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
+                            <circle cx="50" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
+                            <circle cx="70" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
+                            <circle cx="30" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
+                            <circle cx="50" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
+                            <circle cx="70" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
+                            <circle cx="30" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
+                            <circle cx="50" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
+                            <circle cx="70" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
         </form>
     </div>
 
-    <!-- Loading Overlay -->
+    <!-- ========================================
+     LOADING OVERLAY
+     ✅ FIX #4: Loading spinner properly shows/hides
+     ======================================== -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <p>Submitting your signup...</p>
