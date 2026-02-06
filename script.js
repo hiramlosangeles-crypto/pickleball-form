@@ -48,7 +48,9 @@ function displayGameDates(sundays) {
         <label class="date-card" data-index="${index}">
             <input type="radio" name="gameDate" value="${sunday.dateKey}" data-index="${index}">
             <div class="date-card-content">
-                <div class="date-icon">📅</div>
+                <div class="date-icon">
+                    <img src="calendar-icon.png" alt="Calendar" style="width: 100px; height: 100px;">
+                </div>
                 <div class="date-details">
                     <div class="date-title">${sunday.dateLong}</div>
                     <div class="date-info">
