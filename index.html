@@ -5,25 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserve Your Spot - I Wanna Play Pickleball</title>
     
-    <!-- ✅ OPEN GRAPH META TAGS FOR LINK PREVIEWS -->
+    <!-- ✅ OPEN GRAPH META TAGS - For beautiful link previews in iMessage, WhatsApp, etc. -->
     <meta property="og:title" content="Reserve Your Spot - I Wanna Play Pickleball">
-    <meta property="og:description" content="Join us for Sunday pickleball games at Plummer Park! Sign up now to secure your spot.">
-    <meta property="og:image" content="https://hiramlosangeles-crypto.github.io/pickleball-form/og-image.jpg">
+    <meta property="og:description" content="Join us for Sunday pickleball games at Plummer Park! Sign up now to secure your spot and connect with players.">
+    <meta property="og:image" content="https://hiramlosangeles-crypto.github.io/pickleball-form/og-image-banner.jpg">
     <meta property="og:url" content="https://hiramlosangeles-crypto.github.io/pickleball-form/">
     <meta property="og:type" content="website">
+    <meta property="og:site_name" content="I Wanna Play Pickleball">
     
-    <!-- ✅ TWITTER CARD META TAGS (for better previews) -->
+    <!-- ✅ TWITTER CARD META TAGS - For Twitter/X link previews -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Reserve Your Spot - I Wanna Play Pickleball">
     <meta name="twitter:description" content="Join us for Sunday pickleball games at Plummer Park!">
-    <meta name="twitter:image" content="https://hiramlosangeles-crypto.github.io/pickleball-form/og-image.jpg">
+    <meta name="twitter:image" content="https://hiramlosangeles-crypto.github.io/pickleball-form/og-image-banner.jpg">
     
-    <!-- ✅ FAVICON (shows in browser tab) -->
-    <link rel="icon" type="image/png" href="favicon.png">
-    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <!-- ✅ FAVICON - Shows in browser tab and bookmarks -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
     <link rel="stylesheet" href="style_jan25_sunset.css?v=1004">
-    ...
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Hero Banner (Desktop Only) -->
@@ -57,7 +61,9 @@
              ======================================== -->
             <div class="form-step active" id="step0">
                 <div class="step-header">
-                    <div class="step-icon">📅</div>
+                    <div class="step-icon">
+                        <img src="calendar-icon.png" alt="Calendar" style="width: 80px; height: 80px;">
+                    </div>
                     <h2>Pick Your Game Date</h2>
                     <!-- ✅ FIX #7: Single instructional copy only -->
                     <p class="step-subtitle">Select which Sunday you'd like to play. We'll show you the next three available games!</p>
@@ -414,7 +420,7 @@
             <!-- ========================================
              STEP 3: CONFIRMATION
              ✅ FIX #5: Enhanced email confirmation emphasis
-             ✅ FIX #1: Fixed website link to iwannaplaypb.com
+             ✅ FIX #1: Fixed website link to iwannaplaypickleball.com
              ======================================== -->
             <div class="form-step" id="confirmation" style="display: none;">
                 <div class="confirmation-content">
@@ -423,7 +429,7 @@
                     <p class="confirmation-message" id="confirmationMessage"></p>
                     <div class="confirmation-details" id="confirmationDetails"></div>
                     <!-- ✅ FIX #1: Updated link to new domain -->
-                    <a href="https://iwannaplaypb.com/warmup" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px;">
+                    <a href="https://iwannaplaypickleball.com/warmup" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px;">
                         Remember to Warm-Up 
                         <svg width="24" height="24" viewBox="0 0 100 100" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
                             <defs>
