@@ -160,8 +160,22 @@
                 <div class="form-group">
                     <label>
                         Payment Required to Reserve Spot * 
-                        <span class="info-icon" onclick="toggleDonationInfo()">💡</span>
                     </label>
+                    
+                    <!-- Pricing Display -->
+                    <div style="background: linear-gradient(135deg, rgba(155, 81, 224, 0.15), rgba(0, 217, 255, 0.15)); border-left: 4px solid #00D9FF; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div>
+                                <p style="margin: 0; font-size: 15px; color: #fff; font-weight: 600;">💰 Pricing</p>
+                                <p style="margin: 6px 0 0 0; font-size: 14px; color: #e0e0e0;">
+                                    <strong style="color: #FFE500;">$5/hour per person</strong> • Most play 2 hours ($10)
+                                </p>
+                            </div>
+                            <button type="button" onclick="toggleDonationInfo()" style="background: rgba(255, 229, 0, 0.2); border: 2px solid #FFE500; color: #FFE500; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap;">
+                                ℹ️ Why $5?
+                            </button>
+                        </div>
+                    </div>
                     
                     <!-- Donation Info Tooltip -->
                     <div id="donationInfo" class="donation-info" style="display: none;">
