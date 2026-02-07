@@ -425,6 +425,7 @@ function handleFormSubmit(event) {
         
         // VIP details (if selected)
         homeCourt: document.getElementById('homeCourt')?.value || '',
+        birthday: document.getElementById('birthday')?.value || '',
         skillLevel: document.querySelector('input[name="skillLevel"]:checked')?.value || '',
         bestDays: Array.from(document.querySelectorAll('input[name="bestDays"]:checked'))
             .map(cb => cb.value),
