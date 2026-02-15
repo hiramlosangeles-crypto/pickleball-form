@@ -251,38 +251,115 @@ function updateProgress(step, total) {
 // ========================================
 
 function setupFormEventListeners() {
-    // VIP choice handlers
-    const vipYes = document.getElementById('vipYes');
-    const vipNo = document.getElementById('vipNo');
+    // Player count handlers - show dynamic name fields AND update Step 2 pricing
+    const playerCount1 = document.getElementById('playerCount1');
+    const playerCount2 = document.getElementById('playerCount2');
     
-    if (vipYes) {
-        vipYes.addEventListener('change', function() {
+    if (playerCount1) {
+        playerCount1.addEventListener('change', function() {
             if (this.checked) {
-                document.getElementById('vipDetails').style.display = 'block';
-                makeVIPFieldsRequired();
+                showNameFields(1);
+                updateStep2Pricing(1); // Update Step 2 display
             }
         });
     }
     
-    if (vipNo) {
-        vipNo.addEventListener('change', function() {
+    if (playerCount2) {
+        playerCount2.addEventListener('change', function() {
             if (this.checked) {
-                document.getElementById('vipDetails').style.display = 'none';
-                makeVIPFieldsOptional();
+                showNameFields(2);
+                updateStep2Pricing(2); // Update Step 2 display
+            }
+        });
+    }
+    
+    // Priority Alerts checkbox handler
+    const priorityAlertsCheckbox = document.getElementById('priorityAlertsCheckbox');
+    
+    if (priorityAlertsCheckbox) {
+        priorityAlertsCheckbox.addEventListener('change', function() {
+            const details = document.getElementById('priorityAlertsDetails');
+            if (this.checked) {
+                details.style.display = 'block';
+                makePriorityAlertsFieldsRequired();
+            } else {
+                details.style.display = 'none';
+                makePriorityAlertsFieldsOptional();
             }
         });
     }
 }
 
-function makeVIPFieldsRequired() {
+// Update Step 2 pricing display based on player count
+function updateStep2Pricing(playerCount) {
+    const priceDisplay = document.getElementById('sundayGamePrice');
+    if (!priceDisplay) return;
+    
+    const amount = playerCount * 10;
+    const peopleText = playerCount === 1 ? '1 person' : '2 people';
+    
+    priceDisplay.innerHTML = `
+        <h3 style="margin: 0 0 8px 0; color: #D946EF; font-size: 22px; font-weight: 800;">
+            $${amount} Sunday Game for ${peopleText}
+        </h3>
+        <p style="margin: 0; color: rgba(255, 255, 255, 0.7); font-size: 14px;">
+            Full 2-hour game • 7:00 – 9:00 PM
+        </p>
+    `;
+}
+
+// Make Priority Alerts fields required
+function makePriorityAlertsFieldsRequired() {
     document.getElementById('homeCourt').required = true;
-    // Note: Checkboxes can't use required attribute properly
-    // Validation happens in handleFormSubmit instead
+    // Validation for skill level, best days, best times happens in form submission
 }
 
-function makeVIPFieldsOptional() {
+// Make Priority Alerts fields optional
+function makePriorityAlertsFieldsOptional() {
     document.getElementById('homeCourt').required = false;
-    // No need to set required on checkboxes
+}
+
+// Show dynamic name fields based on player count
+function showNameFields(count) {
+    const container = document.getElementById('nameFieldsContainer');
+    
+    if (count === 1) {
+        container.innerHTML = `
+            <div class="form-group">
+                <label for="playerName">Enter your First and Last name *</label>
+                <input 
+                    type="text" 
+                    id="playerName" 
+                    name="playerName" 
+                    placeholder="First and Last name"
+                    required
+                >
+            </div>
+        `;
+    } else if (count === 2) {
+        container.innerHTML = `
+            <div class="form-group">
+                <label for="player1Name">Player 1 – First and Last name *</label>
+                <input 
+                    type="text" 
+                    id="player1Name" 
+                    name="player1Name" 
+                    placeholder="First and Last name"
+                    required
+                >
+            </div>
+            <div class="form-group">
+                <label for="player2Name">Player 2 – First and Last name *</label>
+                <input 
+                    type="text" 
+                    id="player2Name" 
+                    name="player2Name" 
+                    placeholder="First and Last name"
+                    required
+                >
+            </div>
+        `;
+    }
 }
 
 // ========================================
@@ -364,10 +441,17 @@ function handleFormSubmit(event) {
         return;
     }
     
-    // Validate VIP fields if VIP selected
-    const vipChoice = document.querySelector('input[name="vipChoice"]:checked')?.value;
+    // Validate player count selection
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value;
+    if (!playerCount) {
+        alert('Please select how many people you are signing up for');
+        return;
+    }
     
-    if (vipChoice === 'Yes - VIP Network') {
+    // Validate Priority Alerts fields if checkbox is checked
+    const priorityAlertsChecked = document.getElementById('priorityAlertsCheckbox')?.checked;
+    
+    if (priorityAlertsChecked) {
         const homeCourt = document.getElementById('homeCourt').value.trim();
         const skillLevel = document.querySelector('input[name="skillLevel"]:checked');
         const bestDays = document.querySelectorAll('input[name="bestDays"]:checked');
@@ -401,31 +485,48 @@ function handleFormSubmit(event) {
     submitBtn.style.opacity = '0.5';
     submitBtn.style.cursor = 'not-allowed';
     
+    // Collect names based on player count
+    let names = '';
+    if (playerCount === '1') {
+        names = document.getElementById('playerName').value;
+    } else if (playerCount === '2') {
+        const player1 = document.getElementById('player1Name').value;
+        const player2 = document.getElementById('player2Name').value;
+        names = `${player1} & ${player2}`;
+    }
+    
+    // Calculate payment amount: $10 per person
+    const amountDue = parseInt(playerCount) * 10;
+    
     // Collect all form data
     const formData = {
         // Selected game date from Step 0
         selectedGameDate: selectedGameData.dateLong,
-        selectedCourts: 'COURTS ' + selectedGameData.courts,
+        selectedCourts: 'Courts: TBD',  // ✅ Changed from specific courts
         selectedDateKey: selectedGameData.dateKey,
         
         // User info from Step 1
-        names: document.getElementById('names').value,
+        playerCount: playerCount,
+        names: names,
         phone: document.getElementById('phone').value,
         email: document.getElementById('email').value,
         
-        // Time slots
-        timeSlot: Array.from(document.querySelectorAll('input[name="timeSlot"]:checked'))
-            .map(cb => cb.value),
+        // Time slots - always full 2-hour game now
+        timeSlot: '7:00 – 9:00 PM',
+        
+        // Payment amount
+        paymentHours: 2,
+        paymentAmount: amountDue,
         
         // Payment method
         paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
         
-        // VIP choice from Step 2
-        vipChoice: vipChoice || 'No - Sunday Only',
+        // Priority Alerts from Step 2
+        priorityAlerts: priorityAlertsChecked ? 'Yes' : 'No',
+        vipChoice: priorityAlertsChecked ? 'Yes - Priority Alerts' : 'No - Sunday Only', // For backend compatibility
         
-        // VIP details (if selected)
+        // Priority Alerts details (if enrolled)
         homeCourt: document.getElementById('homeCourt')?.value || '',
-        birthday: document.getElementById('birthday')?.value || '',
         skillLevel: document.querySelector('input[name="skillLevel"]:checked')?.value || '',
         bestDays: Array.from(document.querySelectorAll('input[name="bestDays"]:checked'))
             .map(cb => cb.value),
