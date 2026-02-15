@@ -212,19 +212,39 @@ function goToStep1() {
 
 function goToStep2() {
     // Validate Step 1 fields
-    const names = document.getElementById('names').value;
+    const playerCount = document.querySelector('input[name="playerCount"]:checked');
     const phone = document.getElementById('phone').value;
     const email = document.getElementById('email').value;
-    const timeSlots = document.querySelectorAll('input[name="timeSlot"]:checked');
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
     
-    if (!names || !phone || !email) {
-        alert('Please fill in all required fields');
+    // Check player count
+    if (!playerCount) {
+        alert('Please select how many people you are signing up for');
         return;
     }
     
-    if (timeSlots.length === 0) {
-        alert('Please select at least one time slot');
+    // Check names based on player count
+    let namesValid = false;
+    if (playerCount.value === '1') {
+        const playerName = document.getElementById('playerName');
+        namesValid = playerName && playerName.value.trim() !== '';
+        if (!namesValid) {
+            alert('Please enter your name');
+            return;
+        }
+    } else if (playerCount.value === '2') {
+        const player1Name = document.getElementById('player1Name');
+        const player2Name = document.getElementById('player2Name');
+        namesValid = player1Name && player1Name.value.trim() !== '' && 
+                     player2Name && player2Name.value.trim() !== '';
+        if (!namesValid) {
+            alert('Please enter both player names');
+            return;
+        }
+    }
+    
+    if (!phone || !email) {
+        alert('Please fill in phone and email');
         return;
     }
     
@@ -260,6 +280,7 @@ function setupFormEventListeners() {
             if (this.checked) {
                 showNameFields(1);
                 updateStep2Pricing(1); // Update Step 2 display
+                updatePaymentDisplay(); // Update payment amount if payment method already selected
             }
         });
     }
@@ -269,6 +290,7 @@ function setupFormEventListeners() {
             if (this.checked) {
                 showNameFields(2);
                 updateStep2Pricing(2); // Update Step 2 display
+                updatePaymentDisplay(); // Update payment amount if payment method already selected
             }
         });
     }
@@ -362,17 +384,41 @@ function showNameFields(count) {
     }
 }
 
+// Update payment display when player count changes
+function updatePaymentDisplay() {
+    const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+    if (selectedPayment) {
+        // Re-trigger the selected payment method to update amount
+        if (selectedPayment.value === 'Venmo') {
+            showVenmoPayment();
+        } else if (selectedPayment.value === 'Zelle') {
+            showZellePayment();
+        }
+        // Cash doesn't need updating
+    }
+}
+
 // ========================================
 // PAYMENT METHOD HANDLERS
 // ========================================
 
 function showVenmoPayment() {
+    // Get player count to calculate amount
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
+    const amount = parseInt(playerCount) * 10;
+    
     const instructions = `
         <div class="payment-method-details">
             <h4 style="color: #00D9FF; margin-bottom: 12px;">💳 Pay with Venmo</h4>
             <p><strong>Venmo:</strong> @Steven-Bettencourt-4</p>
-            <p style="margin-top: 8px; font-size: 14px; color: rgba(255,255,255,0.7);">
-                After submitting this form, you'll receive a confirmation email with a direct Venmo payment link.
+            <p style="margin-top: 12px;">
+                <a href="venmo://paycharge?txn=pay&recipients=Steven-Bettencourt-4&amount=${amount}&note=Pickleball%20Sunday%20Game" 
+                   style="display: inline-block; padding: 12px 24px; background: #00D9FF; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                    Pay $${amount} via Venmo →
+                </a>
+            </p>
+            <p style="margin-top: 8px; font-size: 13px; color: rgba(255,255,255,0.6);">
+                Click the button above to open Venmo and pay now. You'll also receive this link via email.
             </p>
         </div>
     `;
@@ -381,12 +427,19 @@ function showVenmoPayment() {
 }
 
 function showZellePayment() {
+    // Get player count to calculate amount
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
+    const amount = parseInt(playerCount) * 10;
+    
     const instructions = `
         <div class="payment-method-details">
             <h4 style="color: #00D9FF; margin-bottom: 12px;">🏦 Pay with Zelle</h4>
             <p><strong>Zelle:</strong> (310) 433-8281</p>
             <p><strong>or</strong> bettencourtdesign@me.com</p>
-            <p style="margin-top: 8px; font-size: 14px; color: rgba(255,255,255,0.7);">
+            <p style="margin-top: 12px; padding: 12px; background: rgba(0, 217, 255, 0.1); border-radius: 8px;">
+                <strong style="color: #00D9FF;">Amount to send: $${amount}</strong>
+            </p>
+            <p style="margin-top: 8px; font-size: 13px; color: rgba(255,255,255,0.6);">
                 Send payment through your bank's Zelle feature to either the phone number or email above.
             </p>
         </div>
