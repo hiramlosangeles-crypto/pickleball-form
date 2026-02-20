@@ -317,7 +317,7 @@ function updateStep2Pricing(playerCount) {
     const priceDisplay = document.getElementById('sundayGamePrice');
     if (!priceDisplay) return;
     
-    const amount = playerCount * 10;
+    const amount = playerCount * 4;
     const peopleText = playerCount === 1 ? '1 person' : '2 people';
     
     priceDisplay.innerHTML = `
@@ -405,7 +405,7 @@ function updatePaymentDisplay() {
 function showVenmoPayment() {
     // Get player count to calculate amount
     const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
-    const amount = parseInt(playerCount) * 10;
+    const amount = parseInt(playerCount) * 4;
     
     const instructions = `
         <div class="payment-method-details">
@@ -429,7 +429,7 @@ function showVenmoPayment() {
 function showZellePayment() {
     // Get player count to calculate amount
     const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
-    const amount = parseInt(playerCount) * 10;
+    const amount = parseInt(playerCount) * 4;
     
     const instructions = `
         <div class="payment-method-details">
@@ -548,8 +548,8 @@ function handleFormSubmit(event) {
         names = `${player1} & ${player2}`;
     }
     
-    // Calculate payment amount: $10 per person
-    const amountDue = parseInt(playerCount) * 10;
+    // Calculate payment amount: $4 per person
+    const amountDue = parseInt(playerCount) * 4;
     
     // Collect all form data
     const formData = {
@@ -628,6 +628,12 @@ function showConfirmation(formData) {
     
     // Hide Step 2
     document.getElementById('step2').style.display = 'none';
+    
+    // Hide progress bar container on final confirmation
+    const progressContainer = document.querySelector('.progress-container');
+    if (progressContainer) {
+        progressContainer.style.display = 'none';
+    }
     
     // Show confirmation
     const confirmationDiv = document.getElementById('confirmation');
