@@ -1,273 +1,257 @@
 // ========================================
-// PICKLEBALL FORM - COMPLETE SCRIPT v3.1 UPDATED
-// With 3-Sunday Date Picker System
-// ALL FIXES APPLIED
+// PICKLEBALL FORM LOGIC v2.0
+// ✅ NEW: Phone Lookup & Auto-Fill
 // ========================================
 
 // ========================================
 // CONFIGURATION
 // ========================================
 
-// ⚠️ IMPORTANT: Replace YOUR_DEPLOYMENT_ID with your actual Google Apps Script deployment ID
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz4LseN1EdsVjG-4gzyAkmEYhO1_7kpP2ghQOYrd75qkql-NmJ6VQu3DBI8B6995FAI/exec';
 
-// Store selected game data
-let selectedGameData = null;
-
 // ========================================
-// DATE PICKER FUNCTIONS
+// ✅ NEW: PHONE LOOKUP & AUTO-FILL
 // ========================================
 
-// Load dates when page loads
-window.addEventListener('DOMContentLoaded', function() {
-    loadGameDates();
-    setupFormEventListeners();
-    setupPhoneFormatting();  // ✅ FIX #8: Phone formatting
+let playerLookupData = null; // Store looked-up player data
+let phoneDebounceTimer = null;
+
+/**
+ * Lookup player by phone number
+ */
+async function lookupPlayerByPhone(phone) {
+    try {
+        // Format phone for consistency
+        const formattedPhone = formatPhoneNumber(phone);
+        
+        // Call Apps Script endpoint
+        const url = `${SCRIPT_URL}?action=lookupPhone&phone=${encodeURIComponent(formattedPhone)}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        return data;
+    } catch (error) {
+        console.error('Phone lookup error:', error);
+        return { found: false };
+    }
+}
+
+/**
+ * Format phone number as (XXX) XXX-XXXX
+ */
+function formatPhoneNumber(phone) {
+    const digits = phone.replace(/\D/g, '');
+    if (digits.length === 10) {
+        return `(${digits.substring(0, 3)}) ${digits.substring(3, 6)}-${digits.substring(6)}`;
+    }
+    return phone;
+}
+
+/**
+ * Handle phone input with debouncing
+ */
+function handlePhoneInput(phoneInput) {
+    clearTimeout(phoneDebounceTimer);
+    
+    const phone = phoneInput.value.trim();
+    const messageDiv = document.getElementById('playerRecognitionMessage');
+    
+    // Hide message while typing
+    if (messageDiv) {
+        messageDiv.style.display = 'none';
+    }
+    
+    // Only lookup if we have at least 10 digits
+    const digits = phone.replace(/\D/g, '');
+    if (digits.length < 10) {
+        playerLookupData = null;
+        return;
+    }
+    
+    // Format phone as user types
+    phoneInput.value = formatPhoneNumber(phone);
+    
+    // Debounce: wait 500ms after user stops typing
+    phoneDebounceTimer = setTimeout(async () => {
+        const result = await lookupPlayerByPhone(phone);
+        
+        if (result.found) {
+            // Store player data
+            playerLookupData = result;
+            
+            // Show welcome message
+            if (messageDiv) {
+                messageDiv.innerHTML = `
+                    <div style="background: rgba(0, 217, 255, 0.1); 
+                                border-left: 4px solid #00D9FF; 
+                                padding: 12px 16px; 
+                                border-radius: 8px; 
+                                margin-top: 12px;">
+                        <strong style="color: #00D9FF;">👋 Welcome back, ${result.firstName}!</strong>
+                        <p style="margin: 4px 0 0 0; font-size: 13px; color: rgba(255,255,255,0.7);">
+                            We've pre-filled your information. You can update anything if needed.
+                        </p>
+                    </div>
+                `;
+                messageDiv.style.display = 'block';
+            }
+            
+        } else {
+            // New player
+            playerLookupData = null;
+            
+            if (messageDiv) {
+                messageDiv.innerHTML = `
+                    <div style="background: rgba(155, 81, 224, 0.1); 
+                                border-left: 4px solid #9B51E0; 
+                                padding: 12px 16px; 
+                                border-radius: 8px; 
+                                margin-top: 12px;">
+                        <strong style="color: #9B51E0;">✨ New player - welcome!</strong>
+                        <p style="margin: 4px 0 0 0; font-size: 13px; color: rgba(255,255,255,0.7);">
+                            Please complete the form below.
+                        </p>
+                    </div>
+                `;
+                messageDiv.style.display = 'block';
+            }
+        }
+    }, 500);
+}
+
+/**
+ * Auto-fill player information when player count changes
+ */
+function autoFillPlayerInfo() {
+    if (!playerLookupData || !playerLookupData.found) return;
+    
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value;
+    
+    if (playerCount === '1') {
+        // Single player - fill name field
+        const nameField = document.getElementById('playerName');
+        if (nameField && !nameField.value) {
+            nameField.value = playerLookupData.fullName;
+        }
+    } else if (playerCount === '2') {
+        // Two players - fill Player 1 fields
+        const player1FirstName = document.getElementById('player1FirstName');
+        const player1LastName = document.getElementById('player1LastName');
+        
+        if (player1FirstName && !player1FirstName.value) {
+            player1FirstName.value = playerLookupData.firstName;
+        }
+        if (player1LastName && !player1LastName.value) {
+            player1LastName.value = playerLookupData.lastName;
+        }
+    }
+    
+    // Always fill email (same for both)
+    const emailField = document.getElementById('email');
+    if (emailField && !emailField.value) {
+        emailField.value = playerLookupData.email;
+    }
+    
+    // Pre-select payment method
+    if (playerLookupData.lastPaymentMethod) {
+        const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+        paymentRadios.forEach(radio => {
+            if (radio.value === playerLookupData.lastPaymentMethod) {
+                radio.checked = true;
+                // Trigger change event to show payment details
+                radio.dispatchEvent(new Event('change'));
+            }
+        });
+    }
+}
+
+// ========================================
+// INITIALIZATION
+// ========================================
+
+document.addEventListener('DOMContentLoaded', async function() {
+    try {
+        await loadUpcomingDates();
+        setupFormEventListeners();
+    } catch (error) {
+        console.error('Initialization error:', error);
+        showError('Failed to load game dates. Please refresh the page.');
+    }
 });
 
-async function loadGameDates() {
+// ========================================
+// LOAD UPCOMING DATES
+// ========================================
+
+async function loadUpcomingDates() {
     try {
         const response = await fetch(`${SCRIPT_URL}?action=getNext3Sundays`);
         const data = await response.json();
         
-        if (data.success) {
-            displayGameDates(data.sundays);
+        if (data.success && data.sundays) {
+            renderDateCards(data.sundays);
         } else {
-            showDateLoadError('Failed to load game dates');
+            throw new Error('Failed to load dates');
         }
     } catch (error) {
         console.error('Error loading dates:', error);
-        showDateLoadError('Unable to load game dates. Please refresh the page.');
+        showError('Unable to load game dates. Please try again later.');
     }
 }
 
-function displayGameDates(sundays) {
-    const container = document.getElementById('dateChoiceContainer');
+function renderDateCards(sundays) {
+    const container = document.getElementById('dateCardsContainer');
+    container.innerHTML = '';
     
-    const html = sundays.map((sunday, index) => `
-        <label class="date-card" data-index="${index}">
-            <input type="radio" name="gameDate" value="${sunday.dateKey}" data-index="${index}">
-            <div class="date-card-content">
-                <div class="date-icon">
-                    <img src="calendar-icon.png" alt="Calendar" style="width: 100px; height: 100px;">
-                </div>
-                <div class="date-details">
-                    <div class="date-title">${sunday.dateLong}</div>
-                    <div class="date-info">
-                        <div class="date-info-row">
-                            <span class="date-info-icon">🕖</span>
-                            <span>${sunday.time}</span>
-                        </div>
-                        <div class="date-info-row">
-                            <span class="date-info-icon">📍</span>
-                            <span>${sunday.location} • Courts ${sunday.courts}</span>
-                        </div>
-                    </div>
-                </div>
+    sundays.forEach((sunday, index) => {
+        const card = document.createElement('div');
+        card.className = 'date-card';
+        card.onclick = () => selectDate(index);
+        
+        card.innerHTML = `
+            <div class="date-card-header">
+                <img src="calendar-icon.png" alt="Calendar" style="width: 100px; height: 100px;">
             </div>
-        </label>
-    `).join('');
-    
-    container.innerHTML = html;
-    
-    // Store sunday data globally
-    window.sundayDates = sundays;
-    
-    // Add click handlers to date cards
-    document.querySelectorAll('.date-card').forEach((card, index) => {
-        card.addEventListener('click', () => selectDate(index));
+            <div class="date-card-body">
+                <div class="date-card-date">${sunday.dateShort}</div>
+                <div class="date-card-time">${sunday.time}</div>
+                <div class="date-card-location">${sunday.location}</div>
+                <div class="date-card-courts">Courts: ${sunday.courts}</div>
+            </div>
+        `;
+        
+        container.appendChild(card);
     });
+    
+    window.availableDates = sundays;
 }
 
 function selectDate(index) {
-    // Remove selected class from all cards
-    document.querySelectorAll('.date-card').forEach(card => {
-        card.classList.remove('selected');
+    document.querySelectorAll('.date-card').forEach((card, i) => {
+        card.classList.toggle('selected', i === index);
     });
     
-    // Add selected class to clicked card
-    const cards = document.querySelectorAll('.date-card');
-    cards[index].classList.add('selected');
+    window.selectedDateIndex = index;
     
-    // Check the radio button
-    const radio = cards[index].querySelector('input[type="radio"]');
-    radio.checked = true;
-    
-    // Store selected game data
-    selectedGameData = window.sundayDates[index];
-    
-    // Enable continue button
-    document.getElementById('datePickerContinue').disabled = false;
+    const continueBtn = document.getElementById('continueDateBtn');
+    continueBtn.disabled = false;
+    continueBtn.style.opacity = '1';
+    continueBtn.style.cursor = 'pointer';
 }
 
-function goToStep1FromDatePicker() {
-    if (!selectedGameData) {
+function continueFromDateSelection() {
+    if (window.selectedDateIndex === undefined) {
         alert('Please select a game date');
         return;
     }
     
-    // Update Step 1 with selected date
-    updateStep1WithSelectedDate();
-    
-    // Hide Step 0, show Step 1
     document.getElementById('step0').style.display = 'none';
     document.getElementById('step1').style.display = 'block';
-    document.getElementById('step1').classList.add('active');
-    
-    // Update progress bar
     updateProgress(1, 3);
-    
-    // ✅ FIX #9: Prevent URL flash - use replaceState instead of pushState
-    if (window.history && window.history.replaceState) {
-        window.history.replaceState(null, '', window.location.pathname);
-    }
-}
-
-function updateStep1WithSelectedDate() {
-    // Update the game details subtitle in Step 1
-    const subtitle = document.querySelector('#step1 .step-subtitle');
-    if (subtitle) {
-        subtitle.innerHTML = `
-            Sign up for this Sunday's Pickleball! Steven will organize the games and match you with players.
-            <br><br>
-            <strong style="color: #FFE500; font-size: 18px;">
-                ${selectedGameData.dateLong} • ${selectedGameData.time}<br>
-                ${selectedGameData.location} · COURTS ${selectedGameData.courts}
-            </strong>
-        `;
-    }
-}
-
-function showDateLoadError(message) {
-    const container = document.getElementById('dateChoiceContainer');
-    container.innerHTML = `
-        <div style="text-align: center; padding: 40px 20px;">
-            <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
-            <p style="font-size: 16px; color: rgba(255, 255, 255, 0.7); margin-bottom: 20px;">${message}</p>
-            <button onclick="loadGameDates()" class="btn btn-secondary">Try Again</button>
-        </div>
-    `;
 }
 
 // ========================================
-// PHONE NUMBER FORMATTING
-// ✅ FIX #8: US Phone Number Formatting (XXX) XXX-XXXX
-// ========================================
-
-function setupPhoneFormatting() {
-    const phoneInput = document.getElementById('phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', formatPhoneNumber);
-        phoneInput.addEventListener('keydown', handlePhoneKeydown);
-    }
-}
-
-function formatPhoneNumber(e) {
-    let value = e.target.value.replace(/\D/g, ''); // Remove all non-digits
-    
-    if (value.length === 0) {
-        e.target.value = '';
-        return;
-    }
-    
-    // Format as (XXX) XXX-XXXX
-    if (value.length <= 3) {
-        e.target.value = `(${value}`;
-    } else if (value.length <= 6) {
-        e.target.value = `(${value.slice(0, 3)}) ${value.slice(3)}`;
-    } else {
-        e.target.value = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
-    }
-}
-
-function handlePhoneKeydown(e) {
-    // Allow backspace, delete, tab, escape, enter
-    if ([8, 9, 13, 27, 46].indexOf(e.keyCode) !== -1 ||
-        // Allow Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-        (e.keyCode === 65 && e.ctrlKey === true) ||
-        (e.keyCode === 67 && e.ctrlKey === true) ||
-        (e.keyCode === 86 && e.ctrlKey === true) ||
-        (e.keyCode === 88 && e.ctrlKey === true) ||
-        // Allow home, end, left, right
-        (e.keyCode >= 35 && e.keyCode <= 39)) {
-        return;
-    }
-    
-    // Prevent input if not a number
-    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-        e.preventDefault();
-    }
-}
-
-// ========================================
-// FORM NAVIGATION FUNCTIONS
-// ========================================
-
-function goToStep1() {
-    document.getElementById('step2').style.display = 'none';
-    document.getElementById('step1').style.display = 'block';
-    updateProgress(1, 3);
-    scrollToTop();
-}
-
-function goToStep2() {
-    // Validate Step 1 fields
-    const playerCount = document.querySelector('input[name="playerCount"]:checked');
-    const phone = document.getElementById('phone').value;
-    const email = document.getElementById('email').value;
-    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
-    
-    // Check player count
-    if (!playerCount) {
-        alert('Please select how many people you are signing up for');
-        return;
-    }
-    
-    // Check names based on player count
-    let namesValid = false;
-    if (playerCount.value === '1') {
-        const playerName = document.getElementById('playerName');
-        namesValid = playerName && playerName.value.trim() !== '';
-        if (!namesValid) {
-            alert('Please enter your name');
-            return;
-        }
-    } else if (playerCount.value === '2') {
-        const player1Name = document.getElementById('player1Name');
-        const player2Name = document.getElementById('player2Name');
-        namesValid = player1Name && player1Name.value.trim() !== '' && 
-                     player2Name && player2Name.value.trim() !== '';
-        if (!namesValid) {
-            alert('Please enter both player names');
-            return;
-        }
-    }
-    
-    if (!phone || !email) {
-        alert('Please fill in phone and email');
-        return;
-    }
-    
-    if (!paymentMethod) {
-        alert('Please select a payment method');
-        return;
-    }
-    
-    // Hide Step 1, show Step 2
-    document.getElementById('step1').style.display = 'none';
-    document.getElementById('step2').style.display = 'block';
-    updateProgress(2, 3);
-    scrollToTop();
-}
-
-function updateProgress(step, total) {
-    const percentage = (step / total) * 100;
-    document.getElementById('progressFill').style.width = percentage + '%';
-    document.getElementById('progressText').textContent = `Step ${step} of ${total}`;
-}
-
-// ========================================
-// VIP CHOICE HANDLERS
+// FORM EVENT LISTENERS
 // ========================================
 
 function setupFormEventListeners() {
@@ -275,140 +259,49 @@ function setupFormEventListeners() {
     const playerCount1 = document.getElementById('playerCount1');
     const playerCount2 = document.getElementById('playerCount2');
     
-    if (playerCount1) {
-        playerCount1.addEventListener('change', function() {
-            if (this.checked) {
-                showNameFields(1);
-                updateStep2Pricing(1); // Update Step 2 display
-                updatePaymentDisplay(); // Update payment amount if payment method already selected
-            }
-        });
+    if (playerCount1) playerCount1.addEventListener('change', handlePlayerCountChange);
+    if (playerCount2) playerCount2.addEventListener('change', handlePlayerCountChange);
+    
+    // Payment method handlers
+    const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+    paymentRadios.forEach(radio => {
+        radio.addEventListener('change', handlePaymentMethodChange);
+    });
+}
+
+function handlePlayerCountChange() {
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value;
+    
+    const singlePlayerFields = document.getElementById('singlePlayerFields');
+    const twoPlayerFields = document.getElementById('twoPlayerFields');
+    const pricingDisplay = document.getElementById('pricingDisplay');
+    
+    if (playerCount === '1') {
+        singlePlayerFields.style.display = 'block';
+        twoPlayerFields.style.display = 'none';
+        pricingDisplay.innerHTML = '<strong style="color: #FFE500;">$4 Sunday Game for 1 person</strong>';
+    } else if (playerCount === '2') {
+        singlePlayerFields.style.display = 'none';
+        twoPlayerFields.style.display = 'block';
+        pricingDisplay.innerHTML = '<strong style="color: #FFE500;">$8 Sunday Game for 2 people</strong>';
     }
     
-    if (playerCount2) {
-        playerCount2.addEventListener('change', function() {
-            if (this.checked) {
-                showNameFields(2);
-                updateStep2Pricing(2); // Update Step 2 display
-                updatePaymentDisplay(); // Update payment amount if payment method already selected
-            }
-        });
-    }
+    // Update payment display amounts
+    updatePaymentDisplay();
     
-    // Priority Alerts checkbox handler
-    const priorityAlertsCheckbox = document.getElementById('priorityAlertsCheckbox');
-    
-    if (priorityAlertsCheckbox) {
-        priorityAlertsCheckbox.addEventListener('change', function() {
-            const details = document.getElementById('priorityAlertsDetails');
-            if (this.checked) {
-                details.style.display = 'block';
-                makePriorityAlertsFieldsRequired();
-            } else {
-                details.style.display = 'none';
-                makePriorityAlertsFieldsOptional();
-            }
-        });
-    }
+    // ✅ NEW: Auto-fill if returning player
+    autoFillPlayerInfo();
 }
 
-// Update Step 2 pricing display based on player count
-function updateStep2Pricing(playerCount) {
-    const priceDisplay = document.getElementById('sundayGamePrice');
-    if (!priceDisplay) return;
-    
-    const amount = playerCount * 4;
-    const peopleText = playerCount === 1 ? '1 person' : '2 people';
-    
-    priceDisplay.innerHTML = `
-        <h3 style="margin: 0 0 8px 0; color: #D946EF; font-size: 22px; font-weight: 800;">
-            $${amount} Sunday Game for ${peopleText}
-        </h3>
-        <p style="margin: 0; color: rgba(255, 255, 255, 0.7); font-size: 14px;">
-            Full 2-hour game • 7:00 – 9:00 PM
-        </p>
-    `;
-}
-
-// Make Priority Alerts fields required
-function makePriorityAlertsFieldsRequired() {
-    document.getElementById('homeCourt').required = true;
-    // Validation for skill level, best days, best times happens in form submission
-}
-
-// Make Priority Alerts fields optional
-function makePriorityAlertsFieldsOptional() {
-    document.getElementById('homeCourt').required = false;
-}
-
-// Show dynamic name fields based on player count
-function showNameFields(count) {
-    const container = document.getElementById('nameFieldsContainer');
-    
-    if (count === 1) {
-        container.innerHTML = `
-            <div class="form-group">
-                <label for="playerName">Enter your First and Last name *</label>
-                <input 
-                    type="text" 
-                    id="playerName" 
-                    name="playerName" 
-                    placeholder="First and Last name"
-                    required
-                >
-            </div>
-        `;
-    } else if (count === 2) {
-        container.innerHTML = `
-            <div class="form-group">
-                <label for="player1Name">Player 1 – First and Last name *</label>
-                <input 
-                    type="text" 
-                    id="player1Name" 
-                    name="player1Name" 
-                    placeholder="First and Last name"
-                    required
-                >
-            </div>
-            <div class="form-group">
-                <label for="player2Name">Player 2 – First and Last name *</label>
-                <input 
-                    type="text" 
-                    id="player2Name" 
-                    name="player2Name" 
-                    placeholder="First and Last name"
-                    required
-                >
-            </div>
-        `;
-    }
-}
-
-// Update payment display when player count changes
 function updatePaymentDisplay() {
-    const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
-    if (selectedPayment) {
-        // Re-trigger the selected payment method to update amount
-        if (selectedPayment.value === 'Venmo') {
-            showVenmoPayment();
-        } else if (selectedPayment.value === 'Zelle') {
-            showZellePayment();
-        }
-        // Cash doesn't need updating
-    }
-}
-
-// ========================================
-// PAYMENT METHOD HANDLERS
-// ========================================
-
-function showVenmoPayment() {
-    // Get player count to calculate amount
     const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
     const amount = parseInt(playerCount) * 4;
     
-    const instructions = `
-        <div class="payment-method-details">
+    // Update Venmo link
+    const venmoDetails = document.querySelector('#paymentDetails .payment-method-details');
+    if (venmoDetails && venmoDetails.innerHTML.includes('Venmo')) {
+        const names = getPlayerNames();
+        venmoDetails.innerHTML = `
             <h4 style="color: #00D9FF; margin-bottom: 12px;">💳 Pay with Venmo</h4>
             <p><strong>Venmo:</strong> @Steven-Bettencourt-4</p>
             <p style="margin-top: 12px;">
@@ -420,284 +313,303 @@ function showVenmoPayment() {
             <p style="margin-top: 8px; font-size: 13px; color: rgba(255,255,255,0.6);">
                 Click the button above to open Venmo and pay now. You'll also receive this link via email.
             </p>
-        </div>
-    `;
-    document.getElementById('paymentDetails').innerHTML = instructions;
-    document.getElementById('paymentInstructions').style.display = 'block';
+        `;
+    }
+    
+    // Update Zelle display
+    const zelleDetails = document.querySelector('#paymentDetails .payment-method-details');
+    if (zelleDetails && zelleDetails.innerHTML.includes('Zelle')) {
+        updateZelleDisplay(amount);
+    }
 }
 
-function showZellePayment() {
-    // Get player count to calculate amount
+function handlePaymentMethodChange(e) {
+    const method = e.target.value;
     const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
     const amount = parseInt(playerCount) * 4;
     
-    const instructions = `
-        <div class="payment-method-details">
-            <h4 style="color: #00D9FF; margin-bottom: 12px;">🏦 Pay with Zelle</h4>
+    let instructions = '';
+    
+    if (method === 'Venmo') {
+        const names = getPlayerNames();
+        instructions = `
+            <div class="payment-method-details">
+                <h4 style="color: #00D9FF; margin-bottom: 12px;">💳 Pay with Venmo</h4>
+                <p><strong>Venmo:</strong> @Steven-Bettencourt-4</p>
+                <p style="margin-top: 12px;">
+                    <a href="venmo://paycharge?txn=pay&recipients=Steven-Bettencourt-4&amount=${amount}&note=Pickleball%20Sunday%20Game" 
+                       style="display: inline-block; padding: 12px 24px; background: #00D9FF; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">
+                        Pay $${amount} via Venmo →
+                    </a>
+                </p>
+                <p style="margin-top: 8px; font-size: 13px; color: rgba(255,255,255,0.6);">
+                    Click the button above to open Venmo and pay now. You'll also receive this link via email.
+                </p>
+            </div>
+        `;
+    } else if (method === 'Zelle') {
+        instructions = `
+            <div class="payment-method-details">
+                <h4 style="color: #FFE500; margin-bottom: 12px;">💳 Pay with Zelle</h4>
+                <div style="background: rgba(255, 229, 0, 0.1); border: 2px solid #FFE500; padding: 16px; border-radius: 8px; margin: 12px 0;">
+                    <p style="margin: 0; font-size: 18px; font-weight: bold; color: #FFE500;">Amount to send: $${amount}</p>
+                </div>
+                <p><strong>Zelle:</strong> (310) 433-8281</p>
+                <p style="margin-top: 4px;"><strong>Or email:</strong> bettencourtdesign@me.com</p>
+                <p style="margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.6);">
+                    Send payment via Zelle to either the phone number or email above. You'll also receive this info via email.
+                </p>
+            </div>
+        `;
+    } else if (method === 'Cash (In Person)') {
+        instructions = `
+            <div class="payment-method-details">
+                <h4 style="color: #00FFA3; margin-bottom: 12px;">💵 Pay Cash In Person</h4>
+                <div style="background: rgba(0, 255, 163, 0.1); border: 2px solid #00FFA3; padding: 16px; border-radius: 8px; margin: 12px 0;">
+                    <p style="margin: 0; font-size: 18px; font-weight: bold; color: #00FFA3;">Bring $${amount} cash to the court</p>
+                </div>
+                <p style="margin-top: 12px;">Please arrive a few minutes early to complete payment before the game starts.</p>
+                <p style="margin-top: 8px; font-size: 13px; color: rgba(255,255,255,0.6);">
+                    You'll receive a reminder email with game details.
+                </p>
+            </div>
+        `;
+    }
+    
+    document.getElementById('paymentDetails').innerHTML = instructions;
+}
+
+function updateZelleDisplay(amount) {
+    const zelleDiv = document.querySelector('#paymentDetails .payment-method-details');
+    if (zelleDiv && zelleDiv.innerHTML.includes('Zelle')) {
+        zelleDiv.innerHTML = `
+            <h4 style="color: #FFE500; margin-bottom: 12px;">💳 Pay with Zelle</h4>
+            <div style="background: rgba(255, 229, 0, 0.1); border: 2px solid #FFE500; padding: 16px; border-radius: 8px; margin: 12px 0;">
+                <p style="margin: 0; font-size: 18px; font-weight: bold; color: #FFE500;">Amount to send: $${amount}</p>
+            </div>
             <p><strong>Zelle:</strong> (310) 433-8281</p>
-            <p><strong>or</strong> bettencourtdesign@me.com</p>
-            <p style="margin-top: 12px; padding: 12px; background: rgba(0, 217, 255, 0.1); border-radius: 8px;">
-                <strong style="color: #00D9FF;">Amount to send: $${amount}</strong>
+            <p style="margin-top: 4px;"><strong>Or email:</strong> bettencourtdesign@me.com</p>
+            <p style="margin-top: 12px; font-size: 13px; color: rgba(255,255,255,0.6);">
+                Send payment via Zelle to either the phone number or email above. You'll also receive this info via email.
             </p>
-            <p style="margin-top: 8px; font-size: 13px; color: rgba(255,255,255,0.6);">
-                Send payment through your bank's Zelle feature to either the phone number or email above.
-            </p>
-        </div>
-    `;
-    document.getElementById('paymentDetails').innerHTML = instructions;
-    document.getElementById('paymentInstructions').style.display = 'block';
-}
-
-function showCashPayment() {
-    const instructions = `
-        <div class="payment-method-details">
-            <h4 style="color: #00D9FF; margin-bottom: 12px;">💵 Pay with Cash</h4>
-            <p>Pay in person at the court before the game starts.</p>
-            <p style="margin-top: 8px; font-size: 14px; color: rgba(255,255,255,0.7);">
-                Please arrive a few minutes early to complete your payment.
-            </p>
-        </div>
-    `;
-    document.getElementById('paymentDetails').innerHTML = instructions;
-    document.getElementById('paymentInstructions').style.display = 'block';
-}
-
-function toggleDonationInfo() {
-    const info = document.getElementById('donationInfo');
-    if (info.style.display === 'none') {
-        info.style.display = 'block';
-    } else {
-        info.style.display = 'none';
+        `;
     }
 }
+
+function getPlayerNames() {
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value;
+    
+    if (playerCount === '1') {
+        return document.getElementById('playerName')?.value || '';
+    } else {
+        const firstName1 = document.getElementById('player1FirstName')?.value || '';
+        const lastName1 = document.getElementById('player1LastName')?.value || '';
+        const firstName2 = document.getElementById('player2FirstName')?.value || '';
+        const lastName2 = document.getElementById('player2LastName')?.value || '';
+        return `${firstName1} ${lastName1} & ${firstName2} ${lastName2}`.trim();
+    }
+}
+
+// ========================================
+// STEP 1 → STEP 2 VALIDATION
+// ========================================
+
+function goToStep2() {
+    // Phone validation (required and 10 digits)
+    const phone = document.getElementById('phone').value.trim();
+    const digits = phone.replace(/\D/g, '');
+    if (digits.length !== 10) {
+        alert('Please enter a valid 10-digit phone number');
+        return;
+    }
+    
+    // Player count validation
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value;
+    if (!playerCount) {
+        alert('Please select how many people are playing');
+        return;
+    }
+    
+    // Name validation
+    if (playerCount === '1') {
+        const playerName = document.getElementById('playerName').value.trim();
+        if (!playerName) {
+            alert('Please enter your name');
+            return;
+        }
+    } else if (playerCount === '2') {
+        const player1FirstName = document.getElementById('player1FirstName').value.trim();
+        const player1LastName = document.getElementById('player1LastName').value.trim();
+        const player2FirstName = document.getElementById('player2FirstName').value.trim();
+        const player2LastName = document.getElementById('player2LastName').value.trim();
+        
+        if (!player1FirstName || !player1LastName || !player2FirstName || !player2LastName) {
+            alert('Please enter both players\' names');
+            return;
+        }
+    }
+    
+    // Email validation
+    const email = document.getElementById('email').value.trim();
+    if (!email || !email.includes('@')) {
+        alert('Please enter a valid email address');
+        return;
+    }
+    
+    // Payment method validation
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked')?.value;
+    if (!paymentMethod) {
+        alert('Please select a payment method');
+        return;
+    }
+    
+    // All validations passed - proceed to Step 2
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+    updateProgress(2, 3);
+}
+
+// ========================================
+// PROGRESS BAR
+// ========================================
+
+function updateProgress(step, total) {
+    const percentage = (step / total) * 100;
+    document.getElementById('progressFill').style.width = percentage + '%';
+    document.getElementById('progressText').textContent = `Step ${step} of ${total}`;
+}
+
+// ========================================
+// PRIORITY ALERTS HANDLERS
+// ========================================
+
+document.getElementById('priorityAlertsCheckbox')?.addEventListener('change', function() {
+    const detailsDiv = document.getElementById('priorityAlertsDetails');
+    detailsDiv.style.display = this.checked ? 'block' : 'none';
+});
 
 // ========================================
 // FORM SUBMISSION
-// ✅ FIX #2: VIP Submission Bug Fix
-// ✅ FIX #4: Loading Spinner Restored
 // ========================================
 
-// Setup form submission
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('pickleballForm');
-    if (form) {
-        form.addEventListener('submit', handleFormSubmit);
-    }
-});
-
-function handleFormSubmit(event) {
+async function submitForm(event) {
     event.preventDefault();
     
-    // Validate we have a selected game date
-    if (!selectedGameData) {
-        alert('Please select a game date');
-        return;
-    }
-    
-    // Validate player count selection
-    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value;
-    if (!playerCount) {
-        alert('Please select how many people you are signing up for');
-        return;
-    }
-    
-    // Validate Priority Alerts fields if checkbox is checked
-    const priorityAlertsChecked = document.getElementById('priorityAlertsCheckbox')?.checked;
-    
-    if (priorityAlertsChecked) {
-        const homeCourt = document.getElementById('homeCourt').value.trim();
-        const skillLevel = document.querySelector('input[name="skillLevel"]:checked');
-        const bestDays = document.querySelectorAll('input[name="bestDays"]:checked');
-        const bestTimes = document.querySelectorAll('input[name="bestTimes"]:checked');
-        
-        // Check each required field
-        if (!homeCourt) {
-            alert('Please enter your Home Court / City');
-            return;
-        }
-        if (!skillLevel) {
-            alert('Please select your Skill Level');
-            return;
-        }
-        if (bestDays.length === 0) {
-            alert('Please select at least one Best Day');
-            return;
-        }
-        if (bestTimes.length === 0) {
-            alert('Please select at least one Best Time');
-            return;
-        }
-    }
-    
-    // ✅ FIX #4: Show loading spinner & disable submit button
     const loadingOverlay = document.getElementById('loadingOverlay');
-    const submitBtn = document.getElementById('submitBtn');
-    
     loadingOverlay.classList.add('active');
-    submitBtn.disabled = true;
-    submitBtn.style.opacity = '0.5';
-    submitBtn.style.cursor = 'not-allowed';
     
-    // Collect names based on player count
-    let names = '';
-    if (playerCount === '1') {
-        names = document.getElementById('playerName').value;
-    } else if (playerCount === '2') {
-        const player1 = document.getElementById('player1Name').value;
-        const player2 = document.getElementById('player2Name').value;
-        names = `${player1} & ${player2}`;
-    }
-    
-    // Calculate payment amount: $4 per person
-    const amountDue = parseInt(playerCount) * 4;
-    
-    // Collect all form data
-    const formData = {
-        // Selected game date from Step 0
-        selectedGameDate: selectedGameData.dateLong,
-        selectedCourts: 'Courts: TBD',  // ✅ Changed from specific courts
-        selectedDateKey: selectedGameData.dateKey,
-        
-        // User info from Step 1
-        playerCount: playerCount,
-        names: names,
-        phone: document.getElementById('phone').value,
-        email: document.getElementById('email').value,
-        
-        // Time slots - always full 2-hour game now
-        timeSlot: '7:00 – 9:00 PM',
-        
-        // Payment amount
-        paymentHours: 2,
-        paymentAmount: amountDue,
-        
-        // Payment method
-        paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
-        
-        // Priority Alerts from Step 2
-        priorityAlerts: priorityAlertsChecked ? 'Yes' : 'No',
-        vipChoice: priorityAlertsChecked ? 'Yes - Priority Alerts' : 'No - Sunday Only', // For backend compatibility
-        
-        // Priority Alerts details (if enrolled)
-        homeCourt: document.getElementById('homeCourt')?.value || '',
-        skillLevel: document.querySelector('input[name="skillLevel"]:checked')?.value || '',
-        bestDays: Array.from(document.querySelectorAll('input[name="bestDays"]:checked'))
-            .map(cb => cb.value),
-        bestTimes: Array.from(document.querySelectorAll('input[name="bestTimes"]:checked'))
-            .map(cb => cb.value)
-    };
-    
-    // Submit to Google Apps Script
-    submitToGoogleScript(formData);
-}
-
-async function submitToGoogleScript(formData) {
     try {
+        const formData = collectFormData();
+        
         const response = await fetch(SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
         });
         
-        // Note: no-cors mode doesn't let us read the response
-        // So we assume success if no error is thrown
-        showConfirmation(formData);
+        const result = await response.json();
+        
+        if (result.success) {
+            showConfirmation(formData);
+        } else {
+            throw new Error(result.error || 'Submission failed');
+        }
         
     } catch (error) {
         console.error('Submission error:', error);
-        const loadingOverlay = document.getElementById('loadingOverlay');
-        const submitBtn = document.getElementById('submitBtn');
-        
         loadingOverlay.classList.remove('active');
-        submitBtn.disabled = false;
-        submitBtn.style.opacity = '1';
-        submitBtn.style.cursor = 'pointer';
-        
-        alert('There was an error submitting your signup. Please try again or contact us directly.');
+        alert('There was an error submitting your form. Please try again or contact support.');
     }
 }
 
-// ✅ FIX #5: Enhanced Confirmation Message Emphasis
+function collectFormData() {
+    const selectedDate = window.availableDates[window.selectedDateIndex];
+    const playerCount = document.querySelector('input[name="playerCount"]:checked').value;
+    
+    let names = '';
+    if (playerCount === '1') {
+        names = document.getElementById('playerName').value.trim();
+    } else {
+        const first1 = document.getElementById('player1FirstName').value.trim();
+        const last1 = document.getElementById('player1LastName').value.trim();
+        const first2 = document.getElementById('player2FirstName').value.trim();
+        const last2 = document.getElementById('player2LastName').value.trim();
+        names = `${first1} ${last1} & ${first2} ${last2}`;
+    }
+    
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+    
+    const priorityAlerts = document.getElementById('priorityAlertsCheckbox').checked;
+    
+    let vipChoice = priorityAlerts ? 'Yes - Priority Alerts' : 'No - Sunday Only';
+    let homeCourt = '';
+    let skillLevel = '';
+    let bestDays = [];
+    let bestTimes = [];
+    
+    if (priorityAlerts) {
+        homeCourt = document.getElementById('homeCourt')?.value || '';
+        skillLevel = document.querySelector('input[name="skillLevel"]:checked')?.value || '';
+        
+        const daysCheckboxes = document.querySelectorAll('input[name="bestDays"]:checked');
+        bestDays = Array.from(daysCheckboxes).map(cb => cb.value);
+        
+        const timesCheckboxes = document.querySelectorAll('input[name="bestTimes"]:checked');
+        bestTimes = Array.from(timesCheckboxes).map(cb => cb.value);
+    }
+    
+    const paymentHours = 2;
+    const paymentAmount = parseInt(playerCount) * 4;
+    
+    return {
+        selectedGameDate: selectedDate.dateLong,
+        selectedCourts: selectedDate.courts,
+        names: names,
+        phone: phone,
+        email: email,
+        timeSlot: ['7:00–8:00 PM', '8:00–9:00 PM'],
+        paymentMethod: paymentMethod,
+        paymentHours: paymentHours,
+        paymentAmount: paymentAmount,
+        vipChoice: vipChoice,
+        homeCourt: homeCourt,
+        skillLevel: skillLevel,
+        bestDays: bestDays,
+        bestTimes: bestTimes,
+        priorityAlerts: priorityAlerts
+    };
+}
+
 function showConfirmation(formData) {
-    // Hide loading
     const loadingOverlay = document.getElementById('loadingOverlay');
     loadingOverlay.classList.remove('active');
     
-    // Hide Step 2
     document.getElementById('step2').style.display = 'none';
     
-    // Hide progress bar container on final confirmation
     const progressContainer = document.querySelector('.progress-container');
     if (progressContainer) {
         progressContainer.style.display = 'none';
     }
     
-    // Show confirmation
     const confirmationDiv = document.getElementById('confirmation');
     confirmationDiv.style.display = 'block';
     
-    // Update confirmation message
-    const message = formData.vipChoice === 'Yes - VIP Network'
-        ? 'Welcome to the VIP Network! Check your email for game details and payment instructions.'
+    const message = formData.priorityAlerts
+        ? 'Welcome to Priority Alerts! Check your email for game details and payment instructions.'
         : 'Thanks for signing up! Check your email for game details and payment instructions.';
     
     document.getElementById('confirmationMessage').textContent = message;
-    
-    // Add confirmation details with ENHANCED email emphasis
-    const timeSlots = Array.isArray(formData.timeSlot) 
-        ? formData.timeSlot.join(', ') 
-        : formData.timeSlot;
-    
-    const detailsHTML = `
-        <div style="background: rgba(155, 81, 224, 0.1); padding: 20px; border-radius: 12px; margin: 20px 0;">
-            <p style="margin: 8px 0;"><strong>Name:</strong> ${formData.names}</p>
-            <p style="margin: 8px 0;"><strong>Game Date:</strong> ${formData.selectedGameDate}</p>
-            <p style="margin: 8px 0;"><strong>Time:</strong> ${timeSlots}</p>
-            <p style="margin: 8px 0;"><strong>Courts:</strong> ${formData.selectedCourts}</p>
-            <p style="margin: 8px 0;"><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
-        </div>
-        
-        <div style="background: linear-gradient(135deg, rgba(255, 107, 0, 0.2), rgba(255, 229, 0, 0.2)); 
-                    border: 3px solid #FFE500; 
-                    padding: 24px; 
-                    border-radius: 12px; 
-                    margin: 24px 0;
-                    box-shadow: 0 8px 24px rgba(255, 229, 0, 0.3);">
-            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                <span style="font-size: 32px;">📧</span>
-                <h3 style="margin: 0; color: #FFE500; font-size: 20px; font-weight: 800;">CHECK YOUR EMAIL</h3>
-            </div>
-            <p style="margin: 8px 0; font-size: 16px; font-weight: 700; color: #ffffff; line-height: 1.6;">
-                A confirmation email with payment details has been sent to:<br>
-                <span style="color: #FFE500; font-size: 18px;">${formData.email}</span>
-            </p>
-            <p style="margin: 16px 0 0 0; font-size: 15px; color: rgba(255, 255, 255, 0.9); font-weight: 600;">
-                ⚠️ <strong>Payment is required within 24 hours to secure your Sunday spot.</strong>
-            </p>
-        </div>
-    `;
-    
-    document.getElementById('confirmationDetails').innerHTML = detailsHTML;
-    
-    // Scroll to top
-    scrollToTop();
 }
 
-// ========================================
-// UTILITY FUNCTIONS
-// ========================================
-
-// Scroll to top helper
-function scrollToTop() {
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+function showError(message) {
+    alert(message);
 }
 
-// Log for debugging
-console.log('Pickleball Form Script v3.1 UPDATED - All Fixes Applied');
-console.log('Script URL:', SCRIPT_URL);
+// Expose functions to global scope for HTML onclick handlers
+window.selectDate = selectDate;
+window.continueFromDateSelection = continueFromDateSelection;
+window.goToStep2 = goToStep2;
+window.submitForm = submitForm;
+window.handlePhoneInput = handlePhoneInput;
