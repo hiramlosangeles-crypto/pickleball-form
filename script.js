@@ -7,7 +7,7 @@
 // CONFIGURATION
 // ========================================
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbhx4cWWSUvfJ3oG-fOxZkhQlL6wQzNYeT8On88UeNX3X_1ywNWCwUR0nBCNSPPgMY/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzhx4eWWSUvfJ3oG-fOxZhQlL8wQzNYeT8On88UeNX3X_1ywNWCwUR0nBCNSPPgMYexec/exec';
 
 // ========================================
 // ✅ NEW: PHONE LOOKUP & AUTO-FILL
