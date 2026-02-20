@@ -4,7 +4,7 @@
 // ========================================
 
 // ========================================
-// CONFIGURATION
+// CONFIGURATION and
 // ========================================
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbhx4cWWSUvfJ3oG-fOxZkhQlL6wQzNYeT8On88UeNX3X_1ywNWCwUR0nBCNSPPgMY/exec';
