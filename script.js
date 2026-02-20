@@ -201,7 +201,7 @@ async function loadUpcomingDates() {
 }
 
 function renderDateCards(sundays) {
-    const container = document.getElementById('dateCardsContainer');
+    const container = document.getElementById('dateChoiceContainer');
     container.innerHTML = '';
     
     sundays.forEach((sunday, index) => {
