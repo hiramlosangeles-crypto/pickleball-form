@@ -7,7 +7,7 @@
 // CONFIGURATION
 // ========================================
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw15_nHUEcro2KXmTyjHhIiXw6BzfhqDDigZLjbSiv4zt9MLs3a6noUP3uutQATJwB1/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz3Vayw7TQJI30UpG7qNwKSWhXmzev_PdSodUb-Mzj6RcbL8QksWTV5pBMrlXtTig/exec;
 
 
 // ========================================
