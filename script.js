@@ -9,7 +9,6 @@
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwBFmuf3MN6YDgqkMhONvFHtXeuw9yNAU_4PwtbBFGN7FlexBjbA6pz3VkoCSbwhkiK/exec';
 
-
 // ========================================
 // ✅ NEW: PHONE LOOKUP & AUTO-FILL
 // ========================================
@@ -202,6 +201,11 @@ async function loadUpcomingDates() {
 
 function renderDateCards(sundays) {
     const container = document.getElementById('dateChoiceContainer');
+    if (!container) {
+        console.error('dateChoiceContainer not found');
+        return;
+    }
+    
     container.innerHTML = '';
     
     sundays.forEach((sunday, index) => {
@@ -213,22 +217,22 @@ function renderDateCards(sundays) {
             <div style="display: flex; align-items: center; gap: 16px; padding: 4px;">
                 <div class="date-card-icon" style="flex-shrink: 0;">
                     <img src="calendar-icon.png" alt="Calendar" style="width: 70px; height: 70px;">
-        </div>
-        <div class="date-card-body" style="flex: 1;">
-            <div class="date-card-date" style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px;">
-                ${sunday.dateLong}
+                </div>
+                <div class="date-card-body" style="flex: 1;">
+                    <div class="date-card-date" style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px;">
+                        ${sunday.dateLong}
+                    </div>
+                    <div class="date-card-time" style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.95); margin-bottom: 4px;">
+                        ⏰ ${sunday.time}
+                    </div>
+                    <div class="date-card-location" style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8);">
+                        📍 ${sunday.location}
+                    </div>
+                    <div class="date-card-courts" style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); margin-top: 2px;">
+                        Courts ${sunday.courts}
+                    </div>
+                </div>
             </div>
-            <div class="date-card-time" style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.95); margin-bottom: 4px;">
-                ⏰ ${sunday.time}
-            </div>
-            <div class="date-card-location" style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8);">
-    📍 ${sunday.location}
-</div>
-<div class="date-card-courts" style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); margin-top: 2px;">
-    Courts ${sunday.courts}
-</div>
-        </div>
-    </div>
         `;
         
         container.appendChild(card);
@@ -238,19 +242,24 @@ function renderDateCards(sundays) {
 }
 
 function selectDate(index) {
+    // Remove selected class from all cards
     document.querySelectorAll('.date-card').forEach((card, i) => {
         card.classList.toggle('selected', i === index);
     });
     
+    // Store selected index
     window.selectedDateIndex = index;
     
-    const continueBtn = document.getElementById('continueDateBtn');
-    continueBtn.disabled = false;
-    continueBtn.style.opacity = '1';
-    continueBtn.style.cursor = 'pointer';
+    // Enable the continue button
+    const continueBtn = document.getElementById('datePickerContinue');
+    if (continueBtn) {
+        continueBtn.disabled = false;
+        continueBtn.style.opacity = '1';
+        continueBtn.style.cursor = 'pointer';
+    }
 }
 
-function continueFromDateSelection() {
+function goToStep1FromDatePicker() {
     if (window.selectedDateIndex === undefined) {
         alert('Please select a game date');
         return;
@@ -480,6 +489,12 @@ function goToStep2() {
     updateProgress(2, 3);
 }
 
+function goToStep1() {
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step1').style.display = 'block';
+    updateProgress(1, 3);
+}
+
 // ========================================
 // PROGRESS BAR
 // ========================================
@@ -618,9 +633,41 @@ function showError(message) {
     alert(message);
 }
 
+function toggleDonationInfo() {
+    const donationInfo = document.getElementById('donationInfo');
+    if (donationInfo.style.display === 'none' || !donationInfo.style.display) {
+        donationInfo.style.display = 'block';
+    } else {
+        donationInfo.style.display = 'none';
+    }
+}
+
+function showVenmoPayment() {
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
+    const amount = parseInt(playerCount) * 4;
+    handlePaymentMethodChange({ target: { value: 'Venmo' } });
+}
+
+function showZellePayment() {
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
+    const amount = parseInt(playerCount) * 4;
+    handlePaymentMethodChange({ target: { value: 'Zelle' } });
+}
+
+function showCashPayment() {
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
+    const amount = parseInt(playerCount) * 4;
+    handlePaymentMethodChange({ target: { value: 'Cash (In Person)' } });
+}
+
 // Expose functions to global scope for HTML onclick handlers
 window.selectDate = selectDate;
-window.continueFromDateSelection = continueFromDateSelection;
+window.goToStep1FromDatePicker = goToStep1FromDatePicker;
 window.goToStep2 = goToStep2;
+window.goToStep1 = goToStep1;
 window.submitForm = submitForm;
 window.handlePhoneInput = handlePhoneInput;
+window.toggleDonationInfo = toggleDonationInfo;
+window.showVenmoPayment = showVenmoPayment;
+window.showZellePayment = showZellePayment;
+window.showCashPayment = showCashPayment;
