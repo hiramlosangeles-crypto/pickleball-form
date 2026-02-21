@@ -222,8 +222,11 @@ function renderDateCards(sundays) {
                 ⏰ ${sunday.time}
             </div>
             <div class="date-card-location" style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8);">
-                📍 ${sunday.location} - Courts ${sunday.courts}
-            </div>
+    📍 ${sunday.location}
+</div>
+<div class="date-card-courts" style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.7); margin-top: 2px;">
+    Courts ${sunday.courts}
+</div>
         </div>
     </div>
         `;
