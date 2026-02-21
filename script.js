@@ -486,6 +486,16 @@ document.getElementById('priorityAlertsCheckbox')?.addEventListener('change', fu
     if (detailsDiv) {
         detailsDiv.style.display = this.checked ? 'block' : 'none';
     }
+    
+    // Update visual checkbox
+    const label = this.parentElement.querySelector('span');
+    if (label) {
+        if (this.checked) {
+            label.innerHTML = label.innerHTML.replace('☐', '☑');
+        } else {
+            label.innerHTML = label.innerHTML.replace('☑', '☐');
+        }
+    }
 });
 
 // ========================================
