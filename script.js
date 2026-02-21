@@ -210,18 +210,18 @@ function renderDateCards(sundays) {
         card.onclick = () => selectDate(index);
         
         card.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 20px;">
-        <div class="date-card-icon">
-            <img src="calendar-icon.png" alt="Calendar" style="width: 80px; height: 80px;">
+            <div style="display: flex; align-items: center; gap: 16px; padding: 4px;">
+                <div class="date-card-icon" style="flex-shrink: 0;">
+                    <img src="calendar-icon.png" alt="Calendar" style="width: 70px; height: 70px;">
         </div>
-        <div class="date-card-body">
-            <div class="date-card-date" style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 8px;">
+        <div class="date-card-body" style="flex: 1;">
+            <div class="date-card-date" style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px;">
                 ${sunday.dateLong}
             </div>
-            <div class="date-card-time" style="font-size: 16px; color: rgba(255,255,255,0.9);">
+            <div class="date-card-time" style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.95); margin-bottom: 4px;">
                 ⏰ ${sunday.time}
             </div>
-            <div class="date-card-location" style="font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px;">
+            <div class="date-card-location" style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8);">
                 📍 ${sunday.location} - Courts ${sunday.courts}
             </div>
         </div>
