@@ -47,8 +47,8 @@
             <div class="progress-bar" id="progressBar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <!-- ✅ FIX #6: Removed "Step 1 of 2" from initial state -->
-            <div class="progress-text" id="progressText"></div>
+            <!-- ✅ FIX: Initialize with Step 0 of 3 -->
+            <div class="progress-text" id="progressText">Step 0 of 3</div>
         </div>
 
         <!-- Form -->
@@ -228,7 +228,7 @@
                 <div class="step-header vip">
                     <div class="step-icon">⭐</div>
                     <h2>Enroll me in Priority Alerts (Free)</h2>
-                    <p class="step-subtitle">Get matched with players for games beyond just Sunday. Build your pickleball community!</p>
+                    <!-- Subtitle removed for clarity -->
                 </div>
 
                 <!-- Priority Alerts Explanation -->
@@ -275,7 +275,7 @@
                                        id="priorityAlertsCheckbox" 
                                        name="priorityAlerts" 
                                        value="yes"
-                                       style="width: 20px; height: 20px; cursor: pointer; margin: 0;">
+                                       style="display: none;">
                                 <span style="color: #00FFA3; font-size: 16px; font-weight: 700; flex: 1;">
                                     ✅ Also enroll me in Priority Alerts (Free)
                                 </span>
