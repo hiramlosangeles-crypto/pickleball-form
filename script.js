@@ -210,15 +210,22 @@ function renderDateCards(sundays) {
         card.onclick = () => selectDate(index);
         
         card.innerHTML = `
-            <div class="date-card-header">
-                <img src="calendar-icon.png" alt="Calendar" style="width: 100px; height: 100px;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+        <div class="date-card-icon">
+            <img src="calendar-icon.png" alt="Calendar" style="width: 80px; height: 80px;">
+        </div>
+        <div class="date-card-body">
+            <div class="date-card-date" style="font-size: 24px; font-weight: 800; color: #fff; margin-bottom: 8px;">
+                ${sunday.dateLong}
             </div>
-            <div class="date-card-body">
-                <div class="date-card-date">${sunday.dateShort}</div>
-                <div class="date-card-time">${sunday.time}</div>
-                <div class="date-card-location">${sunday.location}</div>
-                <div class="date-card-courts">Courts: ${sunday.courts}</div>
+            <div class="date-card-time" style="font-size: 16px; color: rgba(255,255,255,0.9);">
+                ⏰ ${sunday.time}
             </div>
+            <div class="date-card-location" style="font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 4px;">
+                📍 ${sunday.location} - Courts ${sunday.courts}
+            </div>
+        </div>
+    </div>
         `;
         
         container.appendChild(card);
