@@ -593,24 +593,60 @@ function collectFormData() {
 }
 
 function showConfirmation(formData) {
-    const loadingOverlay = document.getElementById('loadingOverlay');
-    loadingOverlay.classList.remove('active');
+    // Hide loading
+    document.getElementById('loadingOverlay').style.display = 'none';
     
+    // Hide all steps
+    document.getElementById('step0').style.display = 'none';
+    document.getElementById('step1').style.display = 'none';
     document.getElementById('step2').style.display = 'none';
     
-    const progressContainer = document.querySelector('.progress-container');
-    if (progressContainer) {
-        progressContainer.style.display = 'none';
-    }
-    
+    // Show confirmation
     const confirmationDiv = document.getElementById('confirmation');
     confirmationDiv.style.display = 'block';
+    confirmationDiv.classList.add('active');
     
-    const message = formData.priorityAlerts
-        ? 'Welcome to Priority Alerts! Check your email for game details and payment instructions.'
-        : 'Thanks for signing up! Check your email for game details and payment instructions.';
+    // Update confirmation message
+    const message = formData.vipChoice === 'Yes - VIP Network'
+        ? 'Welcome to the VIP Network! You\'ll receive personalized game invites.'
+        : 'Thanks for signing up for this Sunday\'s game!';
     
     document.getElementById('confirmationMessage').textContent = message;
+    
+    // Show email address prominently
+    document.getElementById('confirmationEmail').innerHTML = `
+        We sent confirmation to: <strong style="color: #FFE500;">${formData.email}</strong>
+    `;
+    
+    // Add confirmation details
+    const timeSlots = Array.isArray(formData.timeSlot) 
+        ? formData.timeSlot.join(', ') 
+        : formData.timeSlot;
+    
+    const detailsHTML = `
+        <div style="background: rgba(155, 81, 224, 0.1); padding: 24px; border-radius: 12px; margin: 20px 0; border: 2px solid rgba(155, 81, 224, 0.3);">
+            <h3 style="margin: 0 0 16px 0; font-size: 20px; color: #D946EF;">📅 Your Game Details</h3>
+            <p style="margin: 8px 0; font-size: 16px;"><strong>Name:</strong> ${formData.names}</p>
+            <p style="margin: 8px 0; font-size: 16px;"><strong>Game Date:</strong> ${formData.selectedGameDate}</p>
+            <p style="margin: 8px 0; font-size: 16px;"><strong>Time:</strong> ${timeSlots}</p>
+            <p style="margin: 8px 0; font-size: 16px;"><strong>Courts:</strong> ${formData.selectedCourts}</p>
+            <p style="margin: 8px 0; font-size: 16px;"><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
+        </div>
+        
+        <div style="background: rgba(255, 107, 0, 0.1); padding: 20px; border-radius: 8px; border-left: 4px solid #FF6B00;">
+            <p style="margin: 0; font-size: 15px; color: rgba(255, 255, 255, 0.9);">
+                ⚠️ <strong>Remember:</strong> Your spot is pending until payment is verified. Please complete your payment within 24 hours.
+            </p>
+        </div>
+    `;
+    
+    document.getElementById('confirmationDetails').innerHTML = detailsHTML;
+    
+    // Scroll to top
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function showError(message) {
