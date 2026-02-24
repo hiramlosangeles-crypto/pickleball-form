@@ -413,45 +413,54 @@
             </div>
 
             <!-- ========================================
-             STEP 3: CONFIRMATION
-             ✅ FIX #5: Enhanced email confirmation emphasis
-             ✅ FIX #1: Fixed website link to iwannaplaypickleball.com
-             ======================================== -->
-            <div class="form-step" id="confirmation" style="display: none;">
-                <div class="confirmation-content">
-                    <div class="confirmation-icon">🎉</div>
-                    <h2>You're All Set!</h2>
-                    <p class="confirmation-message" id="confirmationMessage"></p>
-                    <div class="confirmation-details" id="confirmationDetails"></div>
-                    <!-- ✅ FIX #1: Updated link to new domain -->
-                    <a href="https://iwannaplaypickleball.com/warmup" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px;">
-                        Remember to Warm-Up 
-                        <svg width="24" height="24" viewBox="0 0 100 100" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
-                            <defs>
-                                <radialGradient id="pickleballGradient">
-                                    <stop offset="0%" style="stop-color:#E8FF00"/>
-                                    <stop offset="50%" style="stop-color:#C8E600"/>
-                                    <stop offset="100%" style="stop-color:#9ACD32"/>
-                                </radialGradient>
-                            </defs>
-                            <circle cx="50" cy="50" r="45" fill="url(#pickleballGradient)"/>
-                            <circle cx="30" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
-                            <circle cx="50" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
-                            <circle cx="70" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
-                            <circle cx="30" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
-                            <circle cx="50" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
-                            <circle cx="70" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
-                            <circle cx="30" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
-                            <circle cx="50" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
-                            <circle cx="70" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-
-        </form>
+     CONFIRMATION SCREEN - ENHANCED
+     ======================================== -->
+<div class="form-step" id="confirmation" style="display: none;">
+    <div class="confirmation-content">
+        <div class="confirmation-icon">🎉</div>
+        <h2>You're All Set!</h2>
+        
+        <!-- Dynamic message from JavaScript -->
+        <p class="confirmation-message" id="confirmationMessage" style="font-size: 18px; margin: 20px 0; color: rgba(255, 255, 255, 0.9);"></p>
+        
+        <!-- EMAIL CONFIRMATION EMPHASIS -->
+        <div style="background: linear-gradient(135deg, rgba(255, 229, 0, 0.15), rgba(255, 107, 157, 0.15)); padding: 24px; border-radius: 12px; margin: 30px 0; border: 2px solid #FFE500; box-shadow: 0 8px 24px rgba(255, 229, 0, 0.2);">
+            <p style="margin: 0; font-size: 18px; font-weight: 700; color: #FFE500; text-align: center;">
+                📧 Check your email for confirmation & payment details!
+            </p>
+            <p id="confirmationEmail" style="margin: 12px 0 0 0; font-size: 16px; color: rgba(255, 255, 255, 0.8); text-align: center;">
+                <!-- Email address will be inserted here by JavaScript -->
+            </p>
+        </div>
+        
+        <!-- Game details will be inserted here -->
+        <div class="confirmation-details" id="confirmationDetails"></div>
+        
+        <!-- Warm-up button -->
+        <a href="https://iwannaplaypickleball.com/warmup" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 10px; margin-top: 20px;">
+            Remember to Warm-Up 
+            <svg width="24" height="24" viewBox="0 0 100 100" style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                <defs>
+                    <radialGradient id="pickleballGradient">
+                        <stop offset="0%" style="stop-color:#E8FF00"/>
+                        <stop offset="50%" style="stop-color:#C8E600"/>
+                        <stop offset="100%" style="stop-color:#9ACD32"/>
+                    </radialGradient>
+                </defs>
+                <circle cx="50" cy="50" r="45" fill="url(#pickleballGradient)"/>
+                <circle cx="30" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
+                <circle cx="50" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
+                <circle cx="70" cy="30" r="6" fill="rgba(0,0,0,0.25)"/>
+                <circle cx="30" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
+                <circle cx="50" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
+                <circle cx="70" cy="50" r="6" fill="rgba(0,0,0,0.25)"/>
+                <circle cx="30" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
+                <circle cx="50" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
+                <circle cx="70" cy="70" r="6" fill="rgba(0,0,0,0.25)"/>
+            </svg>
+        </a>
     </div>
-
+</div>
     <!-- ========================================
      LOADING OVERLAY
      ✅ FIX #4: Loading spinner properly shows/hides
