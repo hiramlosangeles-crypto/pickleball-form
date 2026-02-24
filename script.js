@@ -238,6 +238,12 @@ function goToStep1FromDatePicker() {
     document.getElementById('step0').style.display = 'none';
     document.getElementById('step1').style.display = 'block';
     updateProgress(1, 3);
+    
+    // Scroll to top
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 // ========================================
@@ -459,12 +465,24 @@ function goToStep2() {
     document.getElementById('step1').style.display = 'none';
     document.getElementById('step2').style.display = 'block';
     updateProgress(2, 3);
+    
+    // Scroll to top
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 function goToStep1() {
     document.getElementById('step2').style.display = 'none';
     document.getElementById('step1').style.display = 'block';
     updateProgress(1, 3);
+    
+    // Scroll to top
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 // ========================================
