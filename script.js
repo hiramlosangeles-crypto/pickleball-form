@@ -529,29 +529,61 @@ async function submitForm(event) {
     try {
         const formData = collectFormData();
         
-        // Submit to Google Apps Script (but don't wait for response)
-        fetch(SCRIPT_URL, {
+        console.log('=== FORM DATA ===');
+        console.log(formData);
+        console.log('=== SUBMITTING TO ===');
+        console.log(SCRIPT_URL);
+        
+        const response = await fetch(SCRIPT_URL, {
             method: 'POST',
-            mode: 'no-cors',  // Important for Google Apps Script
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(formData)
-        }).catch(err => {
-            console.error('Background submission error:', err);
-            // Don't show error to user - data was still sent
+            headers: { 
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData),
+            redirect: 'follow'
         });
         
-        // Show confirmation after 1.5 seconds
-        setTimeout(() => {
+        console.log('=== RESPONSE STATUS ===');
+        console.log(response.status);
+        console.log('=== RESPONSE HEADERS ===');
+        console.log(response.headers);
+        
+        // Try to read response as text first
+        const responseText = await response.text();
+        console.log('=== RAW RESPONSE ===');
+        console.log(responseText);
+        
+        let result;
+        try {
+            result = JSON.parse(responseText);
+            console.log('=== PARSED RESULT ===');
+            console.log(result);
+        } catch (e) {
+            console.error('=== JSON PARSE ERROR ===');
+            console.error(e);
+            console.log('Response was not valid JSON');
+            
+            // Still show confirmation since data was sent
             showConfirmation(formData);
-        }, 1500);
+            return;
+        }
+        
+        if (result.success) {
+            console.log('=== SUCCESS - SHOWING CONFIRMATION ===');
+            showConfirmation(formData);
+        } else {
+            console.error('=== SUBMISSION FAILED ===');
+            console.error(result.error);
+            throw new Error(result.error || 'Submission failed');
+        }
         
     } catch (error) {
-        console.error('Submission error:', error);
+        console.error('=== SUBMISSION ERROR ===');
+        console.error(error);
         loadingOverlay.classList.remove('active');
-        alert('There was an error submitting your form. Please try again or contact support.');
+        alert('Error submitting form. Check console for details.\n\n' + error.message);
     }
 }
-
 function collectFormData() {
     const selectedDate = window.availableDates[window.selectedDateIndex];
     const playerCount = document.querySelector('input[name="playerCount"]:checked').value;
