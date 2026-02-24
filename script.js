@@ -594,7 +594,7 @@ function collectFormData() {
 
 function showConfirmation(formData) {
     // Hide loading
-    document.getElementById('loadingOverlay').style.display = 'none';
+    document.getElementById('loadingOverlay').classList.remove('active');
     
     // Hide all steps
     document.getElementById('step0').style.display = 'none';
@@ -607,16 +607,19 @@ function showConfirmation(formData) {
     confirmationDiv.classList.add('active');
     
     // Update confirmation message
-    const message = formData.vipChoice === 'Yes - VIP Network'
-        ? 'Welcome to the VIP Network! You\'ll receive personalized game invites.'
+    const message = formData.priorityAlerts
+        ? 'Welcome to Priority Alerts! You\'ll receive game notifications throughout the week.'
         : 'Thanks for signing up for this Sunday\'s game!';
     
     document.getElementById('confirmationMessage').textContent = message;
     
-    // Show email address prominently
-    document.getElementById('confirmationEmail').innerHTML = `
-        We sent confirmation to: <strong style="color: #FFE500;">${formData.email}</strong>
-    `;
+    // Show email address prominently (if element exists)
+    const emailElement = document.getElementById('confirmationEmail');
+    if (emailElement) {
+        emailElement.innerHTML = `
+            We sent confirmation to: <strong style="color: #FFE500;">${formData.email}</strong>
+        `;
+    }
     
     // Add confirmation details
     const timeSlots = Array.isArray(formData.timeSlot) 
@@ -629,8 +632,18 @@ function showConfirmation(formData) {
             <p style="margin: 8px 0; font-size: 16px;"><strong>Name:</strong> ${formData.names}</p>
             <p style="margin: 8px 0; font-size: 16px;"><strong>Game Date:</strong> ${formData.selectedGameDate}</p>
             <p style="margin: 8px 0; font-size: 16px;"><strong>Time:</strong> ${timeSlots}</p>
-            <p style="margin: 8px 0; font-size: 16px;"><strong>Courts:</strong> ${formData.selectedCourts}</p>
+            <p style="margin: 8px 0; font-size: 16px;"><strong>Courts:</strong> COURTS ${formData.selectedCourts}</p>
             <p style="margin: 8px 0; font-size: 16px;"><strong>Payment Method:</strong> ${formData.paymentMethod}</p>
+            <p style="margin: 8px 0; font-size: 16px;"><strong>Amount Due:</strong> $${formData.paymentAmount}</p>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(255, 229, 0, 0.15), rgba(255, 107, 157, 0.15)); padding: 20px; border-radius: 12px; border: 2px solid #FFE500; box-shadow: 0 8px 24px rgba(255, 229, 0, 0.2); margin: 20px 0;">
+            <p style="margin: 0; font-size: 16px; font-weight: 700; color: #FFE500; text-align: center;">
+                📧 A confirmation email with payment details has been sent to:
+            </p>
+            <p style="margin: 8px 0 0 0; font-size: 18px; color: #FFE500; font-weight: 600; text-align: center;">
+                ${formData.email}
+            </p>
         </div>
         
         <div style="background: rgba(255, 107, 0, 0.1); padding: 20px; border-radius: 8px; border-left: 4px solid #FF6B00;">
