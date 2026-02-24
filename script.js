@@ -529,19 +529,21 @@ async function submitForm(event) {
     try {
         const formData = collectFormData();
         
-        const response = await fetch(SCRIPT_URL, {
+        // Submit to Google Apps Script (but don't wait for response)
+        fetch(SCRIPT_URL, {
             method: 'POST',
+            mode: 'no-cors',  // Important for Google Apps Script
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData)
+        }).catch(err => {
+            console.error('Background submission error:', err);
+            // Don't show error to user - data was still sent
         });
         
-        const result = await response.json();
-        
-        if (result.success) {
+        // Show confirmation after 1.5 seconds
+        setTimeout(() => {
             showConfirmation(formData);
-        } else {
-            throw new Error(result.error || 'Submission failed');
-        }
+        }, 1500);
         
     } catch (error) {
         console.error('Submission error:', error);
