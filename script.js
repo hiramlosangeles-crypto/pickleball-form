@@ -342,19 +342,12 @@ function handlePlayerCountChange() {
         `;
     }
     
-    autoFillPlayerInfo();
-}
-function handlePlayerCountChange() {
-    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value;
-    const nameFieldsContainer = document.getElementById('nameFieldsContainer');
-    
-    // ... all the HTML generation code ...
-    
     // CRITICAL: Call autofill AFTER fields are created
     setTimeout(() => {
         autoFillPlayerInfo();
     }, 100);
 }
+
 function handlePaymentMethodChange(e) {
     const method = e.target.value;
     const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
