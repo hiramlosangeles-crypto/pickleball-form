@@ -122,11 +122,13 @@ function autoFillPlayerInfo() {
         }
     }
     
+    // AUTO-FILL EMAIL
     const emailField = document.getElementById('email');
-    if (emailField && !emailField.value) {
+    if (emailField && !emailField.value && playerLookupData.email) {
         emailField.value = playerLookupData.email;
     }
     
+    // AUTO-FILL PAYMENT METHOD
     if (playerLookupData.lastPaymentMethod) {
         const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
         paymentRadios.forEach(radio => {
@@ -137,7 +139,6 @@ function autoFillPlayerInfo() {
         });
     }
 }
-
 // ========================================
 // INITIALIZATION
 // ========================================
@@ -335,7 +336,17 @@ function handlePlayerCountChange() {
     
     autoFillPlayerInfo();
 }
-
+function handlePlayerCountChange() {
+    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value;
+    const nameFieldsContainer = document.getElementById('nameFieldsContainer');
+    
+    // ... all the HTML generation code ...
+    
+    // CRITICAL: Call autofill AFTER fields are created
+    setTimeout(() => {
+        autoFillPlayerInfo();
+    }, 100);
+}
 function handlePaymentMethodChange(e) {
     const method = e.target.value;
     const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
