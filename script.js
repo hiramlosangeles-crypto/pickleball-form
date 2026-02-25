@@ -754,18 +754,3 @@ window.showVenmoPayment = showVenmoPayment;
 window.showZellePayment = showZellePayment;
 window.showCashPayment = showCashPayment;
 
-// TEMPORARY DEBUG FUNCTION
-function testConfirmation() {
-    const testData = {
-        names: "Test User",
-        selectedGameDate: "SUNDAY, FEB 9th",
-        selectedCourts: "6B & 7B",
-        timeSlot: ["7:00–8:00 PM", "8:00–9:00 PM"],
-        paymentMethod: "Venmo",
-        paymentAmount: 4,
-        email: "test@email.com",
-        priorityAlerts: false
-    };
-    
-    showConfirmation(testData);
-}
