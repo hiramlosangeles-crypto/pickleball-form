@@ -584,7 +584,6 @@ async function submitForm(event) {
         alert('There was an error submitting your form.\n\nPlease check the browser console (F12) and send a screenshot to support.\n\nError: ' + error.message);
     }
 }
-```
 
 function collectFormData() {
     const selectedDate = window.availableDates[window.selectedDateIndex];
