@@ -255,13 +255,21 @@ function setupFormEventListeners() {
     const playerCount1 = document.getElementById('playerCount1');
     const playerCount2 = document.getElementById('playerCount2');
     
-    if (playerCount1) playerCount1.addEventListener('change', handlePlayerCountChange);
-    if (playerCount2) playerCount2.addEventListener('change', handlePlayerCountChange);
+    if (playerCount1) {
+        playerCount1.addEventListener('change', handlePlayerCountChange);
+        console.log('✅ Player count 1 listener attached');
+    }
+    if (playerCount2) {
+        playerCount2.addEventListener('change', handlePlayerCountChange);
+        console.log('✅ Player count 2 listener attached');
+    }
     
     const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
     paymentRadios.forEach(radio => {
         radio.addEventListener('change', handlePaymentMethodChange);
     });
+    
+    console.log('✅ Form event listeners setup complete');
 }
 
 function handlePlayerCountChange() {
