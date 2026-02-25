@@ -523,67 +523,69 @@ document.getElementById('priorityAlertsCheckbox')?.addEventListener('change', fu
 async function submitForm(event) {
     event.preventDefault();
     
+    console.log('🔵 Form submission started');
+    
     const loadingOverlay = document.getElementById('loadingOverlay');
     loadingOverlay.classList.add('active');
     
     try {
         const formData = collectFormData();
         
-        console.log('=== FORM DATA ===');
-        console.log(formData);
-        console.log('=== SUBMITTING TO ===');
-        console.log(SCRIPT_URL);
+        console.log('📦 Form data collected:', formData);
+        console.log('🌐 Submitting to:', SCRIPT_URL);
         
         const response = await fetch(SCRIPT_URL, {
             method: 'POST',
             headers: { 
-                'Content-Type': 'application/json'
+                'Content-Type': 'text/plain;charset=utf-8'  // ← CRITICAL CHANGE
             },
             body: JSON.stringify(formData),
             redirect: 'follow'
         });
         
-        console.log('=== RESPONSE STATUS ===');
-        console.log(response.status);
-        console.log('=== RESPONSE HEADERS ===');
-        console.log(response.headers);
+        console.log('📡 Response received');
+        console.log('Status:', response.status);
+        console.log('Status Text:', response.statusText);
         
-        // Try to read response as text first
         const responseText = await response.text();
-        console.log('=== RAW RESPONSE ===');
-        console.log(responseText);
+        console.log('📄 Raw response:', responseText);
         
         let result;
         try {
             result = JSON.parse(responseText);
-            console.log('=== PARSED RESULT ===');
-            console.log(result);
-        } catch (e) {
-            console.error('=== JSON PARSE ERROR ===');
-            console.error(e);
-            console.log('Response was not valid JSON');
+            console.log('✅ Parsed result:', result);
+        } catch (parseError) {
+            console.error('❌ JSON parse error:', parseError);
+            console.log('Response was not valid JSON, but data may have been saved');
             
-            // Still show confirmation since data was sent
-            showConfirmation(formData);
+            // Show confirmation anyway since data was likely saved
+            setTimeout(() => {
+                showConfirmation(formData);
+            }, 500);
             return;
         }
         
         if (result.success) {
-            console.log('=== SUCCESS - SHOWING CONFIRMATION ===');
+            console.log('🎉 Success! Showing confirmation');
             showConfirmation(formData);
         } else {
-            console.error('=== SUBMISSION FAILED ===');
-            console.error(result.error);
+            console.error('❌ Submission failed:', result.error);
             throw new Error(result.error || 'Submission failed');
         }
         
     } catch (error) {
-        console.error('=== SUBMISSION ERROR ===');
-        console.error(error);
+        console.error('❌ SUBMISSION ERROR:');
+        console.error('Error type:', error.name);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        
         loadingOverlay.classList.remove('active');
-        alert('Error submitting form. Check console for details.\n\n' + error.message);
+        
+        alert('There was an error submitting your form.\n\nPlease check the browser console (F12) and send a screenshot to support.\n\nError: ' + error.message);
     }
 }
+```
+
 function collectFormData() {
     const selectedDate = window.availableDates[window.selectedDateIndex];
     const playerCount = document.querySelector('input[name="playerCount"]:checked').value;
