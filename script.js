@@ -705,15 +705,6 @@ function showConfirmation(formData) {
             <p style="margin: 8px 0; font-size: 16px;"><strong>Amount Due:</strong> $${formData.paymentAmount}</p>
         </div>
         
-        <div style="background: linear-gradient(135deg, rgba(255, 229, 0, 0.15), rgba(255, 107, 157, 0.15)); padding: 20px; border-radius: 12px; border: 2px solid #FFE500; box-shadow: 0 8px 24px rgba(255, 229, 0, 0.2); margin: 20px 0;">
-            <p style="margin: 0; font-size: 16px; font-weight: 700; color: #FFE500; text-align: center;">
-                📧 A confirmation email with payment details has been sent to:
-            </p>
-            <p style="margin: 8px 0 0 0; font-size: 18px; color: #FFE500; font-weight: 600; text-align: center;">
-                ${formData.email}
-            </p>
-        </div>
-        
         <div style="background: rgba(255, 107, 0, 0.1); padding: 20px; border-radius: 8px; border-left: 4px solid #FF6B00;">
             <p style="margin: 0; font-size: 15px; color: rgba(255, 255, 255, 0.9);">
                 ⚠️ <strong>Remember:</strong> Your spot is pending until payment is verified. Please complete your payment within 24 hours.
