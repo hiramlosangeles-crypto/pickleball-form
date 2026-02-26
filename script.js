@@ -184,17 +184,21 @@ function renderDateCards(sundays) {
     
     sundays.forEach((sunday, index) => {
         const card = document.createElement('div');
-        card.className = 'date-card';
-        card.onclick = () => selectDate(index);
+        card.className = 'date-card' + (sunday.isAvailable ? '' : ' date-card-disabled');
+        
+        if (sunday.isAvailable) {
+            card.onclick = () => selectDate(index);
+        }
         
         card.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 16px; padding: 4px;">
+            <div style="display: flex; align-items: center; gap: 16px; padding: 4px; ${!sunday.isAvailable ? 'opacity: 0.5;' : ''}">
                 <div class="date-card-icon" style="flex-shrink: 0;">
                     <img src="calendar-icon.png" alt="Calendar" style="width: 70px; height: 70px;">
                 </div>
                 <div class="date-card-body" style="flex: 1;">
                     <div class="date-card-date" style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px;">
                         ${sunday.dateLong}
+                        ${sunday.statusLabel ? `<span style="display: inline-block; background: ${sunday.isAvailable ? 'rgba(255, 229, 0, 0.2)' : 'rgba(255, 107, 0, 0.3)'}; color: ${sunday.isAvailable ? '#FFE500' : '#FF6B00'}; padding: 4px 12px; border-radius: 6px; font-size: 14px; margin-left: 8px; font-weight: 700;">${sunday.statusLabel}</span>` : ''}
                     </div>
                     <div class="date-card-time" style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.95); margin-bottom: 4px;">
                         ⏰ ${sunday.time}
@@ -216,6 +220,14 @@ function renderDateCards(sundays) {
 }
 
 function selectDate(index) {
+    const selectedSunday = window.availableDates[index];
+    
+    // Prevent selection if date is full
+    if (!selectedSunday.isAvailable) {
+        alert('Sorry, this date is currently full. Please select another date.');
+        return;
+    }
+    
     document.querySelectorAll('.date-card').forEach((card, i) => {
         card.classList.toggle('selected', i === index);
     });
@@ -229,7 +241,6 @@ function selectDate(index) {
         continueBtn.style.cursor = 'pointer';
     }
 }
-
 function goToStep1FromDatePicker() {
     if (window.selectedDateIndex === undefined) {
         alert('Please select a game date');
