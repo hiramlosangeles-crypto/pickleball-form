@@ -1093,6 +1093,9 @@ button:disabled {
         font-size: 13px;
     }
 }
+/* ... all your existing styles ... */
+
+/* At the very end: */
 .date-card-disabled {
     cursor: not-allowed !important;
     opacity: 0.6;
