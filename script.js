@@ -660,6 +660,9 @@ function collectFormData() {
 function showConfirmation(formData) {
     // Hide loading
     document.getElementById('loadingOverlay').classList.remove('active');
+
+    // UPDATE PROGRESS BAR TO STEP 3 OF 3
+    updateProgress(3, 3);
     
     // Hide all steps
     document.getElementById('step0').style.display = 'none';
