@@ -174,33 +174,32 @@ async function loadUpcomingDates() {
 }
 
 function renderDateCards(sundays) {
-   const card = document.createElement('div');
-card.className = 'date-card' + (sunday.isAvailable ? '' : ' date-card-full');
-
-if (sunday.isAvailable) {
-    card.onclick = () => selectDate(index);
-}
-
-card.innerHTML = `
-    <div style="display: flex; align-items: center; gap: 16px; padding: 4px;">
+    const container = document.getElementById('dateChoiceContainer');
+    if (!container) {
+        console.error('dateChoiceContainer not found');
+        return;
+    }
+    
+    container.innerHTML = '';
     
     sundays.forEach((sunday, index) => {
         const card = document.createElement('div');
-        card.className = 'date-card' + (sunday.isAvailable ? '' : ' date-card-disabled');
+        card.className = 'date-card' + (sunday.isAvailable ? '' : ' date-card-full');
         
         if (sunday.isAvailable) {
             card.onclick = () => selectDate(index);
         }
         
         card.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 16px; padding: 4px; ${!sunday.isAvailable ? 'opacity: 0.5;' : ''}">
+            <div style="display: flex; align-items: center; gap: 16px; padding: 4px;">
                 <div class="date-card-icon" style="flex-shrink: 0;">
                     <img src="calendar-icon.png" alt="Calendar" style="width: 70px; height: 70px;">
                 </div>
                 <div class="date-card-body" style="flex: 1;">
                     <div class="date-card-date" style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px;">
                         ${sunday.dateLong}
-                        ${sunday.statusLabel ? `<span style="display: inline-block; background: ${sunday.isAvailable ? 'rgba(255, 229, 0, 0.25)' : 'rgba(255, 0, 0, 0.2)'}; color: ${sunday.isAvailable ? '#FFE500' : '#FF0000'};                    </div>
+                        ${sunday.statusLabel ? `<span style="display: inline-block; background: ${sunday.isAvailable ? 'rgba(255, 229, 0, 0.25)' : 'rgba(255, 0, 0, 0.2)'}; color: ${sunday.isAvailable ? '#FFE500' : '#FF0000'}; padding: ${sunday.statusLabel === 'FULL' ? '8px 20px' : '6px 14px'}; border-radius: 8px; font-size: ${sunday.statusLabel === 'FULL' ? '20px' : '15px'}; margin-left: 10px; font-weight: ${sunday.statusLabel === 'FULL' ? '900' : '700'}; letter-spacing: ${sunday.statusLabel === 'FULL' ? '1px' : '0'};">${sunday.statusLabel}</span>` : ''}
+                    </div>
                     <div class="date-card-time" style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.95); margin-bottom: 4px;">
                         ⏰ ${sunday.time}
                     </div>
@@ -219,7 +218,6 @@ card.innerHTML = `
     
     window.availableDates = sundays;
 }
-
 function selectDate(index) {
     const selectedSunday = window.availableDates[index];
     
