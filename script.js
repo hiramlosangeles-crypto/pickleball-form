@@ -174,13 +174,15 @@ async function loadUpcomingDates() {
 }
 
 function renderDateCards(sundays) {
-    const container = document.getElementById('dateChoiceContainer');
-    if (!container) {
-        console.error('dateChoiceContainer not found');
-        return;
-    }
-    
-    container.innerHTML = '';
+   const card = document.createElement('div');
+card.className = 'date-card' + (sunday.isAvailable ? '' : ' date-card-full');
+
+if (sunday.isAvailable) {
+    card.onclick = () => selectDate(index);
+}
+
+card.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 16px; padding: 4px;">
     
     sundays.forEach((sunday, index) => {
         const card = document.createElement('div');
@@ -555,56 +557,30 @@ async function submitForm(event) {
         const formData = collectFormData();
         
         console.log('📦 Form data collected:', formData);
-        console.log('🌐 Submitting to:', SCRIPT_URL);
         
-        const response = await fetch(SCRIPT_URL, {
+        // Show confirmation after 1 second (don't wait for Google)
+        setTimeout(() => {
+            showConfirmation(formData);
+        }, 1000);
+        
+        // Submit to Google Apps Script in background (don't wait)
+        fetch(SCRIPT_URL, {
             method: 'POST',
             headers: { 
-                'Content-Type': 'text/plain;charset=utf-8'  // ← CRITICAL CHANGE
+                'Content-Type': 'text/plain;charset=utf-8'
             },
             body: JSON.stringify(formData),
             redirect: 'follow'
+        }).then(response => {
+            console.log('✅ Background save completed');
+        }).catch(error => {
+            console.error('⚠️ Background save error (data likely saved anyway):', error);
         });
         
-        console.log('📡 Response received');
-        console.log('Status:', response.status);
-        console.log('Status Text:', response.statusText);
-        
-        const responseText = await response.text();
-        console.log('📄 Raw response:', responseText);
-        
-        let result;
-        try {
-            result = JSON.parse(responseText);
-            console.log('✅ Parsed result:', result);
-        } catch (parseError) {
-            console.error('❌ JSON parse error:', parseError);
-            console.log('Response was not valid JSON, but data may have been saved');
-            
-            // Show confirmation anyway since data was likely saved
-            setTimeout(() => {
-                showConfirmation(formData);
-            }, 500);
-            return;
-        }
-        
-        if (result.success) {
-            console.log('🎉 Success! Showing confirmation');
-            showConfirmation(formData);
-        } else {
-            console.error('❌ Submission failed:', result.error);
-            throw new Error(result.error || 'Submission failed');
-        }
-        
     } catch (error) {
-        console.error('❌ SUBMISSION ERROR:');
-        console.error('Error type:', error.name);
-        console.error('Error message:', error.message);
-        console.error('Error stack:', error.stack);
-        
+        console.error('❌ SUBMISSION ERROR:', error);
         loadingOverlay.classList.remove('active');
-        
-        alert('There was an error submitting your form.\n\nPlease check the browser console (F12) and send a screenshot to support.\n\nError: ' + error.message);
+        alert('There was an error submitting your form. Please try again.');
     }
 }
 
