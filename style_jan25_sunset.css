@@ -1096,14 +1096,20 @@ button:disabled {
 /* ... all your existing styles ... */
 
 /* At the very end: */
-.date-card-disabled {
+/* Full date card - bright red, not faded */
+.date-card-full {
     cursor: not-allowed !important;
-    opacity: 0.6;
+    border: 2px solid #FF0000 !important;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.3) !important;
 }
 
-.date-card-disabled:hover {
+.date-card-full:hover {
     transform: none !important;
-    box-shadow: 0 4px 12px rgba(155, 81, 224, 0.2) !important;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.4) !important;
+}
+
+.date-card-full .date-card-date {
+    opacity: 1 !important;
 }
 
 /* Enhanced selected date border */
