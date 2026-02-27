@@ -200,8 +200,7 @@ card.innerHTML = `
                 <div class="date-card-body" style="flex: 1;">
                     <div class="date-card-date" style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px;">
                         ${sunday.dateLong}
-                        ${sunday.statusLabel ? `<span style="display: inline-block; background: ${sunday.isAvailable ? 'rgba(255, 229, 0, 0.25)' : 'rgba(255, 107, 0, 0.4)'}; color: ${sunday.isAvailable ? '#FFE500' : '#FF6B00'}; padding: ${sunday.statusLabel === 'FULL' ? '8px 20px' : '6px 14px'}; border-radius: 8px; font-size: ${sunday.statusLabel === 'FULL' ? '20px' : '15px'}; margin-left: 10px; font-weight: ${sunday.statusLabel === 'FULL' ? '900' : '700'}; letter-spacing: ${sunday.statusLabel === 'FULL' ? '1px' : '0'};">${sunday.statusLabel}</span>` : ''}
-                    </div>
+                        ${sunday.statusLabel ? `<span style="display: inline-block; background: ${sunday.isAvailable ? 'rgba(255, 229, 0, 0.25)' : 'rgba(255, 0, 0, 0.2)'}; color: ${sunday.isAvailable ? '#FFE500' : '#FF0000'};                    </div>
                     <div class="date-card-time" style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.95); margin-bottom: 4px;">
                         ⏰ ${sunday.time}
                     </div>
