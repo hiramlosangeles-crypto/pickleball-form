@@ -126,42 +126,62 @@ function handlePhoneInput(phoneInput) {
 }
 
 function autoFillPlayerInfo() {
-    if (!playerLookupData || !playerLookupData.found) return;
+    // Use global window.playerLookupData
+    const lookupData = window.playerLookupData || playerLookupData;
+    
+    if (!lookupData || !lookupData.found) {
+        console.log('No player data to autofill');
+        return;
+    }
+    
+    console.log('🔄 Autofilling player info:', lookupData);
     
     const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value;
     
     if (playerCount === '1') {
         const nameField = document.getElementById('playerName');
-        if (nameField && !nameField.value) {
-            nameField.value = playerLookupData.fullName;
+        if (nameField) {
+            nameField.value = lookupData.fullName || `${lookupData.firstName} ${lookupData.lastName}`.trim();
+            console.log('✅ Filled single player name:', nameField.value);
         }
     } else if (playerCount === '2') {
         const player1FirstName = document.getElementById('player1FirstName');
         const player1LastName = document.getElementById('player1LastName');
         
-        if (player1FirstName && !player1FirstName.value) {
-            player1FirstName.value = playerLookupData.firstName;
+        if (player1FirstName && lookupData.firstName) {
+            player1FirstName.value = lookupData.firstName;
+            console.log('✅ Filled player 1 first name');
         }
-        if (player1LastName && !player1LastName.value) {
-            player1LastName.value = playerLookupData.lastName;
+        if (player1LastName && lookupData.lastName) {
+            player1LastName.value = lookupData.lastName;
+            console.log('✅ Filled player 1 last name');
         }
     }
     
-    // AUTO-FILL EMAIL
+    // EMAIL - fill if not already filled
     const emailField = document.getElementById('email');
-    if (emailField && !emailField.value && playerLookupData.email) {
-        emailField.value = playerLookupData.email;
+    if (emailField && lookupData.email && !emailField.value) {
+        emailField.value = lookupData.email;
+        console.log('✅ Filled email');
     }
     
-    // AUTO-FILL PAYMENT METHOD
-    if (playerLookupData.lastPaymentMethod) {
+    // PAYMENT METHOD - fill if not already selected
+    if (lookupData.lastPaymentMethod) {
         const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+        let alreadySelected = false;
         paymentRadios.forEach(radio => {
-            if (radio.value === playerLookupData.lastPaymentMethod) {
-                radio.checked = true;
-                radio.dispatchEvent(new Event('change'));
-            }
+            if (radio.checked) alreadySelected = true;
         });
+        
+        if (!alreadySelected) {
+            paymentRadios.forEach(radio => {
+                if (radio.value === lookupData.lastPaymentMethod) {
+                    radio.checked = true;
+                    radio.dispatchEvent(new Event('change'));
+                    console.log('✅ Selected payment method:', lookupData.lastPaymentMethod);
+                }
+            });
+        }
     }
 }
 // ========================================
@@ -377,8 +397,9 @@ function handlePlayerCountChange() {
         `;
     }
     
-    // CRITICAL: Call autofill AFTER fields are created
+   // CRITICAL: Call autofill AFTER fields are created
     setTimeout(() => {
+        console.log('⏰ Calling autoFillPlayerInfo after timeout');
         autoFillPlayerInfo();
     }, 100);
 }
