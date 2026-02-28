@@ -60,6 +60,8 @@ function handlePhoneInput(phoneInput) {
         const result = await lookupPlayerByPhone(phone);
         
         if (result.found) {
+            // STORE player data globally
+            window.playerLookupData = result;  // ← ADD window. prefix
             playerLookupData = result;
             
             if (messageDiv) {
@@ -78,7 +80,30 @@ function handlePhoneInput(phoneInput) {
                 messageDiv.style.display = 'block';
             }
             
+            // AUTO-FILL EMAIL IMMEDIATELY (it always exists)
+            const emailField = document.getElementById('email');
+            if (emailField && result.email) {
+                emailField.value = result.email;
+            }
+            
+            // AUTO-FILL PAYMENT METHOD if available
+            if (result.lastPaymentMethod) {
+                setTimeout(() => {
+                    const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+                    paymentRadios.forEach(radio => {
+                        if (radio.value === result.lastPaymentMethod) {
+                            radio.checked = true;
+                            // Trigger payment details display
+                            if (typeof handlePaymentMethodChange === 'function') {
+                                handlePaymentMethodChange({ target: radio });
+                            }
+                        }
+                    });
+                }, 100);
+            }
+            
         } else {
+            window.playerLookupData = null;  // ← ADD window. prefix
             playerLookupData = null;
             
             if (messageDiv) {
