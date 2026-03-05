@@ -1133,3 +1133,14 @@ button:disabled {
     z-index: -1;
     opacity: 0.3;
 }
+/* Time change alert pulse animation */
+@keyframes pulse {
+    0%, 100% {
+        box-shadow: 0 0 10px rgba(255, 107, 0, 0.4);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 20px rgba(255, 107, 0, 0.6);
+        transform: scale(1.01);
+    }
+}
