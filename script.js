@@ -248,6 +248,29 @@ function renderDateCards(sundays) {
                     <div class="date-card-time" style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.95); margin-bottom: 4px;">
                         ⏰ ${sunday.time}
                     </div>
+                    card.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 16px; padding: 4px;">
+        <div class="date-card-icon" style="flex-shrink: 0;">
+            <img src="calendar-icon.png" alt="Calendar" style="width: 70px; height: 70px;">
+        </div>
+        <div class="date-card-body" style="flex: 1;">
+            <div class="date-card-date" style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px;">
+                ${sunday.dateLong}
+                ${sunday.statusLabel ? `<span style="display: inline-block; background: ${sunday.isAvailable ? 'rgba(255, 229, 0, 0.25)' : 'rgba(255, 0, 0, 0.2)'}; color: ${sunday.isAvailable ? '#FFE500' : '#FF0000'}; padding: ${sunday.statusLabel === 'FULL' ? '8px 20px' : '6px 14px'}; border-radius: 8px; font-size: ${sunday.statusLabel === 'FULL' ? '20px' : '15px'}; margin-left: 10px; font-weight: ${sunday.statusLabel === 'FULL' ? '900' : '700'}; letter-spacing: ${sunday.statusLabel === 'FULL' ? '1px' : '0'};">${sunday.statusLabel}</span>` : ''}
+            </div>
+            <div class="date-card-time" style="font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.95); margin-bottom: 4px;">
+                ⏰ ${sunday.time}
+            </div>
+            ${sunday.timeAlert ? `
+            <div class="date-card-alert" style="background: linear-gradient(135deg, rgba(255, 107, 0, 0.3), rgba(255, 165, 0, 0.2)); border: 2px solid #FF6B00; border-radius: 8px; padding: 10px 12px; margin: 8px 0; animation: pulse 2s ease-in-out infinite;">
+                <div style="font-size: 13px; font-weight: 800; color: #FFA500; line-height: 1.4;">
+                    ${sunday.timeAlert}
+                </div>
+            </div>
+            ` : ''}
+            <div class="date-card-location" style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8);">
+                📍 ${sunday.location}
+            </div>
                     <div class="date-card-location" style="font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.8);">
                         📍 ${sunday.location}
                     </div>
