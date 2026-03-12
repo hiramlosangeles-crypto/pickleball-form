@@ -331,6 +331,17 @@ function setupFormEventListeners() {
         radio.addEventListener('change', handlePaymentMethodChange);
     });
     
+    // NEW: Priority Alerts radio listeners
+    const priorityAlertsRadio = document.getElementById('priorityAlertsRadio');
+    const sundayOnlyRadio = document.getElementById('sundayOnlyRadio');
+    
+    if (priorityAlertsRadio) {
+        priorityAlertsRadio.addEventListener('change', handleSignupTypeChange);
+    }
+    if (sundayOnlyRadio) {
+        sundayOnlyRadio.addEventListener('change', handleSignupTypeChange);
+    }
+    
     console.log('✅ Form event listeners setup complete');
 }
 
@@ -404,13 +415,35 @@ function handlePlayerCountChange() {
         `;
     }
     
-   // CRITICAL: Call autofill AFTER fields are created
+    // CRITICAL: Call autofill AFTER fields are created
     setTimeout(() => {
         console.log('⏰ Calling autoFillPlayerInfo after timeout');
         autoFillPlayerInfo();
     }, 100);
 }
 
+
+function handleSignupTypeChange() {
+    const priorityAlertsRadio = document.getElementById('priorityAlertsRadio');
+    const detailsDiv = document.getElementById('priorityAlertsDetails');
+    
+    if (priorityAlertsRadio && priorityAlertsRadio.checked) {
+        detailsDiv.style.display = 'block';
+        
+        // Make fields required
+        document.getElementById('homeCourt').required = true;
+        const skillRadios = document.querySelectorAll('input[name="skillLevel"]');
+        skillRadios.forEach(radio => radio.required = true);
+        
+    } else {
+        detailsDiv.style.display = 'none';
+        
+        // Make fields optional
+        document.getElementById('homeCourt').required = false;
+        const skillRadios = document.querySelectorAll('input[name="skillLevel"]');
+        skillRadios.forEach(radio => radio.required = false);
+    }
+}
 function handlePaymentMethodChange(e) {
     const method = e.target.value;
     const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
@@ -561,23 +594,6 @@ function updateProgress(step, total) {
 // PRIORITY ALERTS
 // ========================================
 
-document.getElementById('priorityAlertsCheckbox')?.addEventListener('change', function() {
-    const detailsDiv = document.getElementById('priorityAlertsDetails');
-    if (detailsDiv) {
-        detailsDiv.style.display = this.checked ? 'block' : 'none';
-    }
-    
-    // Update visual checkbox
-    const label = this.parentElement.querySelector('span');
-    if (label) {
-        if (this.checked) {
-            label.innerHTML = label.innerHTML.replace('☐', '☑');
-        } else {
-            label.innerHTML = label.innerHTML.replace('☑', '☐');
-        }
-    }
-});
-
 // ========================================
 // FORM SUBMISSION
 // ========================================
@@ -640,9 +656,10 @@ function collectFormData() {
     const email = document.getElementById('email').value.trim();
     const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
     
-    const priorityAlerts = document.getElementById('priorityAlertsCheckbox')?.checked || false;
-    
-    let vipChoice = priorityAlerts ? 'Yes - Priority Alerts' : 'No - Sunday Only';
+   const signupType = document.querySelector('input[name="signupType"]:checked')?.value;
+const priorityAlerts = (signupType === 'priority-alerts');
+
+let vipChoice = priorityAlerts ? 'Yes - Priority Alerts' : 'No - Sunday Only';
     let homeCourt = '';
     let skillLevel = '';
     let bestDays = [];
@@ -779,5 +796,4 @@ window.handlePhoneInput = handlePhoneInput;
 window.toggleDonationInfo = toggleDonationInfo;
 window.showVenmoPayment = showVenmoPayment;
 window.showZellePayment = showZellePayment;
-window.showCashPayment = showCashPayment;
 
