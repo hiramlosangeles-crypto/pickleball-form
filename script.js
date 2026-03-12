@@ -768,9 +768,6 @@ function showZellePayment() {
     handlePaymentMethodChange({ target: { value: 'Zelle' } });
 }
 
-function showCashPayment() {
-    handlePaymentMethodChange({ target: { value: 'Cash (In Person)' } });
-}
 
 // Expose functions to global scope
 window.selectDate = selectDate;
