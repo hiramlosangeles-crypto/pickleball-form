@@ -216,193 +216,160 @@
              STEP 2: PRIORITY ALERTS
              New simplified design with single card + checkbox
              ======================================== -->
-            <div class="form-step" id="step2">
-                <div class="step-header vip">
-                    <div class="step-icon">⭐</div>
-                    <h2>Enroll me in Priority Alerts (Free)</h2>
-                    <!-- Subtitle removed for clarity -->
+           <div class="form-step" id="step2">
+    <div class="step-header vip">
+        <div class="step-icon">🎯</div>
+        <h2>Choose Your Signup Type</h2>
+        <p class="step-subtitle">Select Priority Alerts for weekly game notifications, or Sunday Only for just this game</p>
+    </div>
+
+
+                <!-- Priority Alerts Choice - NOW REQUIRED -->
+<div class="form-group">
+    <label>Choose Your Signup Type *</label>
+    
+    <div class="vip-choice">
+        <!-- Option 1: Priority Alerts -->
+        <label class="choice-card choice-yes">
+            <input type="radio" name="signupType" value="priority-alerts" required id="priorityAlertsRadio">
+            <div class="choice-content">
+                <div class="choice-header">
+                    <span class="choice-icon">⭐</span>
+                    <span class="choice-title">Priority Alerts (Free - Recommended!)</span>
                 </div>
-
-                <!-- Priority Alerts Explanation -->
-                <div style="background: rgba(0, 255, 163, 0.1); 
-                            border-left: 4px solid #00FFA3; 
-                            padding: 20px; 
-                            border-radius: 12px; 
-                            margin-bottom: 24px;">
-                    <h3 style="margin: 0 0 12px 0; color: #00FFA3; font-size: 18px; font-weight: 800;">
-                        ✨ What are Priority Alerts?
-                    </h3>
-                    <p style="margin: 0 0 12px 0; color: rgba(255, 255, 255, 0.9); font-size: 15px; line-height: 1.6;">
-                        Priority Alerts are <strong>free and optional</strong>. If you opt in, you'll get notified when extra weekly games open up (beyond Sunday).
-                    </p>
-                    <p style="margin: 0; color: rgba(255, 255, 255, 0.8); font-size: 14px; line-height: 1.5;">
-                        💡 This does not change the Sunday game price. You still pay $4 per person, but you get first access to new games and personalized invites.
-                    </p>
-                </div>
-
-                <!-- SINGLE CARD with Dynamic Pricing + Checkbox -->
-                <div class="form-group">
-                    <div class="priority-alerts-card" style="background: rgba(155, 81, 224, 0.1); 
-                                                              border: 2px solid #9B51E0; 
-                                                              border-radius: 16px; 
-                                                              padding: 24px; 
-                                                              margin-bottom: 20px;">
-                        <!-- Dynamic Price Display -->
-                        <div id="sundayGamePrice" style="text-align: center; margin-bottom: 20px;">
-                            <h3 style="margin: 0 0 8px 0; color: #D946EF; font-size: 22px; font-weight: 800;">
-                                $4 Sunday Game for 1 person
-                            </h3>
-                            <p style="margin: 0; color: rgba(255, 255, 255, 0.7); font-size: 14px;">
-                                Full 2-hour game • 7:00 – 9:00 PM
-                            </p>
-                        </div>
-
-                        <!-- Priority Alerts Checkbox -->
-                        <div style="background: rgba(0, 255, 163, 0.08); 
-                                    border: 2px solid #00FFA3; 
-                                    border-radius: 12px; 
-                                    padding: 18px;">
-                            <label for="priorityAlertsCheckbox" style="display: flex; align-items: center; gap: 12px; cursor: pointer; margin: 0;">
-                                <input type="checkbox" 
-                                       id="priorityAlertsCheckbox" 
-                                       name="priorityAlerts" 
-                                       value="yes"
-                                       style="display: none;">
-                                <span style="color: #00FFA3; font-size: 16px; font-weight: 700; flex: 1;">
-                                    ☐ Also enroll me in Priority Alerts (Free)
-                                </span>
-                            </label>
-                            <p style="margin: 10px 0 0 32px; color: rgba(255, 255, 255, 0.7); font-size: 13px; line-height: 1.5;">
-                                Get notified about extra games throughout the week. No commitment, unsubscribe anytime.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Priority Alerts Details (Shown if checkbox is checked) -->
-                <div id="priorityAlertsDetails" style="display: none;">
-                    <div class="form-group">
-                        <label for="homeCourt">Home Court / City *</label>
-                        <input 
-                            type="text" 
-                            id="homeCourt" 
-                            name="homeCourt" 
-                            placeholder="e.g., Plummer Park or West Hollywood"
-                        >
-                    </div>
-
-                    <div class="form-group">
-                        <label>Skill Level *</label>
-                        <div class="radio-group">
-                            <label class="radio-card">
-                                <input type="radio" name="skillLevel" value="Social">
-                                <div class="radio-content">
-                                    <span class="radio-label">Social</span>
-                                </div>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="skillLevel" value="Beginner">
-                                <div class="radio-content">
-                                    <span class="radio-label">Beginner</span>
-                                </div>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="skillLevel" value="Intermediate">
-                                <div class="radio-content">
-                                    <span class="radio-label">Intermediate</span>
-                                </div>
-                            </label>
-                            <label class="radio-card">
-                                <input type="radio" name="skillLevel" value="Advanced">
-                                <div class="radio-content">
-                                    <span class="radio-label">Advanced</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Best Days to Play *</label>
-                        <div class="checkbox-group" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 12px;">
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestDays" value="Monday">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Mon</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestDays" value="Tuesday">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Tue</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestDays" value="Wednesday">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Wed</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestDays" value="Thursday">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Thu</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestDays" value="Friday">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Fri</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestDays" value="Saturday">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Sat</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestDays" value="Sunday">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Sun</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Best Times to Play *</label>
-                        <div class="checkbox-group" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestTimes" value="Morning">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Morning</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestTimes" value="Afternoon">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Afternoon</span>
-                                </div>
-                            </label>
-                            <label class="checkbox-card">
-                                <input type="checkbox" name="bestTimes" value="Evening">
-                                <div class="checkbox-content">
-                                    <span class="checkbox-label">Evening</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button type="button" class="btn btn-secondary" onclick="goToStep1()">
-                        ← Back
-                    </button>
-                    <button type="submit" class="btn btn-primary" id="submitBtn">
-                        Complete Signup 🎉
-                    </button>
+                <p class="choice-description">Get notified about games throughout the week</p>
+            </div>
+        </label>
+        
+        <!-- Option 2: Sunday Only -->
+        <label class="choice-card choice-no">
+            <input type="radio" name="signupType" value="sunday-only" required id="sundayOnlyRadio">
+            <div class="choice-content">
+                <div class="choice-header">
+                    <span class="choice-icon">📅</span>
+                    <span class="choice-title">Sunday Game Only</span>
                 </div>
             </div>
+        </label>
+    </div>
+</div>
+
+<!-- Priority Alerts Details (Shows when Priority Alerts selected) -->
+<div id="priorityAlertsDetails" style="display: none;">
+    <div class="vip-details">
+        <div class="form-group">
+            <label for="homeCourt">Home Court *</label>
+            <input 
+                type="text" 
+                id="homeCourt" 
+                name="homeCourt" 
+                placeholder="e.g., Plummer Park, Venice Beach Courts"
+            >
+        </div>
+        
+        <div class="form-group">
+            <label>Skill Level *</label>
+            <div class="radio-group">
+                <label class="radio-card">
+                    <input type="radio" name="skillLevel" value="Beginner">
+                    <div class="radio-content">
+                        <span class="radio-icon">🌱</span>
+                        <span class="radio-label">Beginner</span>
+                    </div>
+                </label>
+                <label class="radio-card">
+                    <input type="radio" name="skillLevel" value="Intermediate">
+                    <div class="radio-content">
+                        <span class="radio-icon">⚡</span>
+                        <span class="radio-label">Intermediate</span>
+                    </div>
+                </label>
+                <label class="radio-card">
+                    <input type="radio" name="skillLevel" value="Advanced">
+                    <div class="radio-content">
+                        <span class="radio-icon">🔥</span>
+                        <span class="radio-label">Advanced</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Best Days to Play *</label>
+            <div class="checkbox-group days-grid">
+                <label class="checkbox-card compact">
+                    <input type="checkbox" name="bestDays" value="Monday">
+                    <div class="checkbox-content">
+                        <span class="checkbox-label">Mon</span>
+                    </div>
+                </label>
+                <label class="checkbox-card compact">
+                    <input type="checkbox" name="bestDays" value="Tuesday">
+                    <div class="checkbox-content">
+                        <span class="checkbox-label">Tue</span>
+                    </div>
+                </label>
+                <label class="checkbox-card compact">
+                    <input type="checkbox" name="bestDays" value="Wednesday">
+                    <div class="checkbox-content">
+                        <span class="checkbox-label">Wed</span>
+                    </div>
+                </label>
+                <label class="checkbox-card compact">
+                    <input type="checkbox" name="bestDays" value="Thursday">
+                    <div class="checkbox-content">
+                        <span class="checkbox-label">Thu</span>
+                    </div>
+                </label>
+                <label class="checkbox-card compact">
+                    <input type="checkbox" name="bestDays" value="Friday">
+                    <div class="checkbox-content">
+                        <span class="checkbox-label">Fri</span>
+                    </div>
+                </label>
+                <label class="checkbox-card compact">
+                    <input type="checkbox" name="bestDays" value="Saturday">
+                    <div class="checkbox-content">
+                        <span class="checkbox-label">Sat</span>
+                    </div>
+                </label>
+                <label class="checkbox-card compact">
+                    <input type="checkbox" name="bestDays" value="Sunday">
+                    <div class="checkbox-content">
+                        <span class="checkbox-label">Sun</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Best Times *</label>
+            <div class="checkbox-group">
+                <label class="checkbox-card">
+                    <input type="checkbox" name="bestTimes" value="Morning (6am-12pm)">
+                    <div class="checkbox-content">
+                        <span class="checkbox-icon">🌅</span>
+                        <span class="checkbox-label">Morning (6am-12pm)</span>
+                    </div>
+                </label>
+                <label class="checkbox-card">
+                    <input type="checkbox" name="bestTimes" value="Afternoon (12pm-5pm)">
+                    <div class="checkbox-content">
+                        <span class="checkbox-icon">☀️</span>
+                        <span class="checkbox-label">Afternoon (12pm-5pm)</span>
+                    </div>
+                </label>
+                <label class="checkbox-card">
+                    <input type="checkbox" name="bestTimes" value="Evening (5pm-9pm)">
+                    <div class="checkbox-content">
+                        <span class="checkbox-icon">🌆</span>
+                        <span class="checkbox-label">Evening (5pm-9pm)</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
             
             <!-- TEMPORARY DEBUG BUTTON - Add after the Complete Signup button -->
 
