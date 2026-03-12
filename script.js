@@ -238,7 +238,22 @@ function renderDateCards(sundays) {
         card.innerHTML = `
             <div style="display: flex; align-items: center; gap: 16px; padding: 4px;">
                 <div class="date-card-icon" style="flex-shrink: 0;">
-                    <img src="calendar-icon.png" alt="Calendar" style="width: 70px; height: 70px;">
+                    <svg width="70" height="70" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Calendar background -->
+    <rect x="15" y="25" width="70" height="60" rx="8" fill="#9B51E0" opacity="0.2"/>
+    <rect x="15" y="25" width="70" height="60" rx="8" fill="none" stroke="#9B51E0" stroke-width="3"/>
+    
+    <!-- Calendar header -->
+    <rect x="15" y="25" width="70" height="18" rx="8" fill="#9B51E0"/>
+    
+    <!-- Binding rings -->
+    <circle cx="30" cy="20" r="3" fill="#FFE500"/>
+    <circle cx="50" cy="20" r="3" fill="#FFE500"/>
+    <circle cx="70" cy="20" r="3" fill="#FFE500"/>
+    
+    <!-- SUN text -->
+    <text x="50" y="62" text-anchor="middle" font-size="22" font-weight="900" fill="#FFE500">SUN</text>
+</svg>
                 </div>
                 <div class="date-card-body" style="flex: 1;">
                     <div class="date-card-date" style="font-size: 20px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 6px;">
