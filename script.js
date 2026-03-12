@@ -448,19 +448,6 @@ function handlePaymentMethodChange(e) {
                 </p>
             </div>
         `;
-    } else if (method === 'Cash (In Person)') {
-        instructions = `
-            <div class="payment-method-details">
-                <h4 style="color: #00FFA3; margin-bottom: 12px;">💵 Pay Cash In Person</h4>
-                <div style="background: rgba(0, 255, 163, 0.1); border: 2px solid #00FFA3; padding: 16px; border-radius: 8px; margin: 12px 0;">
-                    <p style="margin: 0; font-size: 18px; font-weight: bold; color: #00FFA3;">Bring $${amount} cash to the court</p>
-                </div>
-                <p style="margin-top: 12px;">Please arrive a few minutes early to complete payment before the game starts.</p>
-                <p style="margin-top: 8px; font-size: 13px; color: rgba(255,255,255,0.6);">
-                    You'll receive a reminder email with game details.
-                </p>
-            </div>
-        `;
     }
     
     const paymentInstructions = document.getElementById('paymentInstructions');
