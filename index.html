@@ -47,17 +47,14 @@
             <div class="progress-bar" id="progressBar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <!-- ✅ FIX: Initialize with Step 0 of 3 -->
             <div class="progress-text" id="progressText">Step 0 of 3</div>
         </div>
 
         <!-- Form -->
         <form id="pickleballForm" onsubmit="submitForm(event); return false;">
-
+            
             <!-- ========================================
              STEP 0: DATE PICKER
-             ✅ FIX #6: Removed "Step 1 of 2" from header
-             ✅ FIX #7: Removed redundant "Which Sunday..." copy
              ======================================== -->
             <div class="form-step active" id="step0">
                 <div class="step-header">
@@ -65,7 +62,6 @@
                         <img src="calendar-icon.png" alt="Calendar" style="width: 80px; height: 80px;">
                     </div>
                     <h2>Pick Your Game Date</h2>
-                    <!-- ✅ FIX #7: Single instructional copy only -->
                     <p class="step-subtitle">Select which Sunday you'd like to play. We'll show you the next three available games!</p>
                 </div>
 
@@ -88,17 +84,16 @@
             </div>
 
             <!-- ========================================
-             STEP 1: SUNDAY SIGNUP
-             ✅ Step indicator now reads "Step 1 of 3"
+             STEP 1: PLAYER INFO & PAYMENT
              ======================================== -->
-           <div class="form-step" id="step1">
+            <div class="form-step" id="step1" style="display: none;">
                 <div class="step-header">
                     <div class="step-icon">✓</div>
                     <h2>Reserve Your Spot</h2>
                     <p class="step-subtitle">Sign up for this Sunday's Pickleball! Steven will organize the games and match you with players.</p>
                 </div>
 
-                <!-- ✅ NEW: PHONE NUMBER FIRST -->
+                <!-- Phone Number -->
                 <div class="form-group">
                     <label for="phone">Phone Number *</label>
                     <input 
@@ -113,7 +108,7 @@
                     <div id="playerRecognitionMessage" style="display: none;"></div>
                 </div>
 
-                <!-- PLAYER COUNT SELECTION -->
+                <!-- Player Count Selection -->
                 <div class="form-group">
                     <label>How many people are you signing up for? *</label>
                     <div style="display: flex; gap: 12px; margin-top: 12px;">
@@ -128,12 +123,13 @@
                     </div>
                 </div>
 
-                <!-- NAME FIELDS - DYNAMIC BASED ON PLAYER COUNT -->
+                <!-- Name Fields - Dynamic -->
                 <div id="nameFieldsContainer">
                     <!-- Will be populated by JavaScript based on player count selection -->
                 </div>
 
-               <div class="form-group">
+                <!-- Email -->
+                <div class="form-group">
                     <label for="email">Email Address *</label>
                     <input 
                         type="email" 
@@ -144,13 +140,9 @@
                     >
                 </div>
 
-                <!-- ========================================
-                 PAYMENT SECTION
-                 ======================================== -->
+                <!-- Payment Section -->
                 <div class="form-group">
-                    <label>
-                        Payment Required to Reserve Spot * 
-                    </label>
+                    <label>Payment Required to Reserve Spot *</label>
                     
                     <!-- Pricing Display -->
                     <div style="background: linear-gradient(135deg, rgba(155, 81, 224, 0.15), rgba(0, 217, 255, 0.15)); border-left: 4px solid #00D9FF; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
@@ -214,237 +206,237 @@
 
             <!-- ========================================
              STEP 2: PRIORITY ALERTS
-             New simplified design with single card + checkbox
              ======================================== -->
-           <div class="form-step" id="step2">
-    <div class="step-header vip">
-        <div class="step-icon">🎯</div>
-        <h2>Choose Your Signup Type</h2>
-        <p class="step-subtitle">Select Priority Alerts for weekly game notifications, or Sunday Only for just this game</p>
-    </div>
-               <!-- End of Priority Alerts Details -->
-</div>
-
-<!-- BUTTONS - Step 2 -->
-<div class="button-group">
-    <button type="button" class="btn btn-secondary" onclick="goToStep1()">
-        ← Back
-    </button>
-    <button type="submit" class="btn btn-primary">
-        Complete Sign Up →
-    </button>
-</div>
+            <div class="form-step" id="step2" style="display: none;">
+                <div class="step-header vip">
+                    <div class="step-icon">🎯</div>
+                    <h2>Choose Your Signup Type</h2>
+                    <p class="step-subtitle">Select Priority Alerts for weekly game notifications, or Sunday Only for just this game</p>
+                </div>
 
                 <!-- Priority Alerts Choice - NOW REQUIRED -->
-<div class="form-group">
-    <label>Choose Your Signup Type *</label>
-    
-    <div class="vip-choice">
-        <!-- Option 1: Priority Alerts -->
-        <label class="choice-card choice-yes">
-            <input type="radio" name="signupType" value="priority-alerts" required id="priorityAlertsRadio">
-            <div class="choice-content">
-                <div class="choice-header">
-                    <span class="choice-icon">⭐</span>
-                    <span class="choice-title">Priority Alerts (Free - Recommended!)</span>
+                <div class="form-group">
+                    <label>Choose Your Signup Type *</label>
+                    
+                    <div class="vip-choice">
+                        <!-- Option 1: Priority Alerts -->
+                        <label class="choice-card choice-yes">
+                            <input type="radio" name="signupType" value="priority-alerts" required id="priorityAlertsRadio">
+                            <div class="choice-content">
+                                <div class="choice-header">
+                                    <span class="choice-icon">⭐</span>
+                                    <span class="choice-title">Priority Alerts (Free - Recommended!)</span>
+                                </div>
+                                <p class="choice-description">Get notified about games throughout the week</p>
+                            </div>
+                        </label>
+                        
+                        <!-- Option 2: Sunday Only -->
+                        <label class="choice-card choice-no">
+                            <input type="radio" name="signupType" value="sunday-only" required id="sundayOnlyRadio">
+                            <div class="choice-content">
+                                <div class="choice-header">
+                                    <span class="choice-icon">📅</span>
+                                    <span class="choice-title">Sunday Game Only</span>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
                 </div>
-                <p class="choice-description">Get notified about games throughout the week</p>
-            </div>
-        </label>
-        
-        <!-- Option 2: Sunday Only -->
-        <label class="choice-card choice-no">
-            <input type="radio" name="signupType" value="sunday-only" required id="sundayOnlyRadio">
-            <div class="choice-content">
-                <div class="choice-header">
-                    <span class="choice-icon">📅</span>
-                    <span class="choice-title">Sunday Game Only</span>
-                </div>
-            </div>
-        </label>
-    </div>
-</div>
 
-<!-- Priority Alerts Details (Shows when Priority Alerts selected) -->
-<div id="priorityAlertsDetails" style="display: none;">
-    <div class="vip-details">
-        <div class="form-group">
-            <label for="homeCourt">Home Court *</label>
-            <input 
-                type="text" 
-                id="homeCourt" 
-                name="homeCourt" 
-                placeholder="e.g., Plummer Park, Venice Beach Courts"
-            >
-        </div>
-        
-        <div class="form-group">
-            <label>Skill Level *</label>
-            <div class="radio-group">
-                <label class="radio-card">
-                    <input type="radio" name="skillLevel" value="Beginner">
-                    <div class="radio-content">
-                        <span class="radio-icon">🌱</span>
-                        <span class="radio-label">Beginner</span>
+                <!-- Priority Alerts Details (Shows when Priority Alerts selected) -->
+                <div id="priorityAlertsDetails" style="display: none;">
+                    <div class="vip-details">
+                        <div class="form-group">
+                            <label for="homeCourt">Home Court *</label>
+                            <input 
+                                type="text" 
+                                id="homeCourt" 
+                                name="homeCourt" 
+                                placeholder="e.g., Plummer Park, Venice Beach Courts"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Skill Level *</label>
+                            <div class="radio-group">
+                                <label class="radio-card">
+                                    <input type="radio" name="skillLevel" value="Beginner">
+                                    <div class="radio-content">
+                                        <span class="radio-icon">🌱</span>
+                                        <span class="radio-label">Beginner</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="skillLevel" value="Intermediate">
+                                    <div class="radio-content">
+                                        <span class="radio-icon">⚡</span>
+                                        <span class="radio-label">Intermediate</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="skillLevel" value="Advanced">
+                                    <div class="radio-content">
+                                        <span class="radio-icon">🔥</span>
+                                        <span class="radio-label">Advanced</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Best Days to Play *</label>
+                            <div class="checkbox-group days-grid">
+                                <label class="checkbox-card compact">
+                                    <input type="checkbox" name="bestDays" value="Monday">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-label">Mon</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card compact">
+                                    <input type="checkbox" name="bestDays" value="Tuesday">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-label">Tue</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card compact">
+                                    <input type="checkbox" name="bestDays" value="Wednesday">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-label">Wed</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card compact">
+                                    <input type="checkbox" name="bestDays" value="Thursday">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-label">Thu</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card compact">
+                                    <input type="checkbox" name="bestDays" value="Friday">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-label">Fri</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card compact">
+                                    <input type="checkbox" name="bestDays" value="Saturday">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-label">Sat</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card compact">
+                                    <input type="checkbox" name="bestDays" value="Sunday">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-label">Sun</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Best Times *</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-card">
+                                    <input type="checkbox" name="bestTimes" value="Morning (6am-12pm)">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-icon">🌅</span>
+                                        <span class="checkbox-label">Morning (6am-12pm)</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" name="bestTimes" value="Afternoon (12pm-5pm)">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-icon">☀️</span>
+                                        <span class="checkbox-label">Afternoon (12pm-5pm)</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card">
+                                    <input type="checkbox" name="bestTimes" value="Evening (5pm-9pm)">
+                                    <div class="checkbox-content">
+                                        <span class="checkbox-icon">🌆</span>
+                                        <span class="checkbox-label">Evening (5pm-9pm)</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                </label>
-                <label class="radio-card">
-                    <input type="radio" name="skillLevel" value="Intermediate">
-                    <div class="radio-content">
-                        <span class="radio-icon">⚡</span>
-                        <span class="radio-label">Intermediate</span>
-                    </div>
-                </label>
-                <label class="radio-card">
-                    <input type="radio" name="skillLevel" value="Advanced">
-                    <div class="radio-content">
-                        <span class="radio-icon">🔥</span>
-                        <span class="radio-label">Advanced</span>
-                    </div>
-                </label>
+                </div>
+
+                <!-- BUTTONS - Step 2 -->
+                <div class="button-group">
+                    <button type="button" class="btn btn-secondary" onclick="goToStep1()">
+                        ← Back
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Complete Sign Up →
+                    </button>
+                </div>
             </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Best Days to Play *</label>
-            <div class="checkbox-group days-grid">
-                <label class="checkbox-card compact">
-                    <input type="checkbox" name="bestDays" value="Monday">
-                    <div class="checkbox-content">
-                        <span class="checkbox-label">Mon</span>
-                    </div>
-                </label>
-                <label class="checkbox-card compact">
-                    <input type="checkbox" name="bestDays" value="Tuesday">
-                    <div class="checkbox-content">
-                        <span class="checkbox-label">Tue</span>
-                    </div>
-                </label>
-                <label class="checkbox-card compact">
-                    <input type="checkbox" name="bestDays" value="Wednesday">
-                    <div class="checkbox-content">
-                        <span class="checkbox-label">Wed</span>
-                    </div>
-                </label>
-                <label class="checkbox-card compact">
-                    <input type="checkbox" name="bestDays" value="Thursday">
-                    <div class="checkbox-content">
-                        <span class="checkbox-label">Thu</span>
-                    </div>
-                </label>
-                <label class="checkbox-card compact">
-                    <input type="checkbox" name="bestDays" value="Friday">
-                    <div class="checkbox-content">
-                        <span class="checkbox-label">Fri</span>
-                    </div>
-                </label>
-                <label class="checkbox-card compact">
-                    <input type="checkbox" name="bestDays" value="Saturday">
-                    <div class="checkbox-content">
-                        <span class="checkbox-label">Sat</span>
-                    </div>
-                </label>
-                <label class="checkbox-card compact">
-                    <input type="checkbox" name="bestDays" value="Sunday">
-                    <div class="checkbox-content">
-                        <span class="checkbox-label">Sun</span>
-                    </div>
-                </label>
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <label>Best Times *</label>
-            <div class="checkbox-group">
-                <label class="checkbox-card">
-                    <input type="checkbox" name="bestTimes" value="Morning (6am-12pm)">
-                    <div class="checkbox-content">
-                        <span class="checkbox-icon">🌅</span>
-                        <span class="checkbox-label">Morning (6am-12pm)</span>
-                    </div>
-                </label>
-                <label class="checkbox-card">
-                    <input type="checkbox" name="bestTimes" value="Afternoon (12pm-5pm)">
-                    <div class="checkbox-content">
-                        <span class="checkbox-icon">☀️</span>
-                        <span class="checkbox-label">Afternoon (12pm-5pm)</span>
-                    </div>
-                </label>
-                <label class="checkbox-card">
-                    <input type="checkbox" name="bestTimes" value="Evening (5pm-9pm)">
-                    <div class="checkbox-content">
-                        <span class="checkbox-icon">🌆</span>
-                        <span class="checkbox-label">Evening (5pm-9pm)</span>
-                    </div>
-                </label>
-            </div>
-        </div>
-    </div>
-</div>
-            
-            <!-- TEMPORARY DEBUG BUTTON - Add after the Complete Signup button -->
+            <!-- END STEP 2 -->
 
             <!-- ========================================
-     CONFIRMATION SCREEN - ENHANCED
-     ======================================== -->
-<div class="form-step" id="confirmation" style="display: none;">
-    <div class="confirmation-content">
-        <div class="confirmation-icon">🎉</div>
-        <h2>You're All Set!</h2>
-        
-        <!-- Dynamic message from JavaScript -->
-        <p class="confirmation-message" id="confirmationMessage" style="font-size: 18px; margin: 20px 0; color: rgba(255, 255, 255, 0.9);"></p>
-        
-        <!-- EMAIL CONFIRMATION EMPHASIS -->
-        <div style="background: linear-gradient(135deg, rgba(255, 229, 0, 0.15), rgba(255, 107, 157, 0.15)); padding: 24px; border-radius: 12px; margin: 30px 0; border: 2px solid #FFE500; box-shadow: 0 8px 24px rgba(255, 229, 0, 0.2);">
-            <p style="margin: 0; font-size: 18px; font-weight: 700; color: #FFE500; text-align: center;">
-                📧 Check your email for confirmation & payment details!
-            </p>
-            <p id="confirmationEmail" style="margin: 12px 0 0 0; font-size: 16px; color: rgba(255, 255, 255, 0.8); text-align: center;">
-                <!-- Email address will be inserted here by JavaScript -->
-            </p>
-        </div>
-        
-        <!-- Game details will be inserted here -->
-        <div class="confirmation-details" id="confirmationDetails"></div>
-        
-        <!-- Action buttons - centered and same size -->
-<div style="display: flex; gap: 16px; margin-top: 40px; justify-content: center; align-items: center; flex-wrap: wrap;">
-    <a href="https://iwannaplaypickleball.com/warmup" 
-       class="btn btn-primary" 
-       style="display: flex; 
-              align-items: center; 
-              justify-content: center; 
-              gap: 10px; 
-              min-width: 220px;
-              padding: 18px 30px;
-              font-size: 18px;
-              font-weight: 700;
-              text-decoration: none;">
-        <span style="font-size: 24px;">🎾</span>
-        <span>Remember to Warm-Up</span>
-    </a>
-    
-    <a href="https://iwannaplaypickleball.com" 
-       class="btn btn-secondary" 
-       style="display: flex; 
-              align-items: center; 
-              justify-content: center; 
-              gap: 8px; 
-              min-width: 220px;
-              padding: 18px 30px;
-              font-size: 18px;
-              font-weight: 700;
-              text-decoration: none;">
-        <span>←</span>
-        <span>Back to Homepage</span>
-    </a>
-</div>
+             CONFIRMATION SCREEN
+             ======================================== -->
+            <div class="form-step" id="confirmation" style="display: none;">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon">🎉</div>
+                    <h2>You're All Set!</h2>
+                    
+                    <!-- Dynamic message from JavaScript -->
+                    <p class="confirmation-message" id="confirmationMessage" style="font-size: 18px; margin: 20px 0; color: rgba(255, 255, 255, 0.9);"></p>
+                    
+                    <!-- EMAIL CONFIRMATION EMPHASIS -->
+                    <div style="background: linear-gradient(135deg, rgba(255, 229, 0, 0.15), rgba(255, 107, 157, 0.15)); padding: 24px; border-radius: 12px; margin: 30px 0; border: 2px solid #FFE500; box-shadow: 0 8px 24px rgba(255, 229, 0, 0.2);">
+                        <p style="margin: 0; font-size: 18px; font-weight: 700; color: #FFE500; text-align: center;">
+                            📧 Check your email for confirmation & payment details!
+                        </p>
+                        <p id="confirmationEmail" style="margin: 12px 0 0 0; font-size: 16px; color: rgba(255, 255, 255, 0.8); text-align: center;">
+                            <!-- Email address will be inserted here by JavaScript -->
+                        </p>
+                    </div>
+                    
+                    <!-- Game details will be inserted here -->
+                    <div class="confirmation-details" id="confirmationDetails"></div>
+                    
+                    <!-- Action buttons - centered and same size -->
+                    <div style="display: flex; gap: 16px; margin-top: 40px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                        <a href="https://iwannaplaypickleball.com/warmup" 
+                           class="btn btn-primary" 
+                           style="display: flex; 
+                                  align-items: center; 
+                                  justify-content: center; 
+                                  gap: 10px; 
+                                  min-width: 220px;
+                                  padding: 18px 30px;
+                                  font-size: 18px;
+                                  font-weight: 700;
+                                  text-decoration: none;">
+                            <span style="font-size: 24px;">🎾</span>
+                            <span>Remember to Warm-Up</span>
+                        </a>
+                        
+                        <a href="https://iwannaplaypickleball.com" 
+                           class="btn btn-secondary" 
+                           style="display: flex; 
+                                  align-items: center; 
+                                  justify-content: center; 
+                                  gap: 8px; 
+                                  min-width: 220px;
+                                  padding: 18px 30px;
+                                  font-size: 18px;
+                                  font-weight: 700;
+                                  text-decoration: none;">
+                            <span>←</span>
+                            <span>Back to Homepage</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </form>
     </div>
-</div>
+
     <!-- ========================================
      LOADING OVERLAY
-     ✅ FIX #4: Loading spinner properly shows/hides
      ======================================== -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
