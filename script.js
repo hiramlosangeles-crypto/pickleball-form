@@ -430,13 +430,19 @@ function handlePlayerCountChange() {
         `;
     }
     
-    // CRITICAL: Call autofill AFTER fields are created
+     // CRITICAL: Call autofill AFTER fields are created
     setTimeout(() => {
         console.log('⏰ Calling autoFillPlayerInfo after timeout');
         autoFillPlayerInfo();
     }, 100);
+    
+    // NEW: Update payment amount if payment method already selected
+    const selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+    if (selectedPaymentMethod) {
+        console.log('🔄 Updating payment display after player count change');
+        handlePaymentMethodChange({ target: selectedPaymentMethod });
+    }
 }
-
 
 function handleSignupTypeChange() {
     const priorityAlertsRadio = document.getElementById('priorityAlertsRadio');
@@ -461,8 +467,15 @@ function handleSignupTypeChange() {
 }
 function handlePaymentMethodChange(e) {
     const method = e.target.value;
-    const playerCount = document.querySelector('input[name="playerCount"]:checked')?.value || '1';
+    
+    // Get player count - default to 1 if not selected yet
+    const playerCountElement = document.querySelector('input[name="playerCount"]:checked');
+    const playerCount = playerCountElement ? playerCountElement.value : '1';
     const amount = parseInt(playerCount) * 4;
+    
+    console.log('💳 Payment method changed:', method);
+    console.log('👥 Player count:', playerCount);
+    console.log('💵 Amount:', amount);
     
     let instructions = '';
     
