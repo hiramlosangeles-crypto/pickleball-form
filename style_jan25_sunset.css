@@ -1144,3 +1144,39 @@ button:disabled {
         transform: scale(1.01);
     }
 }
+/* ========================================
+   SUNDAY ONLY CARD - BRIGHT ORANGE
+   ======================================== */
+
+/* Sunday Only - Bright Orange Gradient */
+.choice-no {
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.15), rgba(255, 165, 0, 0.1)) !important;
+    border: 2px solid rgba(255, 140, 0, 0.4) !important;
+}
+
+.choice-no:hover {
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.25), rgba(255, 165, 0, 0.2)) !important;
+    border-color: rgba(255, 140, 0, 0.6) !important;
+    box-shadow: 0 8px 24px rgba(255, 140, 0, 0.3) !important;
+}
+
+/* Selected state - orange glow */
+.choice-no input[type="radio"]:checked + .choice-content {
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.3), rgba(255, 165, 0, 0.25)) !important;
+    border-color: #FFA500 !important;
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.6), 0 0 40px rgba(255, 165, 0, 0.4) !important;
+}
+
+.choice-no input[type="radio"]:checked + .choice-content .choice-title {
+    color: #FFA500 !important;
+    text-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+}
+
+.choice-no input[type="radio"]:checked + .choice-content .choice-icon {
+    filter: drop-shadow(0 0 8px rgba(255, 165, 0, 0.8));
+}
+
+/* Priority Alerts - Keep existing purple but enhance */
+.choice-yes input[type="radio"]:checked + .choice-content .choice-icon {
+    filter: drop-shadow(0 0 8px rgba(0, 255, 163, 0.8));
+}
