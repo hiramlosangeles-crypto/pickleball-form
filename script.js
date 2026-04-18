@@ -485,7 +485,7 @@ function handlePaymentMethodChange(e) {
                 <h4 style="color: #00D9FF; margin-bottom: 12px;">💳 Pay with Venmo</h4>
                 <p><strong>Venmo:</strong> @Steven-Bettencourt-4</p>
                 <p style="margin-top: 12px;">
-                    <a href="venmo://paycharge?txn=pay&recipients=Steven-Bettencourt-4&amount=${amount}&note=Pickleball%20Sunday%20Game" 
+                    <a href="https://venmo.com/?txn=pay&audience=private&recipients=Steven-Bettencourt-4&amount=${amount}&note=Pickleball%20Sunday%20Game" 
                        style="display: inline-block; padding: 12px 24px; background: #00D9FF; color: white; text-decoration: none; border-radius: 8px; font-weight: bold;">
                         Pay $${amount} via Venmo →
                     </a>
