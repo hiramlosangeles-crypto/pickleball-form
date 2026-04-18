@@ -403,13 +403,7 @@ function showPaymentInfo(method) {
             title: '🌐 PayPal',
             info: '<strong style="color: #00D9FF; font-size: 18px;">hyruhm@hyruhm.com</strong>',
             note: 'Send payment to PayPal email'
-        },
-        inperson: {
-            title: '💵 In Person',
-            info: '<strong style="color: #00D9FF; font-size: 18px;">Pay at the court</strong>',
-            note: 'Bring cash or card to the game'
         }
-    };
     
     const selected = paymentDetails[method];
     
