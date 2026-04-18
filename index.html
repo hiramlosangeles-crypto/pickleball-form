@@ -4,27 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reserve Your Spot - I Wanna Play Pickleball</title>
-    
-    <!-- ✅ OPEN GRAPH META TAGS - For beautiful link previews in iMessage, WhatsApp, etc. -->
-    <meta property="og:title" content="Reserve Your Spot - I Wanna Play Pickleball">
-    <meta property="og:description" content="Join us for Sunday pickleball games at Plummer Park! Sign up now to secure your spot and connect with players.">
-    <meta property="og:image" content="https://hiramlosangeles-crypto.github.io/pickleball-form/og-image-banner.jpg">
-    <meta property="og:url" content="https://hiramlosangeles-crypto.github.io/pickleball-form/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="I Wanna Play Pickleball">
-    
-    <!-- ✅ TWITTER CARD META TAGS - For Twitter/X link previews -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Reserve Your Spot - I Wanna Play Pickleball">
-    <meta name="twitter:description" content="Join us for Sunday pickleball games at Plummer Park!">
-    <meta name="twitter:image" content="https://hiramlosangeles-crypto.github.io/pickleball-form/og-image-banner.jpg">
-    
-    <!-- ✅ FAVICON - Shows in browser tab and bookmarks -->
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    
-    <link rel="stylesheet" href="style_jan25_sunset.css?v=1004">
+    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -47,43 +27,331 @@
             <div class="progress-bar" id="progressBar">
                 <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="progress-text" id="progressText">Step 0 of 3</div>
+            <div class="progress-text" id="progressText">Step 1 of 2</div>
         </div>
 
         <!-- Form -->
-        <form id="pickleballForm" onsubmit="submitForm(event); return false;">
+        <form id="pickleballForm">
             
             <!-- ========================================
-             STEP 0: DATE PICKER
-             ======================================== -->
-            <div class="form-step active" id="step0">
+                 STEP 1 OF 2: ALL FORM FIELDS
+                 ======================================== -->
+            <div class="form-step active" id="step1">
                 <div class="step-header">
-                    <div class="step-icon">
-                        <img src="calendar-icon.png" alt="Calendar" style="width: 80px; height: 80px;">
-                    </div>
-                    <h2>Pick Your Game Date</h2>
-                    <p class="step-subtitle">Select which Sunday you'd like to play. We'll show you the next three available games!</p>
+                    <div class="step-icon">✓</div>
+                    <h2>Reserve Your Spot</h2>
+                    <p class="step-subtitle">Sign up for this week's Sunday Pickleball! Steven will organize the games and match you with players.</p>
+                    <p class="step-subtitle" style="margin-top: 18px; font-size: 18px; font-weight: 700; color: #00D9FF; line-height: 1.6;">JAN 25 • 7:00–9:00 PM<br>PLUMMER PARK · COURTS 6A & 7A</p>
                 </div>
 
+                <!-- PLAYER INFO -->
                 <div class="form-group">
-                    <label style="display: none;">Select a date</label>
-                    <div class="date-choice" id="dateChoiceContainer">
-                        <!-- Dates will be loaded dynamically from Google Apps Script -->
-                        <div class="loading-dates">
-                            <div class="spinner"></div>
-                            <p>Loading available game dates...</p>
+                    <label for="names">Name(s) / Nickname(s) *</label>
+                    <input 
+                        type="text" 
+                        id="names" 
+                        name="names" 
+                        placeholder="e.g., Hiram or Hiram & Steven"
+                        required
+                    >
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input 
+                            type="tel" 
+                            id="phone" 
+                            name="phone" 
+                            placeholder="(213) 555-1234"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="your@email.com"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- TIME SLOTS -->
+                <div class="form-group">
+                    <label>What time do you want to play? *</label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="timeSlot" value="7:00–8:00 PM">
+                            <div class="checkbox-content">
+                                <span class="checkbox-icon">🕖</span>
+                                <span class="checkbox-label">7:00–8:00 PM</span>
+                            </div>
+                        </label>
+                        <label class="checkbox-card">
+                            <input type="checkbox" name="timeSlot" value="8:00–9:00 PM">
+                            <div class="checkbox-content">
+                                <span class="checkbox-icon">🕗</span>
+                                <span class="checkbox-label">8:00–9:00 PM</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- PAYMENT METHOD -->
+                <div class="form-group">
+                    <label>
+                        Contribution Method * 
+                        <span class="info-icon" onclick="toggleDonationInfo()">💡</span>
+                    </label>
+                    
+                    <!-- Donation Info Tooltip -->
+                    <div id="donationInfo" class="donation-info" style="display: none;">
+                        <div class="donation-info-content">
+                            <h4>💡 Why $5?</h4>
+                            <p>Your $5 contribution covers <strong>court reservations, game organization, and all the logistics</strong> so you can just show up and play.</p>
+                            
+                            <div class="donation-breakdown">
+                                <p><strong>What Your Contribution Covers:</strong></p>
+                                <ul>
+                                    <li>Reserved court time at Plummer Park</li>
+                                    <li>Organized games with matched players</li>
+                                    <li>Communication and coordination</li>
+                                    <li>Equipment and supplies</li>
+                                </ul>
+                                
+                                <p class="donation-highlight">✨ This is a non-profit community group. Pay what you can – no one is turned away!</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p class="field-description" style="margin-top: 8px; margin-bottom: 12px; font-size: 14px; color: #94A3B8;">Please contribute $5 per person to help cover costs.</p>
+                    
+                    <div class="radio-group">
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="Cash App" required onclick="showPaymentInfo('cashapp')">
+                            <div class="radio-content">
+                                <span class="radio-icon">💵</span>
+                                <span class="radio-label">Cash App</span>
+                            </div>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="Venmo" onclick="showPaymentInfo('venmo')">
+                            <div class="radio-content">
+                                <span class="radio-icon">💳</span>
+                                <span class="radio-label">Venmo</span>
+                            </div>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="Zelle" onclick="showPaymentInfo('zelle')">
+                            <div class="radio-content">
+                                <span class="radio-icon">🏦</span>
+                                <span class="radio-label">Zelle</span>
+                            </div>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="paymentMethod" value="PayPal" onclick="showPaymentInfo('paypal')">
+                            <div class="radio-content">
+                                <span class="radio-icon">🌐</span>
+                                <span class="radio-label">PayPal</span>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <!-- Payment Details Box -->
+                    <div id="paymentInfo" class="payment-info" style="display: none;">
+                        <div id="paymentDetails"></div>
+                    </div>
+                </div>
+
+                <!-- PRIORITY ALERTS / SUNDAY ONLY CHOICE -->
+                <div class="form-group">
+                    <label>Sign-Up Type *</label>
+                    <div class="radio-group">
+                        <label class="radio-card">
+                            <input type="radio" name="vipChoice" value="Yes - Priority Alerts (Free!)" required id="vipYes">
+                            <div class="radio-content">
+                                <span class="radio-icon">⭐</span>
+                                <span class="radio-label">Priority Alerts (Free!)</span>
+                            </div>
+                        </label>
+                        <label class="radio-card">
+                            <input type="radio" name="vipChoice" value="No - Sunday Only" id="vipNo">
+                            <div class="radio-content">
+                                <span class="radio-icon">☀️</span>
+                                <span class="radio-label">Sunday Only</span>
+                            </div>
+                        </label>
+                    </div>
+                    <p style="margin-top: 12px; font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.5;">
+                        <strong style="color: #FFE500;">Priority Alerts:</strong> Get notified about games throughout the week (free, unsubscribe anytime)<br>
+                        <strong style="color: #FFA500;">Sunday Only:</strong> Just this Sunday's game, no extra notifications
+                    </p>
+                </div>
+
+                <!-- PRIORITY ALERTS DETAILS (Conditional) -->
+                <div id="vipDetails" class="vip-details" style="display: none;">
+                    <div class="form-group">
+                        <label for="homeCourt">Home Court / City *</label>
+                        <input 
+                            type="text" 
+                            id="homeCourt" 
+                            name="homeCourt" 
+                            placeholder="e.g., Plummer Park or West Hollywood"
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label>Skill Level *</label>
+                        <div class="radio-group">
+                            <label class="radio-card">
+                                <input type="radio" name="skillLevel" value="Social">
+                                <div class="radio-content">
+                                    <span class="radio-label">Social</span>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="skillLevel" value="Beginner">
+                                <div class="radio-content">
+                                    <span class="radio-label">Beginner</span>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="skillLevel" value="Intermediate">
+                                <div class="radio-content">
+                                    <span class="radio-label">Intermediate</span>
+                                </div>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="skillLevel" value="Advanced">
+                                <div class="radio-content">
+                                    <span class="radio-label">Advanced</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Best Days *</label>
+                        <div class="checkbox-group days-grid">
+                            <label class="checkbox-card compact">
+                                <input type="checkbox" name="bestDays" value="Mon">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-label">Mon</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card compact">
+                                <input type="checkbox" name="bestDays" value="Tue">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-label">Tue</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card compact">
+                                <input type="checkbox" name="bestDays" value="Wed">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-label">Wed</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card compact">
+                                <input type="checkbox" name="bestDays" value="Thu">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-label">Thu</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card compact">
+                                <input type="checkbox" name="bestDays" value="Fri">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-label">Fri</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card compact">
+                                <input type="checkbox" name="bestDays" value="Sat">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-label">Sat</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card compact">
+                                <input type="checkbox" name="bestDays" value="Sun">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-label">Sun</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Best Times *</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="bestTimes" value="Morning (6–10 AM)">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🌅</span>
+                                    <span class="checkbox-label">Morning (6–10 AM)</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="bestTimes" value="Midday (10 AM–2 PM)">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">☀️</span>
+                                    <span class="checkbox-label">Midday (10 AM–2 PM)</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="bestTimes" value="Afternoon (2–6 PM)">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🌤️</span>
+                                    <span class="checkbox-label">Afternoon (2–6 PM)</span>
+                                </div>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="bestTimes" value="Evening (6–9 PM)">
+                                <div class="checkbox-content">
+                                    <span class="checkbox-icon">🌆</span>
+                                    <span class="checkbox-label">Evening (6–9 PM)</span>
+                                </div>
+                            </label>
                         </div>
                     </div>
                 </div>
 
+                <!-- SUBMIT BUTTON - Now at end of Step 1 -->
                 <div class="button-group">
-    <button type="button" class="btn btn-primary" onclick="goToStep2()">
-        Continue to Step 2 →
-    </button>
-</div>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        Complete Signup 🎉
+                    </button>
+                </div>
             </div>
+            <!-- END STEP 1 -->
 
             <!-- ========================================
+                 STEP 2 OF 2: CONFIRMATION
+                 ======================================== -->
+            <div class="form-step" id="confirmation" style="display: none;">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon">🎉</div>
+                    <h2>You're All Set!</h2>
+                    <p class="confirmation-message" id="confirmationMessage"></p>
+                    <div class="confirmation-details" id="confirmationDetails"></div>
+                    <a href="https://iwannaplaypickleball.com" class="btn btn-primary">Back to Home</a>
+                </div>
+            </div>
+            <!-- END STEP 2 -->
+
+        </form>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p>Submitting your signup...</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>            <!-- ========================================
              STEP 1: PLAYER INFO & PAYMENT
              ======================================== -->
             <div class="form-step" id="step1" style="display: none;">
