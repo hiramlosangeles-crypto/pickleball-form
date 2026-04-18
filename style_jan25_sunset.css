@@ -1180,3 +1180,36 @@ button:disabled {
 .choice-yes input[type="radio"]:checked + .choice-content .choice-icon {
     filter: drop-shadow(0 0 8px rgba(0, 255, 163, 0.8));
 }
+/* ========================================
+   STEP 2 SIMPLIFIED - FIX OVERLAPPING STYLES
+   ======================================== */
+
+/* Remove all .choice-card, .choice-yes, .choice-no styles */
+/* These were causing the overlapping box issue */
+
+/* Step 2 uses standard .radio-card styles only */
+#step2 .radio-group {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 540px) {
+    #step2 .radio-group {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Priority Alerts selected state - Purple glow */
+#step2 .radio-card input[type="radio"][value="priority-alerts"]:checked + .radio-content {
+    background: linear-gradient(135deg, rgba(155, 81, 224, 0.3), rgba(217, 70, 239, 0.2));
+    border-color: #9B51E0;
+    box-shadow: 0 0 20px rgba(155, 81, 224, 0.6);
+}
+
+/* Sunday Only selected state - Orange glow */
+#step2 .radio-card input[type="radio"][value="sunday-only"]:checked + .radio-content {
+    background: linear-gradient(135deg, rgba(255, 107, 0, 0.3), rgba(255, 165, 0, 0.2));
+    border-color: #FFA500;
+    box-shadow: 0 0 20px rgba(255, 165, 0, 0.6);
+}
