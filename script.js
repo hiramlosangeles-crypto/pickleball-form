@@ -613,6 +613,7 @@ function goToStep1() {
 // ========================================
 
 function updateProgress(step, total) {
+    function updateProgress(step, total) {
     const percentage = (step / total) * 100;
     document.getElementById('progressFill').style.width = percentage + '%';
     document.getElementById('progressText').textContent = `Step ${step} of ${total}`;
