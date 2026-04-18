@@ -148,7 +148,7 @@ function validateStep1() {
     }
     
     if (!paymentMethod) {
-        alert('Please select a contribution method');
+        alert('Please select a payment method');
         return false;
     }
     
@@ -376,7 +376,7 @@ function showConfirmation(formData) {
 }
 
 // ===================================
-// PAYMENT INFO DISPLAY
+// PAYMENT INFO DISPLAY - ONLY ZELLE & VENMO
 // ===================================
 
 function showPaymentInfo(method) {
@@ -384,26 +384,17 @@ function showPaymentInfo(method) {
     const detailsDiv = document.getElementById('paymentDetails');
     
     const paymentDetails = {
-        cashapp: {
-            title: '💵 Cash App',
-            info: '<strong style="color: #00D9FF; font-size: 18px;">$HyruhmUlyssisGrant</strong>',
-            note: 'Send payment to Cash App'
-        },
-        venmo: {
-            title: '💳 Venmo',
-            info: '<a href="https://venmo.com/Steven-Bettencourt-4" target="_blank" style="color: #00D9FF; font-size: 18px; text-decoration: none; font-weight: bold;">@Steven-Bettencourt-4</a>',
-            note: 'Click to open Venmo'
-        },
         zelle: {
             title: '🏦 Zelle',
             info: '<strong style="color: #00D9FF; font-size: 18px;">(310) 433-8281</strong><br><span style="font-size: 16px;">or bettencourtdesign@me.com</span>',
             note: 'Send via phone number or email'
         },
-        paypal: {
-            title: '🌐 PayPal',
-            info: '<strong style="color: #00D9FF; font-size: 18px;">hyruhm@hyruhm.com</strong>',
-            note: 'Send payment to PayPal email'
+        venmo: {
+            title: '💳 Venmo',
+            info: '<a href="https://venmo.com/Steven-Bettencourt-4" target="_blank" style="color: #00D9FF; font-size: 18px; text-decoration: none; font-weight: bold;">@Steven-Bettencourt-4</a>',
+            note: 'Click to open Venmo'
         }
+    };
     
     const selected = paymentDetails[method];
     
@@ -419,23 +410,6 @@ function showPaymentInfo(method) {
         setTimeout(() => {
             infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }, 100);
-    }
-}
-
-// ===================================
-// DONATION INFO TOGGLE
-// ===================================
-
-function toggleDonationInfo() {
-    const infoBox = document.getElementById('donationInfo');
-    if (infoBox.style.display === 'none' || infoBox.style.display === '') {
-        infoBox.style.display = 'block';
-        // Smooth scroll to show the info
-        setTimeout(() => {
-            infoBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 100);
-    } else {
-        infoBox.style.display = 'none';
     }
 }
 
