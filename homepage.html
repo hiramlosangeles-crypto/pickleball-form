@@ -431,6 +431,31 @@
 
         .btb-title span { color: var(--yellow); }
 
+        .btb-link {
+            text-decoration: none;
+            display: inline-block;
+            transition: opacity 0.2s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btb-link:hover { opacity: 0.85; }
+
+        .btb-link .btb-eyebrow,
+        .btb-link .btb-title {
+            pointer-events: none; /* clicks go to the <a> wrapper */
+        }
+
+        /* subtle "tap to read our story" hint */
+        .btb-read-more {
+            display: inline-block;
+            margin-top: -12px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: rgba(255,255,255,0.35);
+            letter-spacing: 1px;
+        }
+
         .no-group {
             display: flex;
             align-items: center;
@@ -604,8 +629,15 @@
 
     <!-- BEYOND THE BASELINE -->
     <footer class="btb-section">
-        <span class="btb-eyebrow">About Us</span>
-        <span class="btb-title">Beyond The <span>Baseline</span></span>
+        <a href="https://hiramlosangeles-crypto.github.io/Beyond-the-Baseline/"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="btb-link"
+           aria-label="About Us — Beyond The Baseline">
+            <span class="btb-eyebrow">About Us</span>
+            <span class="btb-title">Beyond The <span>Baseline</span></span>
+        </a>
+        <span class="btb-read-more">Tap to read our story →</span>
 
         <div class="no-group">
             <span style="color: var(--red); font-size: 18px;">🚫</span>
