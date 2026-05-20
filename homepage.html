@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>I Wanna Play Pickleball — Sunday Games at Plummer Park</title>
+
+    <meta property="og:title" content="I Wanna Play Pickleball">
+    <meta property="og:description" content="Sunday pickleball games at Plummer Park, West Hollywood. By invitation only. Reserve your spot now.">
+    <meta property="og:image" content="player-hero.jpg">
+    <meta property="og:url" content="https://iwannaplaypickleball.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* ================================
+           RESET & BASE
+        ================================ */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --purple:  #9B51E0;
+            --yellow:  #FFE500;
+            --orange:  #FFA500;
+            --pink:    #FF6B9D;
+            --magenta: #D946EF;
+            --red:     #CC0000;
+            --navy:    #0A0015;
+            --navy2:   #130025;
+            --navy3:   #1a0a3e;
+            --card-bg: #1a0a3e;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--navy);
+            color: #fff;
+            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* ================================
+           HERO SECTION
+        ================================ */
+        .hero {
+            position: relative;
+            width: 100%;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hero-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            z-index: 0;
+        }
+
+        /* Dark overlay so text pops */
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                180deg,
+                rgba(10, 0, 21, 0.45) 0%,
+                rgba(10, 0, 21, 0.25) 35%,
+                rgba(10, 0, 21, 0.65) 70%,
+                rgba(10, 0, 21, 0.97) 100%
+            );
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 100svh;
+            padding: 28px 20px 32px;
+        }
+
+        /* ================================
+           WORDMARK
+        ================================ */
+        .wordmark {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 900;
+            line-height: 0.88;
+            letter-spacing: -2px;
+            animation: fadeDown 0.7s ease both;
+        }
+
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .wordmark-line {
+            display: block;
+            font-size: clamp(44px, 12vw, 72px);
+        }
+
+        .wl1 { background: linear-gradient(90deg, #FFE500 0%, #FF9500 40%, #FF6B9D 70%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .wl2 { background: linear-gradient(90deg, #FF6B9D 0%, #D946EF 40%, #9B51E0 70%, #00BFFF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        /* ================================
+           HERO BOTTOM CTA
+        ================================ */
+        .hero-bottom {
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .reserve-eyebrow {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .reserve-heading {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #fff;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .reserve-heading strong {
+            color: var(--yellow);
+        }
+
+        .cta-btn {
+            display: block;
+            width: 100%;
+            padding: 20px 28px;
+            background: linear-gradient(90deg,
+                var(--purple) 0%,
+                var(--magenta) 30%,
+                var(--pink) 55%,
+                var(--orange) 80%,
+                var(--yellow) 100%
+            );
+            border: none;
+            border-radius: 14px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
+            box-shadow: 0 8px 32px rgba(155,81,224,0.5);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .cta-btn:active {
+            transform: scale(0.98);
+            box-shadow: 0 4px 16px rgba(155,81,224,0.4);
+        }
+
+        /* ================================
+           INFO SECTION (below hero)
+        ================================ */
+        .info-section {
+            background: var(--navy);
+            padding: 28px 20px 0;
+        }
+
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(155,81,224,0.25);
+            border-radius: 14px;
+            padding: 16px 10px;
+            text-align: center;
+        }
+
+        .info-card-icon {
+            font-size: 26px;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .info-card-label {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .info-card-value {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--yellow);
+            display: block;
+            line-height: 1.15;
+        }
+
+        /* ================================
+           RELAX TAGLINE
+        ================================ */
+        .relax-bar {
+            text-align: center;
+            padding: 18px 20px 24px;
+            background: var(--navy);
+        }
+
+        .relax-text {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            font-style: italic;
+            color: rgba(255,255,255,0.55);
+            letter-spacing: 1px;
+        }
+
+        /* ================================
+           PHOENIX ALLIANCE SECTION
+        ================================ */
+        .phoenix-section {
+            margin: 0 16px 24px;
+            background: linear-gradient(135deg, rgba(204,0,0,0.12), rgba(155,81,224,0.10));
+            border: 1px solid rgba(204,0,0,0.35);
+            border-radius: 18px;
+            padding: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .phoenix-section::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            right: -30px;
+            width: 100px;
+            height: 100px;
+            background: rgba(204,0,0,0.08);
+            border-radius: 50%;
+        }
+
+        .phoenix-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .phoenix-logo-wrap {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #111;
+            border: 2.5px solid var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+            box-shadow: 0 0 16px rgba(204,0,0,0.4);
+        }
+
+        .phoenix-logo-wrap img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .phoenix-title-group {
+            flex: 1;
+        }
+
+        .phoenix-eyebrow {
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .phoenix-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 20px;
+            font-weight: 900;
+            color: #FF8888;
+            letter-spacing: 1px;
+            display: block;
+        }
+
+        .phoenix-link {
+            font-size: 10px;
+            color: rgba(255,100,100,0.5);
+            display: block;
+            margin-top: 1px;
+            text-decoration: none;
+        }
+
+        .phoenix-body {
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .phoenix-member-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(204,0,0,0.18);
+            border: 1px solid rgba(204,0,0,0.4);
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #FF8888;
+            margin-bottom: 12px;
+            text-decoration: none;
+        }
+
+        .pill-dot {
+            width: 7px;
+            height: 7px;
+            background: #CC0000;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .phoenix-tagline {
+            font-style: italic;
+            font-size: 12px;
+            color: rgba(255,255,255,0.38);
+            line-height: 1.7;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            padding-top: 12px;
+        }
+
+        /* ================================
+           INVITE ONLY SECTION
+        ================================ */
+        .invite-section {
+            margin: 0 16px 24px;
+            background: var(--card-bg);
+            border: 1px solid rgba(155,81,224,0.25);
+            border-radius: 16px;
+            padding: 22px 20px;
+            text-align: center;
+        }
+
+        .invite-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--yellow);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .invite-body {
+            font-size: 13px;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+        }
+
+        /* ================================
+           BEYOND THE BASELINE
+        ================================ */
+        .btb-section {
+            background: linear-gradient(180deg, var(--navy3) 0%, var(--navy) 100%);
+            border-top: 1px solid rgba(155,81,224,0.2);
+            padding: 28px 20px 36px;
+            text-align: center;
+        }
+
+        .btb-eyebrow {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--yellow);
+            text-transform: uppercase;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .btb-title {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 38px;
+            font-weight: 900;
+            color: #fff;
+            line-height: 1;
+            display: block;
+            margin-bottom: 20px;
+        }
+
+        .btb-title span {
+            color: var(--yellow);
+        }
+
+        .no-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 20px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            margin-bottom: 20px;
+        }
+
+        .no-group-text {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 16px;
+            font-weight: 800;
+            color: rgba(255,255,255,0.45);
+            letter-spacing: 2px;
+        }
+
+        .footer-cta {
+            margin-top: 4px;
+        }
+
+        .footer-cta a {
+            font-size: 12px;
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+        }
+
+        /* ================================
+           DESKTOP LAYOUT
+        ================================ */
+        @media (min-width: 600px) {
+            .hero-content {
+                max-width: 480px;
+                margin: 0 auto;
+                width: 100%;
+            }
+
+            .info-section,
+            .relax-bar {
+                max-width: 480px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .phoenix-section,
+            .invite-section {
+                max-width: 448px;
+            }
+
+            .btb-section {
+                padding: 40px 20px 48px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .wordmark-line {
+                font-size: 80px;
+            }
+
+            .cta-btn {
+                font-size: 24px;
+            }
+
+            .hero-content {
+                max-width: 560px;
+            }
+
+            .info-section,
+            .relax-bar {
+                max-width: 560px;
+            }
+
+            .phoenix-section,
+            .invite-section {
+                max-width: 528px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ================================
+         HERO
+    ================================ -->
+    <section class="hero">
+        <!-- Full-bleed hero image -->
+        <img src="player-hero.jpg" alt="Pickleball player" class="hero-image">
+
+        <!-- Dark gradient overlay -->
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <!-- Wordmark top-left -->
+            <div class="wordmark">
+                <span class="wordmark-line wl1">I WANNA PLAY</span>
+                <span class="wordmark-line wl2">PICKLEBALL</span>
+            </div>
+
+            <!-- CTA bottom -->
+            <div class="hero-bottom">
+                <span class="reserve-eyebrow">Reserve Your Spot</span>
+                <span class="reserve-heading"><strong>SIGN UP NOW</strong></span>
+                <a href="https://hiramlosangeles-crypto.github.io/pickleball-form/" class="cta-btn">
+                    SIGN UP FOR SUNDAY GAME &nbsp;→
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         GAME INFO CARDS
+    ================================ -->
+    <section class="info-section">
+        <div class="info-cards">
+            <div class="info-card">
+                <span class="info-card-icon">📅</span>
+                <span class="info-card-label">When</span>
+                <span class="info-card-value">Every Sunday</span>
+            </div>
+            <div class="info-card">
+                <span class="info-card-icon">⏰</span>
+                <span class="info-card-label">Time</span>
+                <span class="info-card-value">7:00–9:00 PM</span>
+            </div>
+            <div class="info-card">
+                <span class="info-card-icon">📍</span>
+                <span class="info-card-label">Location</span>
+                <span class="info-card-value">Plummer Park</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================================
+         RELAX TAGLINE
+    ================================ -->
+    <div class="relax-bar">
+        <span class="relax-text">Relax, It's Just Pickleball</span>
+    </div>
+
+    <!-- ================================
+         PHOENIX ALLIANCE
+    ================================ -->
+    <section class="phoenix-section">
+        <div class="phoenix-header">
+            <div class="phoenix-logo-wrap">
+                <!-- Use phoenix-logo.png once uploaded to GitHub repo -->
+                <img src="phoenix-logo.png" alt="The Phoenix"
+                     onerror="this.style.display='none'; this.parentNode.innerHTML='<svg width=\'32\' height=\'32\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'44\' fill=\'none\' stroke=\'#fff\' stroke-width=\'6\'/><ellipse cx=\'50\' cy=\'60\' rx=\'26\' ry=\'30\' fill=\'%23CC0000\'/><ellipse cx=\'50\' cy=\'42\' rx=\'13\' ry=\'15\' fill=\'%23AA0000\'/><path d=\'M50 20 Q43 30 50 38 Q57 30 50 20Z\' fill=\'%23EE3333\'/></svg>';">
+            </div>
+            <div class="phoenix-title-group">
+                <span class="phoenix-eyebrow">Community Partner</span>
+                <span class="phoenix-title">THE PHOENIX</span>
+                <a href="https://thephoenix.org" target="_blank" rel="noopener noreferrer" class="phoenix-link">thephoenix.org ↗</a>
+            </div>
+        </div>
+
+        <p class="phoenix-body">
+            We're proud to partner with The Phoenix — a nonprofit dedicated to building a sober, active community for people in recovery through sport, connection, and friendship.
+        </p>
+
+        <a href="https://hiramlosangeles-crypto.github.io/pickleball-form/" class="phoenix-member-pill">
+            <span class="pill-dot"></span>
+            Phoenix member? Sign up free →
+        </a>
+
+        <div class="phoenix-tagline">
+            "Every player matters. Every life counts.<br>
+            Every game ends with friends, no matter the score."
+        </div>
+    </section>
+
+    <!-- ================================
+         BY INVITATION ONLY
+    ================================ -->
+    <section class="invite-section">
+        <span class="invite-title">BY INVITATION ONLY</span>
+        <p class="invite-body">
+            Sunday games are shared through player invitations to keep the experience enjoyable for everyone.
+        </p>
+    </section>
+
+    <!-- ================================
+         BEYOND THE BASELINE
+    ================================ -->
+    <footer class="btb-section">
+        <span class="btb-eyebrow">About Us</span>
+        <span class="btb-title">Beyond The <span>Baseline</span></span>
+
+        <div class="no-group">
+            <span style="color: var(--red); font-size: 16px;">🚫</span>
+            <span class="no-group-text">NO GROUP TEXT. EVER.</span>
+        </div>
+
+        <div class="footer-cta">
+            <a href="https://hiramlosangeles-crypto.github.io/pickleball-form/">Reserve your spot →</a>
+        </div>
+    </footer>
+
+</body>
+</html>
