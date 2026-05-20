@@ -130,9 +130,9 @@
 
         .reserve-heading {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: 1px;
+            font-size: 30px;
+            font-weight: 700;
+            letter-spacing: 4px;
             color: #fff;
             display: block;
             margin-bottom: 18px;
@@ -160,9 +160,9 @@
             border: none;
             border-radius: 16px;
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 2px;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 3px;
             color: #fff;
             text-decoration: none;
             text-align: center;
@@ -385,9 +385,9 @@
 
         .invite-title {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 3px;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 5px;
             color: var(--yellow);
             display: block;
             margin-bottom: 10px;
@@ -421,15 +421,21 @@
 
         .btb-title {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 40px;
-            font-weight: 900;
+            font-size: 38px;
+            font-weight: 700;
+            letter-spacing: 2px;
             color: #fff;
             line-height: 1;
             display: block;
             margin-bottom: 24px;
         }
 
-        .btb-title span { color: var(--yellow); }
+        /* "Baseline" — extra tracking balances the weight difference with "Beyond The" */
+        .btb-title span {
+            color: var(--yellow);
+            letter-spacing: 5px;
+            margin-left: 2px; /* optical space after "The " */
+        }
 
         .btb-link {
             text-decoration: none;
@@ -470,9 +476,9 @@
 
         .no-group-text {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 18px;
-            font-weight: 800;
-            letter-spacing: 2px;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 3px;
             color: rgba(255,255,255,0.45);
         }
 
@@ -493,9 +499,9 @@
             );
             border-radius: 14px;
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 21px;
-            font-weight: 900;
-            letter-spacing: 2px;
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 3px;
             color: #fff;
             text-decoration: none;
             text-shadow: 0 2px 6px rgba(0,0,0,0.3);
@@ -538,7 +544,7 @@
             }
 
             .cta-btn { font-size: 26px; }
-            .btb-title { font-size: 48px; }
+            .btb-title { font-size: 44px; }
         }
     </style>
 </head>
