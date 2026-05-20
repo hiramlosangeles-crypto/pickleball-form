@@ -1180,3 +1180,233 @@ button:disabled {
 .choice-yes input[type="radio"]:checked + .choice-content .choice-icon {
     filter: drop-shadow(0 0 8px rgba(0, 255, 163, 0.8));
 }
+/* ========================================
+   PHOENIX PAGE STYLES
+   Add these at the very bottom of style_jan25_sunset.css
+   ======================================== */
+
+/* Logos Row */
+.phoenix-logos-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 26px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.iwpp-logo-text {
+    font-size: 18px;
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+}
+
+.iwpp-line1 {
+    background: linear-gradient(90deg, #FFE500, #FF9500, #FF6B9D);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+}
+
+.iwpp-line2 {
+    background: linear-gradient(90deg, #FF6B9D, #D946EF, #9B51E0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: block;
+}
+
+.phoenix-divider-v {
+    width: 1px;
+    height: 54px;
+    background: rgba(255, 255, 255, 0.15);
+    flex-shrink: 0;
+}
+
+.phoenix-partner-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.phoenix-logo-circle {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #111;
+    border: 2.5px solid #CC0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+
+.phoenix-partner-link:hover .phoenix-logo-circle {
+    box-shadow: 0 0 14px rgba(204, 0, 0, 0.7);
+}
+
+.phoenix-partner-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.phoenix-partner-name {
+    font-size: 13px;
+    font-weight: 800;
+    color: #FF8888;
+    letter-spacing: 0.8px;
+    display: block;
+    line-height: 1.2;
+}
+
+.phoenix-partner-sub {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    display: block;
+}
+
+.phoenix-partner-hint {
+    font-size: 9px;
+    color: rgba(255, 100, 100, 0.5);
+    display: block;
+    margin-top: 2px;
+}
+
+/* Phoenix Cards */
+.phoenix-card {
+    border-radius: 14px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    padding: 18px 20px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+}
+
+.phoenix-card-icon {
+    font-size: 24px;
+    flex-shrink: 0;
+}
+
+.phoenix-card-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.3px;
+}
+
+/* YES Card */
+.phoenix-card-yes:hover {
+    border-color: rgba(255, 229, 0, 0.35);
+    background: rgba(255, 229, 0, 0.05);
+}
+
+.phoenix-card-yes.selected {
+    background: linear-gradient(135deg, rgba(155, 81, 224, 0.25), rgba(217, 70, 239, 0.15));
+    border: 3px solid #FFE500;
+    box-shadow: 0 0 20px rgba(255, 229, 0, 0.6), 0 0 40px rgba(255, 229, 0, 0.3);
+    transform: scale(1.01);
+}
+
+.phoenix-card-yes.selected .phoenix-card-title {
+    color: #FFE500;
+}
+
+/* NO Card */
+.phoenix-card-no:hover {
+    border-color: rgba(0, 255, 120, 0.35);
+    background: rgba(0, 255, 120, 0.04);
+}
+
+.phoenix-card-no.selected {
+    background: linear-gradient(135deg, rgba(0, 200, 100, 0.2), rgba(0, 255, 120, 0.1));
+    border: 3px solid #00FF88;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.55), 0 0 40px rgba(0, 255, 136, 0.25);
+    transform: scale(1.01);
+}
+
+.phoenix-card-no.selected .phoenix-card-title {
+    color: #00FF88;
+}
+
+/* Phoenix Member Form Reveal */
+.phoenix-form-reveal {
+    margin-top: 16px;
+    animation: fadeSlideIn 0.35s ease;
+}
+
+.phoenix-form-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 540px) {
+    .phoenix-form-row {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* NO Redirect Progress */
+.phoenix-no-redirect {
+    margin-top: 14px;
+    background: rgba(0, 255, 136, 0.08);
+    border: 1.5px solid rgba(0, 255, 136, 0.3);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+    animation: fadeSlideIn 0.3s ease;
+}
+
+.phoenix-no-redirect p {
+    margin: 0;
+    font-size: 14px;
+    color: #00FF88;
+    font-weight: 600;
+}
+
+.phoenix-no-redirect small {
+    display: block;
+    margin-top: 4px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+.phoenix-progress-bar {
+    height: 4px;
+    background: rgba(0, 255, 136, 0.2);
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.phoenix-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: #00FF88;
+    border-radius: 4px;
+    transition: width 1.5s ease;
+}
+
+/* Phoenix Tagline */
+.phoenix-tagline {
+    font-style: italic;
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.35);
+    text-align: center;
+    margin-top: 22px;
+    line-height: 1.8;
+    padding: 16px 8px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
