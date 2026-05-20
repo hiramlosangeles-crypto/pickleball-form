@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
     <title>Reserve Your Spot - I Wanna Play Pickleball</title>
     
-    <!-- ✅ OPEN GRAPH META TAGS - For beautiful link previews in iMessage, WhatsApp, etc. -->
     <meta property="og:title" content="Reserve Your Spot - I Wanna Play Pickleball">
     <meta property="og:description" content="Join us for Sunday pickleball games at Plummer Park! Sign up now to secure your spot and connect with players.">
     <meta property="og:image" content="https://hiramlosangeles-crypto.github.io/pickleball-form/og-image-banner.jpg">
@@ -13,18 +13,16 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="I Wanna Play Pickleball">
     
-    <!-- ✅ TWITTER CARD META TAGS - For Twitter/X link previews -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Reserve Your Spot - I Wanna Play Pickleball">
     <meta name="twitter:description" content="Join us for Sunday pickleball games at Plummer Park!">
     <meta name="twitter:image" content="https://hiramlosangeles-crypto.github.io/pickleball-form/og-image-banner.jpg">
     
-    <!-- ✅ FAVICON - Shows in browser tab and bookmarks -->
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="180x180" href="favicon.png">
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
     
-    <link rel="stylesheet" href="style_jan25_sunset.css?v=1004">
+    <link rel="stylesheet" href="style_jan25_sunset.css?v=1005">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -52,7 +50,7 @@
 
         <!-- Form -->
         <form id="pickleballForm" onsubmit="submitForm(event); return false;">
-            
+
             <!-- ========================================
              STEP 0: DATE PICKER
              ======================================== -->
@@ -68,7 +66,6 @@
                 <div class="form-group">
                     <label style="display: none;">Select a date</label>
                     <div class="date-choice" id="dateChoiceContainer">
-                        <!-- Dates will be loaded dynamically from Google Apps Script -->
                         <div class="loading-dates">
                             <div class="spinner"></div>
                             <p>Loading available game dates...</p>
@@ -84,6 +81,103 @@
             </div>
 
             <!-- ========================================
+             PHOENIX PAGE: ARE YOU A PHOENIX MEMBER?
+             ======================================== -->
+            <div class="form-step" id="stepPhoenix" style="display: none;">
+
+                <!-- Logos Row -->
+                <div class="phoenix-logos-row">
+                    <div class="iwpp-logo-text">
+                        <span class="iwpp-line1">I WANNA PLAY</span>
+                        <span class="iwpp-line2">PICKLEBALL</span>
+                    </div>
+                    <div class="phoenix-divider-v"></div>
+                    <a href="https://thephoenix.org" target="_blank" rel="noopener noreferrer" class="phoenix-partner-link" title="Visit The Phoenix">
+                        <div class="phoenix-logo-circle">
+                            <img src="phoenix-logo.png" alt="The Phoenix" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+                        </div>
+                        <div class="phoenix-partner-text">
+                            <span class="phoenix-partner-name">THE PHOENIX</span>
+                            <span class="phoenix-partner-sub">Community Partner</span>
+                            <span class="phoenix-partner-hint">thephoenix.org ↗</span>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Question Header -->
+                <div class="step-header" style="margin-bottom: 24px; background-image: linear-gradient(var(--bg-card), var(--bg-card)), linear-gradient(135deg, #CC0000, #9B51E0); background-origin: border-box; background-clip: padding-box, border-box;">
+                    <h2 style="background: linear-gradient(135deg, #ffffff, #d4c5f9); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Are You a Phoenix Member?</h2>
+                </div>
+
+                <!-- YES Card -->
+                <div class="phoenix-card phoenix-card-yes" id="phoenixYesCard" onclick="handlePhoenixYes()">
+                    <span class="phoenix-card-icon">🔴</span>
+                    <span class="phoenix-card-title">YES, I'M A PHOENIX MEMBER</span>
+                </div>
+
+                <!-- Phoenix Member Form — reveals when YES selected -->
+                <div id="phoenixMemberForm" style="display: none;" class="phoenix-form-reveal">
+                    <div class="phoenix-form-row">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="phoenixName">Full Name *</label>
+                            <input
+                                type="text"
+                                id="phoenixName"
+                                name="phoenixName"
+                                placeholder="First Last"
+                            >
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="phoenixEmail">
+                                Email
+                                <span style="font-weight: 400; color: var(--text-muted); font-size: 12px;">(optional)</span>
+                            </label>
+                            <input
+                                type="email"
+                                id="phoenixEmail"
+                                name="phoenixEmail"
+                                placeholder="your@email.com"
+                            >
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px;">
+                        <button type="button" class="btn btn-primary" onclick="submitPhoenixMember()">
+                            Submit
+                        </button>
+                    </div>
+                </div>
+
+                <!-- NO Card -->
+                <div class="phoenix-card phoenix-card-no" id="phoenixNoCard" onclick="handlePhoenixNo()">
+                    <span class="phoenix-card-icon">🏓</span>
+                    <span class="phoenix-card-title">NO, CONTINUE TO REGULAR SIGN UP</span>
+                </div>
+
+                <!-- NO Redirect Message -->
+                <div id="phoenixNoRedirect" style="display: none;" class="phoenix-no-redirect">
+                    <p>Taking you to sign up now...</p>
+                    <small>You'll be there in just a moment</small>
+                    <div class="phoenix-progress-bar">
+                        <div class="phoenix-progress-fill" id="phoenixProgressFill"></div>
+                    </div>
+                </div>
+
+                <!-- Back Button -->
+                <div style="margin-top: 20px;">
+                    <button type="button" class="btn btn-secondary" onclick="goBackToDatePicker()">
+                        ← Back to Date Picker
+                    </button>
+                </div>
+
+                <!-- Tagline -->
+                <div class="phoenix-tagline">
+                    "Every player matters. Every life counts.<br>Every game ends with friends, no matter the score."
+                </div>
+
+            </div>
+            <!-- END PHOENIX PAGE -->
+
+            <!-- ========================================
              STEP 1: PLAYER INFO & PAYMENT
              ======================================== -->
             <div class="form-step" id="step1" style="display: none;">
@@ -96,11 +190,11 @@
                 <!-- Phone Number -->
                 <div class="form-group">
                     <label for="phone">Phone Number *</label>
-                    <input 
-                        type="tel" 
-                        id="phone" 
-                        name="phone" 
-                        placeholder="(555) 123-4567" 
+                    <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        placeholder="(555) 123-4567"
                         required
                         oninput="handlePhoneInput(this)"
                         maxlength="14"
@@ -124,17 +218,15 @@
                 </div>
 
                 <!-- Name Fields - Dynamic -->
-                <div id="nameFieldsContainer">
-                    <!-- Will be populated by JavaScript based on player count selection -->
-                </div>
+                <div id="nameFieldsContainer"></div>
 
                 <!-- Email -->
                 <div class="form-group">
                     <label for="email">Email Address *</label>
-                    <input 
-                        type="email" 
-                        id="email" 
-                        name="email" 
+                    <input
+                        type="email"
+                        id="email"
+                        name="email"
                         placeholder="your@email.com"
                         required
                     >
@@ -143,8 +235,7 @@
                 <!-- Payment Section -->
                 <div class="form-group">
                     <label>Payment Required to Reserve Spot *</label>
-                    
-                    <!-- Pricing Display -->
+
                     <div style="background: linear-gradient(135deg, rgba(155, 81, 224, 0.15), rgba(0, 217, 255, 0.15)); border-left: 4px solid #00D9FF; padding: 16px; border-radius: 8px; margin-bottom: 16px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <div>
@@ -158,8 +249,7 @@
                             </button>
                         </div>
                     </div>
-                    
-                    <!-- Donation Info Tooltip -->
+
                     <div id="donationInfo" class="donation-info" style="display: none;">
                         <div class="donation-info-content">
                             <h4>💡 Payment Details</h4>
@@ -167,12 +257,11 @@
                             <p>Your $4 helps cover court time, reservations, and coordination (signups and reminders). No one is ever turned away for lack of funds.</p>
                         </div>
                     </div>
-                    
+
                     <p class="field-description" style="margin-top: 8px; margin-bottom: 16px; font-size: 14px; color: #FF6B00; font-weight: 700;">
                         ⚠️ IMPORTANT: Your spot is <strong>PENDING</strong> until payment is verified. Pay within 24 hours to secure your reservation.
                     </p>
-                    
-                    <!-- Payment Method Selection -->
+
                     <div class="radio-group">
                         <label class="radio-card">
                             <input type="radio" name="paymentMethod" value="Venmo" required onclick="showVenmoPayment()">
@@ -181,7 +270,6 @@
                                 <span class="radio-label">Venmo</span>
                             </div>
                         </label>
-                        
                         <label class="radio-card">
                             <input type="radio" name="paymentMethod" value="Zelle" required onclick="showZellePayment()">
                             <div class="radio-content">
@@ -190,8 +278,7 @@
                             </div>
                         </label>
                     </div>
-                    
-                    <!-- Payment Instructions (Appears after selection) -->
+
                     <div id="paymentInstructions" class="payment-instructions" style="display: none; margin-top: 24px;">
                         <div id="paymentDetails"></div>
                     </div>
@@ -214,12 +301,10 @@
                     <p class="step-subtitle">Select Priority Alerts for weekly game notifications, or Sunday Only for just this game</p>
                 </div>
 
-                <!-- Priority Alerts Choice - NOW REQUIRED -->
                 <div class="form-group">
                     <label>Choose Your Signup Type *</label>
-                    
+
                     <div class="vip-choice">
-                        <!-- Option 1: Priority Alerts -->
                         <label class="choice-card choice-yes">
                             <input type="radio" name="signupType" value="priority-alerts" required id="priorityAlertsRadio">
                             <div class="choice-content">
@@ -230,13 +315,14 @@
                                 <p class="choice-description">Get notified about games throughout the week</p>
                             </div>
                         </label>
-                        
-                        <!-- Option 2: Sunday Only -->
+
                         <label class="choice-card choice-no">
                             <input type="radio" name="signupType" value="sunday-only" required id="sundayOnlyRadio">
                             <div class="choice-content">
                                 <div class="choice-header">
-                                    <span class="choice-icon">📅</span>
+                                    <span class="choice-icon">
+                                        <img src="calendar-icon.png" alt="Calendar" style="width: 32px; height: 32px;">
+                                    </span>
                                     <span class="choice-title">Sunday Game Only</span>
                                 </div>
                             </div>
@@ -244,101 +330,87 @@
                     </div>
                 </div>
 
-                <!-- Priority Alerts Details (Shows when Priority Alerts selected) -->
+                <!-- Priority Alerts Details -->
                 <div id="priorityAlertsDetails" style="display: none;">
                     <div class="vip-details">
                         <div class="form-group">
                             <label for="homeCourt">Home Court *</label>
-                            <input 
-                                type="text" 
-                                id="homeCourt" 
-                                name="homeCourt" 
+                            <input
+                                type="text"
+                                id="homeCourt"
+                                name="homeCourt"
                                 placeholder="e.g., Plummer Park, Venice Beach Courts"
                             >
                         </div>
-                        
+
                         <div class="form-group">
-    <label>Skill Level *</label>
-    <div class="radio-group">
-        <label class="radio-card">
-            <input type="radio" name="skillLevel" value="Social">
-            <div class="radio-content">
-                <span class="radio-icon">🎉</span>
-                <span class="radio-label">Social</span>
-            </div>
-        </label>
-        <label class="radio-card">
-            <input type="radio" name="skillLevel" value="Beginner">
-            <div class="radio-content">
-                <span class="radio-icon">🌱</span>
-                <span class="radio-label">Beginner</span>
-            </div>
-        </label>
-        <label class="radio-card">
-            <input type="radio" name="skillLevel" value="Intermediate">
-            <div class="radio-content">
-                <span class="radio-icon">⚡</span>
-                <span class="radio-label">Intermediate</span>
-            </div>
-        </label>
-        <label class="radio-card">
-            <input type="radio" name="skillLevel" value="Advanced">
-            <div class="radio-content">
-                <span class="radio-icon">🔥</span>
-                <span class="radio-label">Advanced</span>
-            </div>
-        </label>
-    </div>
-</div>
-                        
+                            <label>Skill Level *</label>
+                            <div class="radio-group">
+                                <label class="radio-card">
+                                    <input type="radio" name="skillLevel" value="Social">
+                                    <div class="radio-content">
+                                        <span class="radio-icon">🎉</span>
+                                        <span class="radio-label">Social</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="skillLevel" value="Beginner">
+                                    <div class="radio-content">
+                                        <span class="radio-icon">🌱</span>
+                                        <span class="radio-label">Beginner</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="skillLevel" value="Intermediate">
+                                    <div class="radio-content">
+                                        <span class="radio-icon">⚡</span>
+                                        <span class="radio-label">Intermediate</span>
+                                    </div>
+                                </label>
+                                <label class="radio-card">
+                                    <input type="radio" name="skillLevel" value="Advanced">
+                                    <div class="radio-content">
+                                        <span class="radio-icon">🔥</span>
+                                        <span class="radio-label">Advanced</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label>Best Days to Play *</label>
                             <div class="checkbox-group days-grid">
                                 <label class="checkbox-card compact">
                                     <input type="checkbox" name="bestDays" value="Monday">
-                                    <div class="checkbox-content">
-                                        <span class="checkbox-label">Mon</span>
-                                    </div>
+                                    <div class="checkbox-content"><span class="checkbox-label">Mon</span></div>
                                 </label>
                                 <label class="checkbox-card compact">
                                     <input type="checkbox" name="bestDays" value="Tuesday">
-                                    <div class="checkbox-content">
-                                        <span class="checkbox-label">Tue</span>
-                                    </div>
+                                    <div class="checkbox-content"><span class="checkbox-label">Tue</span></div>
                                 </label>
                                 <label class="checkbox-card compact">
                                     <input type="checkbox" name="bestDays" value="Wednesday">
-                                    <div class="checkbox-content">
-                                        <span class="checkbox-label">Wed</span>
-                                    </div>
+                                    <div class="checkbox-content"><span class="checkbox-label">Wed</span></div>
                                 </label>
                                 <label class="checkbox-card compact">
                                     <input type="checkbox" name="bestDays" value="Thursday">
-                                    <div class="checkbox-content">
-                                        <span class="checkbox-label">Thu</span>
-                                    </div>
+                                    <div class="checkbox-content"><span class="checkbox-label">Thu</span></div>
                                 </label>
                                 <label class="checkbox-card compact">
                                     <input type="checkbox" name="bestDays" value="Friday">
-                                    <div class="checkbox-content">
-                                        <span class="checkbox-label">Fri</span>
-                                    </div>
+                                    <div class="checkbox-content"><span class="checkbox-label">Fri</span></div>
                                 </label>
                                 <label class="checkbox-card compact">
                                     <input type="checkbox" name="bestDays" value="Saturday">
-                                    <div class="checkbox-content">
-                                        <span class="checkbox-label">Sat</span>
-                                    </div>
+                                    <div class="checkbox-content"><span class="checkbox-label">Sat</span></div>
                                 </label>
                                 <label class="checkbox-card compact">
                                     <input type="checkbox" name="bestDays" value="Sunday">
-                                    <div class="checkbox-content">
-                                        <span class="checkbox-label">Sun</span>
-                                    </div>
+                                    <div class="checkbox-content"><span class="checkbox-label">Sun</span></div>
                                 </label>
                             </div>
                         </div>
-                        
+
                         <div class="form-group">
                             <label>Best Times *</label>
                             <div class="checkbox-group">
@@ -368,7 +440,6 @@
                     </div>
                 </div>
 
-                <!-- BUTTONS - Step 2 -->
                 <div class="button-group">
                     <button type="button" class="btn btn-secondary" onclick="goToStep1()">
                         ← Back
@@ -387,51 +458,28 @@
                 <div class="confirmation-content">
                     <div class="confirmation-icon">🎉</div>
                     <h2>You're All Set!</h2>
-                    
-                    <!-- Dynamic message from JavaScript -->
+
                     <p class="confirmation-message" id="confirmationMessage" style="font-size: 18px; margin: 20px 0; color: rgba(255, 255, 255, 0.9);"></p>
-                    
-                    <!-- EMAIL CONFIRMATION EMPHASIS -->
+
                     <div style="background: linear-gradient(135deg, rgba(255, 229, 0, 0.15), rgba(255, 107, 157, 0.15)); padding: 24px; border-radius: 12px; margin: 30px 0; border: 2px solid #FFE500; box-shadow: 0 8px 24px rgba(255, 229, 0, 0.2);">
                         <p style="margin: 0; font-size: 18px; font-weight: 700; color: #FFE500; text-align: center;">
                             📧 Check your email for confirmation & payment details!
                         </p>
-                        <p id="confirmationEmail" style="margin: 12px 0 0 0; font-size: 16px; color: rgba(255, 255, 255, 0.8); text-align: center;">
-                            <!-- Email address will be inserted here by JavaScript -->
-                        </p>
+                        <p id="confirmationEmail" style="margin: 12px 0 0 0; font-size: 16px; color: rgba(255, 255, 255, 0.8); text-align: center;"></p>
                     </div>
-                    
-                    <!-- Game details will be inserted here -->
+
                     <div class="confirmation-details" id="confirmationDetails"></div>
-                    
-                    <!-- Action buttons - centered and same size -->
+
                     <div style="display: flex; gap: 16px; margin-top: 40px; justify-content: center; align-items: center; flex-wrap: wrap;">
-                        <a href="https://iwannaplaypickleball.com/warmup" 
-                           class="btn btn-primary" 
-                           style="display: flex; 
-                                  align-items: center; 
-                                  justify-content: center; 
-                                  gap: 10px; 
-                                  min-width: 220px;
-                                  padding: 18px 30px;
-                                  font-size: 18px;
-                                  font-weight: 700;
-                                  text-decoration: none;">
+                        <a href="https://iwannaplaypickleball.com/warmup"
+                           class="btn btn-primary"
+                           style="display: flex; align-items: center; justify-content: center; gap: 10px; min-width: 220px; padding: 18px 30px; font-size: 18px; font-weight: 700; text-decoration: none;">
                             <span style="font-size: 24px;">🎾</span>
                             <span>Remember to Warm-Up</span>
                         </a>
-                        
-                        <a href="https://iwannaplaypickleball.com" 
-                           class="btn btn-secondary" 
-                           style="display: flex; 
-                                  align-items: center; 
-                                  justify-content: center; 
-                                  gap: 8px; 
-                                  min-width: 220px;
-                                  padding: 18px 30px;
-                                  font-size: 18px;
-                                  font-weight: 700;
-                                  text-decoration: none;">
+                        <a href="https://iwannaplaypickleball.com"
+                           class="btn btn-secondary"
+                           style="display: flex; align-items: center; justify-content: center; gap: 8px; min-width: 220px; padding: 18px 30px; font-size: 18px; font-weight: 700; text-decoration: none;">
                             <span>←</span>
                             <span>Back to Homepage</span>
                         </a>
@@ -442,9 +490,7 @@
         </form>
     </div>
 
-    <!-- ========================================
-     LOADING OVERLAY
-     ======================================== -->
+    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
         <p>Submitting your signup...</p>
