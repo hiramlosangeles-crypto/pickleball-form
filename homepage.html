@@ -70,10 +70,12 @@
             inset: 0;
             background: linear-gradient(
                 180deg,
-                rgba(10,0,21,0.55) 0%,
-                rgba(10,0,21,0.20) 30%,
-                rgba(10,0,21,0.60) 65%,
-                rgba(10,0,21,0.97) 100%
+                rgba(10,0,21,0.48) 0%,    /* top — logo area, slightly lighter */
+                rgba(10,0,21,0.08) 22%,   /* hero photo breathes here */
+                rgba(10,0,21,0.08) 40%,   /* sustained open window */
+                rgba(10,0,21,0.52) 60%,   /* begin quiet descent */
+                rgba(10,0,21,0.84) 78%,   /* cinematic base forming */
+                rgba(10,0,21,0.97) 100%   /* solid dark for CTA legibility */
             );
             z-index: 1;
         }
@@ -85,7 +87,7 @@
             flex-direction: column;
             justify-content: space-between;
             min-height: 100svh;
-            padding: clamp(14px, 3.5vw, 24px) clamp(16px, 6vw, 48px) 36px;
+            padding: clamp(40px, 7vw, 56px) clamp(16px, 6vw, 48px) 36px;
         }
 
         /* ================================
@@ -111,6 +113,7 @@
         ================================ */
         .hero-bottom {
             animation: fadeUp 0.8s 0.3s ease both;
+            padding-top: 32px; /* quiet breathing room between photo and CTA */
         }
 
         @keyframes fadeUp {
@@ -119,23 +122,23 @@
         }
 
         .reserve-eyebrow {
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 4px;
-            color: rgba(255,255,255,0.55);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 6px;
+            color: rgba(255,255,255,0.85);
             text-transform: uppercase;
             display: block;
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
 
         .reserve-heading {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 30px;
+            font-size: 26px;
             font-weight: 700;
             letter-spacing: 4px;
             color: #fff;
             display: block;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
 
         .reserve-heading strong {
@@ -160,14 +163,14 @@
             border: none;
             border-radius: 16px;
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 22px;
-            font-weight: 800;
+            font-size: 21px;
+            font-weight: 700;
             letter-spacing: 3px;
             color: #fff;
             text-decoration: none;
             text-align: center;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
-            box-shadow: 0 8px 32px rgba(155,81,224,0.5);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 6px 24px rgba(155,81,224,0.38);
             transition: transform 0.15s ease, box-shadow 0.15s ease;
             -webkit-tap-highlight-color: transparent;
         }
