@@ -163,9 +163,10 @@
             border: none;
             border-radius: 16px;
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 21px;
+            font-size: clamp(15px, 4vw, 22px);
             font-weight: 700;
-            letter-spacing: 3px;
+            letter-spacing: clamp(1px, 0.5vw, 3px);
+            white-space: nowrap;          /* arrow never drops to new line */
             color: #fff;
             text-decoration: none;
             text-align: center;
@@ -502,12 +503,13 @@
             );
             border-radius: 14px;
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 20px;
-            font-weight: 800;
-            letter-spacing: 3px;
+            font-size: clamp(15px, 4vw, 21px);
+            font-weight: 700;
+            letter-spacing: clamp(1px, 0.5vw, 3px);
+            white-space: nowrap;
             color: #fff;
             text-decoration: none;
-            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+            text-shadow: 0 1px 4px rgba(0,0,0,0.25);
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -535,6 +537,8 @@
         }
 
         @media (min-width: 768px) {
+            .hero-logo { width: clamp(380px, 72vw, 680px); } /* larger on desktop */
+
             .hero-content,
             .info-section,
             .relax-bar {
@@ -546,7 +550,6 @@
                 max-width: 548px;
             }
 
-            .cta-btn { font-size: 26px; }
             .btb-title { font-size: 44px; }
         }
     </style>
