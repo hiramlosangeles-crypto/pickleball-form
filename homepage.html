@@ -15,7 +15,7 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -70,12 +70,12 @@
             inset: 0;
             background: linear-gradient(
                 180deg,
-                rgba(10,0,21,0.48) 0%,    /* top — logo area, slightly lighter */
-                rgba(10,0,21,0.08) 22%,   /* hero photo breathes here */
-                rgba(10,0,21,0.08) 40%,   /* sustained open window */
-                rgba(10,0,21,0.52) 60%,   /* begin quiet descent */
-                rgba(10,0,21,0.84) 78%,   /* cinematic base forming */
-                rgba(10,0,21,0.97) 100%   /* solid dark for CTA legibility */
+                rgba(10,0,21,0.48) 0%,
+                rgba(10,0,21,0.08) 22%,
+                rgba(10,0,21,0.08) 40%,
+                rgba(10,0,21,0.52) 60%,
+                rgba(10,0,21,0.84) 78%,
+                rgba(10,0,21,0.97) 100%
             );
             z-index: 1;
         }
@@ -91,14 +91,12 @@
         }
 
         /* ================================
-           LOGO — actual brand image
+           LOGO
         ================================ */
         .hero-logo {
-            /* clamp: min 260px on tiny phones, 88vw fluid, max 580px on desktop */
             width: clamp(260px, 88vw, 580px);
             height: auto;
             display: block;
-            /* screen blend removes black background, keeps vivid brand colors */
             mix-blend-mode: screen;
             animation: fadeDown 0.7s ease both;
         }
@@ -113,7 +111,7 @@
         ================================ */
         .hero-bottom {
             animation: fadeUp 0.8s 0.3s ease both;
-            padding-top: 32px; /* quiet breathing room between photo and CTA */
+            padding-top: 32px;
         }
 
         @keyframes fadeUp {
@@ -122,30 +120,32 @@
         }
 
         .reserve-eyebrow {
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 6px;
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 4px;
             color: rgba(255,255,255,0.85);
             text-transform: uppercase;
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .reserve-heading {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 26px;
-            font-weight: 700;
-            letter-spacing: 4px;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(22px, 6vw, 30px);
+            font-weight: 900;
+            letter-spacing: 1px;
             color: #fff;
             display: block;
             margin-bottom: 16px;
+            line-height: 1.1;
         }
 
         .reserve-heading strong {
             color: var(--yellow);
         }
 
-        /* CTA button — min 60px tall for easy thumb tap */
+        /* CTA button */
         .cta-btn {
             display: flex;
             align-items: center;
@@ -162,11 +162,10 @@
             );
             border: none;
             border-radius: 16px;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: clamp(15px, 4vw, 22px);
-            font-weight: 700;
-            letter-spacing: clamp(1px, 0.5vw, 3px);
-            white-space: nowrap;          /* arrow never drops to new line */
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(15px, 4vw, 20px);
+            font-weight: 800;
+            letter-spacing: 0.5px;
             color: #fff;
             text-decoration: none;
             text-align: center;
@@ -221,12 +220,12 @@
         }
 
         .info-card-value {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 18px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
             font-weight: 800;
             color: var(--yellow);
             display: block;
-            line-height: 1.2;
+            line-height: 1.3;
         }
 
         /* ================================
@@ -239,12 +238,12 @@
         }
 
         .relax-text {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 24px;
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
             font-weight: 700;
             font-style: italic;
             color: rgba(255,255,255,0.5);
-            letter-spacing: 1px;
+            letter-spacing: 0px;
         }
 
         /* ================================
@@ -327,7 +326,6 @@
             text-decoration: none;
         }
 
-        /* body text — comfortable reading on small screens */
         .phoenix-body {
             font-size: 15px;
             line-height: 1.65;
@@ -335,7 +333,6 @@
             margin-bottom: 16px;
         }
 
-        /* pill — large touch target, min 48px */
         .phoenix-pill {
             display: inline-flex;
             align-items: center;
@@ -388,10 +385,10 @@
         }
 
         .invite-title {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: 5px;
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 3px;
             color: var(--yellow);
             display: block;
             margin-bottom: 10px;
@@ -434,11 +431,10 @@
             margin-bottom: 24px;
         }
 
-        /* "Baseline" — extra tracking balances the weight difference with "Beyond The" */
         .btb-title span {
             color: var(--yellow);
             letter-spacing: 5px;
-            margin-left: 2px; /* optical space after "The " */
+            margin-left: 2px;
         }
 
         .btb-link {
@@ -452,10 +448,9 @@
 
         .btb-link .btb-eyebrow,
         .btb-link .btb-title {
-            pointer-events: none; /* clicks go to the <a> wrapper */
+            pointer-events: none;
         }
 
-        /* subtle "tap to read our story" hint */
         .btb-read-more {
             display: inline-block;
             margin-top: -12px;
@@ -479,14 +474,14 @@
         }
 
         .no-group-text {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 3px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 2px;
             color: rgba(255,255,255,0.45);
         }
 
-        /* Footer CTA — same gradient button, full width */
+        /* Footer CTA */
         .footer-cta-btn {
             display: flex;
             align-items: center;
@@ -502,11 +497,10 @@
                 var(--yellow) 100%
             );
             border-radius: 14px;
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: clamp(15px, 4vw, 21px);
-            font-weight: 700;
-            letter-spacing: clamp(1px, 0.5vw, 3px);
-            white-space: nowrap;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(14px, 3.8vw, 19px);
+            font-weight: 800;
+            letter-spacing: 0.5px;
             color: #fff;
             text-decoration: none;
             text-shadow: 0 1px 4px rgba(0,0,0,0.25);
@@ -537,7 +531,7 @@
         }
 
         @media (min-width: 768px) {
-            .hero-logo { width: clamp(380px, 72vw, 680px); } /* larger on desktop */
+            .hero-logo { width: clamp(380px, 72vw, 680px); }
 
             .hero-content,
             .info-section,
@@ -562,10 +556,8 @@
         <div class="hero-overlay"></div>
 
         <div class="hero-content">
-            <!-- Brand logo -->
             <img src="logo.png" alt="I Wanna Play Pickleball" class="hero-logo">
 
-            <!-- CTA bottom -->
             <div class="hero-bottom">
                 <span class="reserve-eyebrow">Reserve Your Spot</span>
                 <span class="reserve-heading"><strong>SIGN UP NOW</strong></span>
