@@ -90,9 +90,6 @@
             padding: clamp(40px, 7vw, 56px) clamp(16px, 6vw, 48px) 36px;
         }
 
-        /* ================================
-           LOGO
-        ================================ */
         .hero-logo {
             width: clamp(260px, 88vw, 580px);
             height: auto;
@@ -106,9 +103,6 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* ================================
-           HERO BOTTOM CTA
-        ================================ */
         .hero-bottom {
             animation: fadeUp 0.8s 0.3s ease both;
             padding-top: 32px;
@@ -141,11 +135,8 @@
             line-height: 1.1;
         }
 
-        .reserve-heading strong {
-            color: var(--yellow);
-        }
+        .reserve-heading strong { color: var(--yellow); }
 
-        /* CTA button */
         .cta-btn {
             display: flex;
             align-items: center;
@@ -168,7 +159,6 @@
             letter-spacing: 0.5px;
             color: #fff;
             text-decoration: none;
-            text-align: center;
             text-shadow: 0 1px 4px rgba(0,0,0,0.3);
             box-shadow: 0 6px 24px rgba(155,81,224,0.38);
             transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -181,26 +171,27 @@
         }
 
         /* ================================
-           INFO SECTION
+           INFO SECTION — brighter cards
         ================================ */
         .info-section {
-            background: var(--navy);
-            padding: 28px 20px 0;
+            background: linear-gradient(180deg, var(--navy) 0%, #0f0528 100%);
+            padding: 32px 20px 8px;
         }
 
         .info-cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
 
         .info-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(155,81,224,0.25);
+            background: rgba(155, 81, 224, 0.18);
+            border: 1.5px solid rgba(155, 81, 224, 0.4);
             border-radius: 14px;
             padding: 18px 10px;
             text-align: center;
+            backdrop-filter: blur(8px);
         }
 
         .info-card-icon {
@@ -213,7 +204,7 @@
             font-size: 10px;
             font-weight: 700;
             letter-spacing: 2px;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,255,255,0.55);
             text-transform: uppercase;
             display: block;
             margin-bottom: 5px;
@@ -229,12 +220,12 @@
         }
 
         /* ================================
-           RELAX TAGLINE
+           RELAX TAGLINE — warmer, brighter
         ================================ */
         .relax-bar {
             text-align: center;
-            padding: 18px 20px 22px;
-            background: var(--navy);
+            padding: 20px 20px 28px;
+            background: linear-gradient(180deg, #0f0528 0%, #1a0538 100%);
         }
 
         .relax-text {
@@ -242,19 +233,22 @@
             font-size: 20px;
             font-weight: 700;
             font-style: italic;
-            color: rgba(255,255,255,0.5);
+            background: linear-gradient(90deg, #D946EF, #FFA500, #FFE500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             letter-spacing: 0px;
         }
 
         /* ================================
-           PHOENIX ALLIANCE
+           PHOENIX — warmer, lighter
         ================================ */
         .phoenix-section {
-            margin: 0 16px 24px;
-            background: linear-gradient(135deg, rgba(204,0,0,0.12), rgba(155,81,224,0.08));
-            border: 1px solid rgba(204,0,0,0.35);
-            border-radius: 18px;
-            padding: 22px 20px;
+            margin: 0 16px 20px;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.12), rgba(204,0,0,0.08), rgba(155,81,224,0.08));
+            border: 1.5px solid rgba(255, 120, 50, 0.4);
+            border-radius: 20px;
+            padding: 24px 20px;
             position: relative;
             overflow: hidden;
         }
@@ -264,9 +258,9 @@
             position: absolute;
             top: -40px;
             right: -40px;
-            width: 120px;
-            height: 120px;
-            background: rgba(204,0,0,0.07);
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, rgba(255,100,0,0.12) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
         }
@@ -283,13 +277,13 @@
             height: 56px;
             border-radius: 50%;
             background: #111;
-            border: 2.5px solid var(--red);
+            border: 2.5px solid #FF6B00;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
             overflow: hidden;
-            box-shadow: 0 0 16px rgba(204,0,0,0.35);
+            box-shadow: 0 0 20px rgba(255, 107, 0, 0.4);
         }
 
         .phoenix-logo-wrap img {
@@ -303,24 +297,24 @@
             font-size: 10px;
             font-weight: 700;
             letter-spacing: 2px;
-            color: rgba(255,255,255,0.4);
+            color: rgba(255,200,100,0.7);
             text-transform: uppercase;
             display: block;
             margin-bottom: 2px;
         }
 
         .phoenix-name {
-            font-family: 'Barlow Condensed', sans-serif;
-            font-size: 22px;
+            font-family: 'Inter', sans-serif;
+            font-size: 20px;
             font-weight: 900;
-            color: #FF8888;
+            color: #FFAA55;
             letter-spacing: 1px;
             display: block;
         }
 
         .phoenix-url {
             font-size: 11px;
-            color: rgba(255,100,100,0.5);
+            color: rgba(255,160,80,0.6);
             display: block;
             margin-top: 2px;
             text-decoration: none;
@@ -328,8 +322,8 @@
 
         .phoenix-body {
             font-size: 15px;
-            line-height: 1.65;
-            color: rgba(255,255,255,0.68);
+            line-height: 1.7;
+            color: rgba(255,255,255,0.78);
             margin-bottom: 16px;
         }
 
@@ -337,80 +331,54 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(204,0,0,0.18);
-            border: 1.5px solid rgba(204,0,0,0.45);
+            background: rgba(255, 107, 0, 0.2);
+            border: 1.5px solid rgba(255, 107, 0, 0.5);
             border-radius: 24px;
             padding: 12px 18px;
             min-height: 48px;
+            font-family: 'Inter', sans-serif;
             font-size: 15px;
             font-weight: 700;
-            color: #FF8888;
+            color: #FFAA55;
             text-decoration: none;
             margin-bottom: 14px;
             -webkit-tap-highlight-color: transparent;
             transition: background 0.15s ease;
         }
 
-        .phoenix-pill:active {
-            background: rgba(204,0,0,0.28);
-        }
+        .phoenix-pill:active { background: rgba(255, 107, 0, 0.32); }
 
         .pill-dot {
             width: 8px;
             height: 8px;
-            background: var(--red);
+            background: #FF6B00;
             border-radius: 50%;
             flex-shrink: 0;
         }
 
         .phoenix-tagline {
             font-style: italic;
-            font-size: 13px;
-            color: rgba(255,255,255,0.38);
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
             line-height: 1.75;
-            border-top: 1px solid rgba(255,255,255,0.07);
+            border-top: 1px solid rgba(255,150,50,0.2);
             padding-top: 14px;
         }
 
         /* ================================
-           INVITE ONLY
-        ================================ */
-        .invite-section {
-            margin: 0 16px 24px;
-            background: var(--card-bg);
-            border: 1px solid rgba(155,81,224,0.25);
-            border-radius: 16px;
-            padding: 24px 20px;
-            text-align: center;
-        }
-
-        .invite-title {
-            font-family: 'Inter', sans-serif;
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: 3px;
-            color: var(--yellow);
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        .invite-body {
-            font-size: 15px;
-            color: rgba(255,255,255,0.5);
-            line-height: 1.65;
-        }
-
-        /* ================================
-           BEYOND THE BASELINE
+           BEYOND THE BASELINE — vibrant
         ================================ */
         .btb-section {
-            background: linear-gradient(180deg, var(--navy3) 0%, var(--navy) 100%);
-            border-top: 1px solid rgba(155,81,224,0.2);
-            padding: 32px 20px 44px;
+            background: linear-gradient(160deg, #1a0a3e 0%, #2d0f5e 40%, #1a0a3e 100%);
+            border-top: 1px solid rgba(155,81,224,0.3);
+            border-bottom: 1px solid rgba(155,81,224,0.3);
+            padding: 36px 20px 40px;
             text-align: center;
+            margin-bottom: 20px;
         }
 
         .btb-eyebrow {
+            font-family: 'Inter', sans-serif;
             font-size: 11px;
             font-weight: 700;
             letter-spacing: 3px;
@@ -422,13 +390,13 @@
 
         .btb-title {
             font-family: 'Barlow Condensed', sans-serif;
-            font-size: 38px;
+            font-size: 42px;
             font-weight: 700;
             letter-spacing: 2px;
             color: #fff;
             line-height: 1;
             display: block;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .btb-title span {
@@ -445,20 +413,54 @@
         }
 
         .btb-link:hover { opacity: 0.85; }
-
         .btb-link .btb-eyebrow,
-        .btb-link .btb-title {
-            pointer-events: none;
-        }
+        .btb-link .btb-title { pointer-events: none; }
 
         .btb-read-more {
             display: inline-block;
-            margin-top: -12px;
-            margin-bottom: 20px;
+            margin-top: -8px;
+            margin-bottom: 24px;
             font-size: 13px;
             font-weight: 600;
-            color: rgba(255,255,255,0.35);
+            color: rgba(255,255,255,0.4);
             letter-spacing: 1px;
+        }
+
+        /* ================================
+           INVITE ONLY — lighter, warmer
+        ================================ */
+        .invite-section {
+            margin: 0 16px 20px;
+            background: linear-gradient(135deg, rgba(255,229,0,0.08), rgba(255,165,0,0.06));
+            border: 1.5px solid rgba(255,229,0,0.25);
+            border-radius: 18px;
+            padding: 24px 20px;
+            text-align: center;
+        }
+
+        .invite-title {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--yellow);
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .invite-body {
+            font-size: 15px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.65;
+        }
+
+        /* ================================
+           FOOTER — bright, energetic
+        ================================ */
+        .site-footer {
+            background: linear-gradient(180deg, #0f0528 0%, var(--navy) 100%);
+            padding: 28px 20px 44px;
+            text-align: center;
         }
 
         .no-group {
@@ -467,27 +469,26 @@
             justify-content: center;
             gap: 10px;
             padding: 16px 20px;
-            background: rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.05);
             border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.08);
-            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 20px;
         }
 
         .no-group-text {
             font-family: 'Inter', sans-serif;
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 800;
             letter-spacing: 2px;
-            color: rgba(255,255,255,0.45);
+            color: rgba(255,255,255,0.6);
         }
 
-        /* Footer CTA */
         .footer-cta-btn {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            min-height: 60px;
+            min-height: 62px;
             padding: 16px 28px;
             background: linear-gradient(90deg,
                 var(--purple) 0%,
@@ -496,14 +497,15 @@
                 var(--orange) 80%,
                 var(--yellow) 100%
             );
-            border-radius: 14px;
+            border-radius: 16px;
             font-family: 'Inter', sans-serif;
-            font-size: clamp(14px, 3.8vw, 19px);
+            font-size: clamp(15px, 4vw, 20px);
             font-weight: 800;
             letter-spacing: 0.5px;
             color: #fff;
             text-decoration: none;
             text-shadow: 0 1px 4px rgba(0,0,0,0.25);
+            box-shadow: 0 6px 24px rgba(155,81,224,0.35);
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -513,38 +515,16 @@
         @media (min-width: 600px) {
             .hero-content,
             .info-section,
-            .relax-bar {
-                max-width: 520px;
-                margin-left: auto;
-                margin-right: auto;
-                width: 100%;
-            }
-
-            .phoenix-section,
-            .invite-section {
-                max-width: 488px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .btb-section { padding: 44px 20px 56px; }
+            .relax-bar,
+            .site-footer { max-width: 520px; margin-left: auto; margin-right: auto; width: 100%; }
+            .phoenix-section, .invite-section, .btb-section { max-width: 488px; margin-left: auto; margin-right: auto; }
         }
 
         @media (min-width: 768px) {
             .hero-logo { width: clamp(380px, 72vw, 680px); }
-
-            .hero-content,
-            .info-section,
-            .relax-bar {
-                max-width: 580px;
-            }
-
-            .phoenix-section,
-            .invite-section {
-                max-width: 548px;
-            }
-
-            .btb-title { font-size: 44px; }
+            .hero-content, .info-section, .relax-bar, .site-footer { max-width: 580px; }
+            .phoenix-section, .invite-section { max-width: 548px; }
+            .btb-title { font-size: 48px; }
         }
     </style>
 </head>
@@ -554,10 +534,8 @@
     <section class="hero">
         <img src="player-hero.jpg" alt="Pickleball player" class="hero-image">
         <div class="hero-overlay"></div>
-
         <div class="hero-content">
             <img src="logo.png" alt="I Wanna Play Pickleball" class="hero-logo">
-
             <div class="hero-bottom">
                 <span class="reserve-eyebrow">Reserve Your Spot</span>
                 <span class="reserve-heading"><strong>SIGN UP NOW</strong></span>
@@ -607,28 +585,17 @@
                 <a href="https://thephoenix.org" target="_blank" rel="noopener noreferrer" class="phoenix-url">thephoenix.org ↗</a>
             </div>
         </div>
-
         <p class="phoenix-body">
             We're proud to partner with The Phoenix — a nonprofit dedicated to building a sober, active community for people in recovery through sport, connection, and friendship.
         </p>
-
         <a href="https://hiramlosangeles-crypto.github.io/pickleball-form/" class="phoenix-pill">
             <span class="pill-dot"></span>
             Phoenix member? Sign up here →
         </a>
-
         <div class="phoenix-tagline">
             "Every player matters. Every life counts.<br>
             Every game ends with friends, no matter the score."
         </div>
-    </section>
-
-    <!-- BY INVITATION ONLY -->
-    <section class="invite-section">
-        <span class="invite-title">BY INVITATION ONLY</span>
-        <p class="invite-body">
-            Sunday games are shared through player invitations to keep the experience enjoyable for everyone.
-        </p>
     </section>
 
     <!-- BEYOND THE BASELINE -->
@@ -642,16 +609,26 @@
             <span class="btb-title">Beyond The <span>Baseline</span></span>
         </a>
         <span class="btb-read-more">Tap to read our story →</span>
+    </footer>
 
+    <!-- BY INVITATION ONLY -->
+    <section class="invite-section">
+        <span class="invite-title">BY INVITATION ONLY</span>
+        <p class="invite-body">
+            Sunday games are shared through player invitations to keep the experience enjoyable for everyone.
+        </p>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="site-footer">
         <div class="no-group">
-            <span style="color: var(--red); font-size: 18px;">🚫</span>
+            <span style="color: #FF6B00; font-size: 20px;">🚫</span>
             <span class="no-group-text">NO GROUP TEXT. EVER.</span>
         </div>
-
         <a href="https://hiramlosangeles-crypto.github.io/pickleball-form/" class="footer-cta-btn">
             SIGN UP FOR SUNDAY GAME &nbsp;→
         </a>
-    </footer>
+    </div>
 
 </body>
 </html>
