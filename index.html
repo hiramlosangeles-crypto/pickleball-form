@@ -181,12 +181,25 @@
             }
             .invite-cta { font-size: 12px; padding: 8px 14px; }
         }
-
         /* NO GROUP */
-        .no-group-row { display: flex; align-items: center; justify-content: center; gap: 10px; padding: clamp(12px,2vw,20px) 16px; margin-bottom: 16px; }
-        .no-group-icon { font-size: clamp(18px,2.5vw,26px); }
-        .no-group-text { font-size: clamp(13px,1.6vw,17px); font-weight: 800; letter-spacing: 2px; color: var(--purple); }
-
+        .no-group-row {
+            display: flex; align-items: center; justify-content: center;
+            gap: 12px;
+            padding: clamp(20px,3vw,32px) 16px;
+            margin-top: clamp(20px,3vw,36px);
+            margin-bottom: clamp(36px,6vw,64px);
+        }
+        .no-group-icon {
+            font-size: clamp(16px,2.2vw,22px);
+            opacity: 0.65;
+        }
+        .no-group-text {
+            font-size: clamp(12px,1.5vw,16px);
+            font-weight: 700;
+            letter-spacing: 4px;
+            color: var(--purple);
+            opacity: 0.55;
+        }
         /* FOOTER CTA */
         .footer-cta { display: flex; align-items: center; justify-content: center; width: 100%; min-height: clamp(58px,7vw,72px); padding: 16px 24px; background: linear-gradient(90deg, var(--purple) 0%, var(--magenta) 30%, var(--pink) 55%, var(--orange) 80%, var(--yellow) 100%); border-radius: 16px; font-family: 'Inter', sans-serif; font-size: clamp(16px,2.5vw,22px); font-weight: 800; letter-spacing: 0.5px; color: #fff; text-decoration: none; text-shadow: 0 1px 3px rgba(0,0,0,0.2); box-shadow: 0 6px 24px rgba(155,81,224,0.3); -webkit-tap-highlight-color: transparent; }
     </style>
