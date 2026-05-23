@@ -26,6 +26,7 @@
             --green:       #00C97A;
             --navy:        #0A0015;
             --light-bg:    #F5F0FF;
+            --warm-white:  #FCFAFF;
             --text-dark:   #1a0a2e;
         }
         html { scroll-behavior: smooth; }
@@ -38,9 +39,7 @@
             overflow-x: hidden;
         }
 
-        /* =============================================
-           HERO
-        ============================================= */
+        /* ============================================= HERO ============================================= */
         .hero {
             position: relative;
             width: 100%;
@@ -52,22 +51,19 @@
         .hero-image {
             position: absolute; inset: 0;
             width: 100%; height: 100%;
-            object-fit: cover; object-position: center top; z-index: 0;
+            object-fit: cover; object-position: 25% top; z-index: 0;
+        }
+        @media (min-width: 768px) {
+            .hero-image { object-position: center top; }
         }
         .hero-overlay {
             position: absolute; inset: 0;
             background: linear-gradient(180deg,
-                rgba(10,0,21,0.12) 0%,
-                rgba(10,0,21,0.04) 20%,
-                rgba(10,0,21,0.00) 38%,
-                rgba(10,0,21,0.42) 60%,
-                rgba(10,0,21,0.84) 78%,
-                rgba(10,0,21,0.97) 100%);
+                rgba(10,0,21,0.12) 0%, rgba(10,0,21,0.04) 20%,
+                rgba(10,0,21,0.00) 38%, rgba(10,0,21,0.42) 60%,
+                rgba(10,0,21,0.84) 78%, rgba(10,0,21,0.97) 100%);
             z-index: 1;
         }
-
-        /* MOBILE: single column, full width
-           DESKTOP: constrained centered column */
         .hero-content {
             position: relative; z-index: 2;
             display: flex; flex-direction: column;
@@ -76,14 +72,10 @@
             width: 100%;
             padding: clamp(6px,2vw,16px) clamp(12px,3vw,24px) clamp(40px,5vw,56px);
         }
-
-        /* LOGO — mobile: near full viewport width
-                  desktop: left-aligned, 55% of screen  */
         .hero-logo {
             width: clamp(320px, 98vw, 98vw);
             max-width: none;
-            height: auto;
-            display: block;
+            height: auto; display: block;
             mix-blend-mode: screen;
             animation: fadeDown 0.7s ease both;
             margin-left: clamp(-12px, -1.5vw, -4px);
@@ -93,29 +85,21 @@
             from { opacity:0; transform:translateY(-14px); }
             to   { opacity:1; transform:translateY(0); }
         }
-        .hero-bottom {
-            animation: fadeUp 0.8s 0.3s ease both;
-        }
+        .hero-bottom { animation: fadeUp 0.8s 0.3s ease both; }
         @keyframes fadeUp {
             from { opacity:0; transform:translateY(16px); }
             to   { opacity:1; transform:translateY(0); }
         }
-
-        /* RESERVE YOUR SPOT */
         .reserve-heading {
             font-size: clamp(17px, 4.6vw, 24px);
-            font-weight: 800;
-            letter-spacing: 3px;
-            display: block;
-            margin-bottom: 6px;
-            line-height: 1.2;
-            white-space: nowrap;
+            font-weight: 800; letter-spacing: 3px;
+            display: block; margin-bottom: 6px;
+            line-height: 1.2; white-space: nowrap;
         }
         .word-reserve { color: var(--yellow); }
         .word-your    { color: rgba(255,255,255,0.82); }
         .word-spot    { color: var(--yellow); }
 
-        /* CTA BUTTON */
         .cta-btn {
             display: flex; align-items: center; justify-content: center;
             width: 100%; min-height: 58px; padding: 16px 24px;
@@ -134,53 +118,28 @@
         }
         .cta-btn:active { transform: scale(0.98); }
 
-        /* WAVE */
         .hero-wave {
             position: absolute; bottom: -2px; left: 0; right: 0;
             z-index: 3; line-height: 0;
         }
         .hero-wave svg { display: block; width: 100%; }
 
-        /* =============================================
-           DESKTOP HERO — 768px+
-           Logo anchors left, CTA constrained to 480px
-        ============================================= */
         @media (min-width: 768px) {
             .hero-content {
                 padding: clamp(16px,3vw,32px) clamp(40px,6vw,80px) clamp(48px,6vw,72px);
             }
-            .hero-logo {
-                width: clamp(420px, 55vw, 780px);
-                margin-left: 0;
-                margin-top: 0;
-            }
-            .hero-bottom {
-                max-width: 520px; /* keeps CTA from stretching full desktop width */
-            }
-            .reserve-heading {
-                font-size: clamp(20px, 2.8vw, 28px);
-            }
-            .cta-btn {
-                font-size: clamp(16px, 2vw, 22px);
-                min-height: 64px;
-            }
+            .hero-logo { width: clamp(420px, 55vw, 780px); margin-left: 0; margin-top: 0; }
+            .hero-bottom { max-width: 520px; }
+            .reserve-heading { font-size: clamp(20px, 2.8vw, 28px); }
+            .cta-btn { font-size: clamp(16px, 2vw, 22px); min-height: 64px; }
         }
-
         @media (min-width: 1200px) {
-            .hero-content {
-                padding: 40px 96px 72px;
-            }
-            .hero-logo {
-                width: clamp(560px, 48vw, 820px);
-            }
-            .hero-bottom {
-                max-width: 560px;
-            }
+            .hero-content { padding: 40px 96px 72px; }
+            .hero-logo { width: clamp(560px, 48vw, 820px); }
+            .hero-bottom { max-width: 560px; }
         }
 
-        /* =============================================
-           PAGE BODY
-        ============================================= */
+        /* ============================================= PAGE BODY ============================================= */
         .page-body { background: var(--light-bg); padding: 24px 16px 48px; }
         .card-wrap { width: 100%; max-width: 600px; margin: 0 auto; }
         @media (min-width: 680px)  { .card-wrap { max-width: 680px; } }
@@ -196,76 +155,120 @@
         }
 
         /* INFO CARDS */
-        .info-inner {
-            display: grid; grid-template-columns: repeat(3,1fr);
-            padding: 20px 12px;
-        }
+        .info-inner { display: grid; grid-template-columns: repeat(3,1fr); padding: 20px 12px; }
         .info-col { text-align: center; padding: 4px clamp(8px,2vw,20px); }
         .info-col:not(:last-child) { border-right: 1.5px solid rgba(155,81,224,0.13); }
-        .info-icon {
-            display: flex; align-items: center; justify-content: center;
-            height: clamp(40px,6vw,60px); margin: 0 auto 8px;
-        }
-        .info-label {
-            font-size: clamp(9px,1.2vw,12px); font-weight: 700;
-            letter-spacing: 2px; color: var(--purple);
-            text-transform: uppercase; display: block; margin-bottom: 4px;
-        }
-        .info-value {
-            font-size: clamp(14px,2vw,20px); font-weight: 800;
-            color: var(--text-dark); display: block; line-height: 1.3;
+        .info-icon { display: flex; align-items: center; justify-content: center;
+                     height: clamp(40px,6vw,60px); margin: 0 auto 8px; }
+        .info-label { font-size: clamp(9px,1.2vw,12px); font-weight: 700;
+                      letter-spacing: 2px; color: var(--purple);
+                      text-transform: uppercase; display: block; margin-bottom: 4px; }
+        .info-value { font-size: clamp(14px,2vw,20px); font-weight: 800;
+                      color: var(--text-dark); display: block; line-height: 1.3; }
+
+        /* =============================================
+           PHOENIX CARD — premium refresh
+        ============================================= */
+        .phoenix-card { background: var(--warm-white); }
+        .phoenix-inner { padding: clamp(22px,3vw,40px); }
+
+        /* TOP ROW: logo (left) + pill (top right) */
+        .phoenix-top {
+            display: flex; justify-content: space-between;
+            align-items: flex-start;
+            gap: clamp(12px,2vw,20px);
+            margin-bottom: clamp(16px,2.5vw,24px);
         }
 
-        /* PHOENIX */
-        .phoenix-inner { padding: clamp(18px,2.5vw,32px); }
-        .phoenix-top {
-            display: flex; align-items: flex-start;
-            gap: clamp(12px,2vw,20px); margin-bottom: 16px;
-        }
+        /* Logo circle with premium radial glow */
         .phoenix-logo-circle {
-            width: clamp(52px,7vw,72px); height: clamp(52px,7vw,72px);
-            border-radius: 50%; background: #1a0505;
-            border: 2.5px solid #FF6B00;
+            position: relative;
+            width: clamp(72px,10vw,96px);
+            height: clamp(72px,10vw,96px);
+            border-radius: 50%;
+            background: #1a0505;
+            border: 2.5px solid var(--orange-deep);
             display: flex; align-items: center; justify-content: center;
             flex-shrink: 0; overflow: hidden;
-            box-shadow: 0 0 16px rgba(255,107,0,0.4);
-            font-size: clamp(22px,3.5vw,34px);
+            font-size: clamp(28px,4vw,40px);
+            box-shadow:
+                0 0 0 6px rgba(255,115,0,0.08),
+                0 0 0 12px rgba(255,115,0,0.04),
+                0 0 28px rgba(255,115,0,0.35),
+                0 0 56px rgba(155,81,224,0.18);
         }
         .phoenix-logo-circle img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
-        .phoenix-info { flex: 1; }
+
+        /* INFO BLOCK below top row */
+        .phoenix-info { margin-bottom: clamp(14px,2vw,20px); }
         .phoenix-eyebrow {
-            font-size: clamp(9px,1.1vw,12px); font-weight: 700;
-            letter-spacing: 2px; color: #D4820A;
-            text-transform: uppercase; display: block; margin-bottom: 2px;
+            font-size: clamp(10px,1.2vw,13px); font-weight: 700;
+            letter-spacing: 3px; color: var(--orange-deep);
+            text-transform: uppercase; display: block; margin-bottom: 6px;
         }
         .phoenix-name {
-            font-size: clamp(18px,2.8vw,28px); font-weight: 900;
-            color: var(--text-dark); display: block; margin-bottom: 2px;
+            font-size: clamp(34px,7vw,60px);
+            font-weight: 900;
+            letter-spacing: -1.5px;
+            color: var(--text-dark);
+            display: block;
+            line-height: 1;
+            margin-bottom: 10px;
         }
         .phoenix-url {
-            font-size: clamp(11px,1.2vw,14px); color: rgba(155,81,224,0.6);
-            text-decoration: none; display: block;
+            display: inline-flex; align-items: center; gap: 4px;
+            font-size: clamp(12px,1.4vw,15px);
+            color: var(--purple);
+            text-decoration: none;
+            font-weight: 500;
         }
+        .phoenix-url:hover { opacity: 0.75; }
+
+        /* Slim gradient divider */
+        .phoenix-divider {
+            height: 1px;
+            background: linear-gradient(90deg,
+                var(--orange-deep) 0%,
+                var(--purple) 40%,
+                transparent 90%);
+            margin: 0 0 clamp(16px,2.5vw,22px);
+            opacity: 0.55;
+        }
+
+        /* Pill button — slightly smaller */
         .phoenix-pill {
             display: inline-flex; align-items: center; justify-content: center;
             text-align: center;
             background: var(--orange-deep);
-            border: none; border-radius: 20px;
-            padding: clamp(8px,1.2vw,12px) clamp(12px,1.8vw,18px);
-            font-size: clamp(12px,1.4vw,15px); font-weight: 700;
+            border: none; border-radius: 18px;
+            padding: clamp(7px,1vw,10px) clamp(11px,1.5vw,16px);
+            font-size: clamp(11px,1.3vw,14px); font-weight: 700;
             color: rgba(255,255,255,0.95);
             text-decoration: none;
-            flex-shrink: 0; align-self: flex-start; line-height: 1.4;
+            flex-shrink: 0; line-height: 1.35;
             box-shadow: 0 3px 14px rgba(255,115,0,0.4);
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.15s ease;
         }
+        .phoenix-pill:active { transform: scale(0.97); }
+
+        /* Body paragraph — tightened width */
         .phoenix-body-text {
             font-size: clamp(14px,1.7vw,18px); line-height: 1.65;
-            color: rgba(26,10,46,0.72); margin-bottom: 14px;
+            color: rgba(26,10,46,0.78);
+            max-width: 52ch;
+            margin-bottom: clamp(22px,3vw,32px); /* extra breathing room before quote */
         }
+
+        /* Quote — extra space above */
         .phoenix-quote {
-            border-left: 3px solid var(--orange-deep); padding-left: 12px;
-            font-style: italic; font-size: clamp(13px,1.5vw,17px);
-            color: var(--orange-deep); line-height: 1.7;
+            border-left: 3px solid var(--orange-deep);
+            padding: 4px 0 4px 16px;
+            font-style: italic;
+            font-size: clamp(14px,1.55vw,17px);
+            color: var(--orange-deep);
+            line-height: 1.65;
+            max-width: 52ch;
         }
 
         /* BTB */
@@ -286,19 +289,10 @@
             line-height: 1.05; display: block;
         }
         .btb-title span { color: var(--purple); display: block; }
-        .btb-link {
-            text-decoration: none; display: block;
-            -webkit-tap-highlight-color: transparent;
-        }
+        .btb-link { text-decoration: none; display: block; -webkit-tap-highlight-color: transparent; }
         .btb-link:hover { opacity: 0.82; }
-        .btb-desc {
-            font-size: clamp(13px,1.6vw,17px);
-            color: rgba(26,10,46,0.6); line-height: 1.65;
-        }
-        .ball-wrap {
-            width: clamp(110px,22vw,160px);
-            flex-shrink: 0; margin-bottom: 4px;
-        }
+        .btb-desc { font-size: clamp(13px,1.6vw,17px); color: rgba(26,10,46,0.6); line-height: 1.65; }
+        .ball-wrap { width: clamp(110px,22vw,160px); flex-shrink: 0; margin-bottom: 4px; }
 
         /* INVITE */
         .invite-inner {
@@ -311,10 +305,7 @@
             letter-spacing: 2px; color: var(--purple);
             text-transform: uppercase; display: block; margin-bottom: 4px;
         }
-        .invite-body {
-            font-size: clamp(13px,1.6vw,17px);
-            color: rgba(26,10,46,0.6); line-height: 1.55;
-        }
+        .invite-body { font-size: clamp(13px,1.6vw,17px); color: rgba(26,10,46,0.6); line-height: 1.55; }
 
         /* NO GROUP */
         .no-group-row {
@@ -401,28 +392,28 @@
             </div>
 
             <!-- PHOENIX -->
-            <div class="card">
+            <div class="card phoenix-card">
                 <div class="phoenix-inner">
                     <div class="phoenix-top">
                         <div class="phoenix-logo-circle">
                             <img src="phoenix-logo.png" alt="The Phoenix"
                                  onerror="this.style.display='none'; this.parentElement.innerHTML='&#x1F525;';">
                         </div>
-                        <div class="phoenix-info">
-                            <span class="phoenix-eyebrow">Community Partner</span>
-                            <span class="phoenix-name">THE PHOENIX</span>
-                            <a href="https://thephoenix.org" target="_blank" rel="noopener noreferrer" class="phoenix-url">thephoenix.org &nearr;</a>
-                        </div>
                         <a href="https://hiramlosangeles-crypto.github.io/pickleball-form/index-old.html" class="phoenix-pill">
                             Phoenix member?<br>Sign up here &rarr;
                         </a>
                     </div>
+                    <div class="phoenix-info">
+                        <span class="phoenix-eyebrow">Community Partner</span>
+                        <span class="phoenix-name">THE PHOENIX</span>
+                        <a href="https://thephoenix.org" target="_blank" rel="noopener noreferrer" class="phoenix-url">thephoenix.org &nearr;</a>
+                    </div>
+                    <div class="phoenix-divider"></div>
                     <p class="phoenix-body-text">
-                        We&rsquo;re proud to partner with The Phoenix &mdash; a nonprofit dedicated to building a sober, active community for people in recovery through sport, connection, and friendship.
+                        Together with The Phoenix, we&rsquo;re helping build a sober, active community through sport, connection, and friendship.
                     </p>
                     <div class="phoenix-quote">
-                        &ldquo;Every player matters. Every life counts.<br>
-                        Every game ends with friends, no matter the score.&rdquo;
+                        &ldquo;Every player matters. Every life counts. Every game ends with friends, no matter the score.&rdquo;
                     </div>
                 </div>
             </div>
