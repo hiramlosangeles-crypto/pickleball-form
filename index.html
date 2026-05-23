@@ -17,16 +17,16 @@
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
-            --purple:  #9B51E0;
-            --yellow:  #FFE500;
-            --orange:  #FFA500;
+            --purple:      #9B51E0;
+            --yellow:      #FFE500;
+            --orange:      #FFA500;
             --orange-deep: #FF7300;
-            --pink:    #FF6B9D;
-            --magenta: #D946EF;
-            --green:   #00C97A;
-            --navy:    #0A0015;
-            --light-bg:#F5F0FF;
-            --text-dark:#1a0a2e;
+            --pink:        #FF6B9D;
+            --magenta:     #D946EF;
+            --green:       #00C97A;
+            --navy:        #0A0015;
+            --light-bg:    #F5F0FF;
+            --text-dark:   #1a0a2e;
         }
         html { scroll-behavior: smooth; }
         body {
@@ -39,7 +39,7 @@
         }
 
         /* =============================================
-           HERO — unified composition at all widths
+           HERO
         ============================================= */
         .hero {
             position: relative;
@@ -57,40 +57,45 @@
         .hero-overlay {
             position: absolute; inset: 0;
             background: linear-gradient(180deg,
-                rgba(10,0,21,0.10) 0%, rgba(10,0,21,0.04) 20%,
-                rgba(10,0,21,0.00) 38%, rgba(10,0,21,0.38) 60%,
-                rgba(10,0,21,0.82) 78%, rgba(10,0,21,0.97) 100%);
+                rgba(10,0,21,0.12) 0%,
+                rgba(10,0,21,0.04) 20%,
+                rgba(10,0,21,0.00) 38%,
+                rgba(10,0,21,0.42) 60%,
+                rgba(10,0,21,0.84) 78%,
+                rgba(10,0,21,0.97) 100%);
             z-index: 1;
         }
 
-        /* hero-content: constrained + centered on desktop
-           so logo, text, and button all move together     */
+        /* MOBILE: single column, full width
+           DESKTOP: constrained centered column */
         .hero-content {
             position: relative; z-index: 2;
             display: flex; flex-direction: column;
             justify-content: space-between;
             min-height: 100svh;
             width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-            padding: clamp(6px,2vw,28px) clamp(16px,4vw,48px) clamp(40px,5vw,56px);
+            padding: clamp(6px,2vw,16px) clamp(12px,3vw,24px) clamp(40px,5vw,56px);
         }
 
-        /* logo: % of container so it scales with container, not raw vw */
+        /* LOGO — mobile: near full viewport width
+                  desktop: left-aligned, 55% of screen  */
         .hero-logo {
-            width: clamp(320px, 98%, 720px);
+            width: clamp(320px, 98vw, 98vw);
             max-width: none;
-            height: auto; display: block;
+            height: auto;
+            display: block;
             mix-blend-mode: screen;
             animation: fadeDown 0.7s ease both;
-            margin-left: clamp(-12px, -1.5%, -4px);
+            margin-left: clamp(-12px, -1.5vw, -4px);
             margin-top: -4px;
         }
         @keyframes fadeDown {
             from { opacity:0; transform:translateY(-14px); }
             to   { opacity:1; transform:translateY(0); }
         }
-        .hero-bottom { animation: fadeUp 0.8s 0.3s ease both; }
+        .hero-bottom {
+            animation: fadeUp 0.8s 0.3s ease both;
+        }
         @keyframes fadeUp {
             from { opacity:0; transform:translateY(16px); }
             to   { opacity:1; transform:translateY(0); }
@@ -119,7 +124,8 @@
                 var(--pink) 55%, var(--orange) 80%, var(--yellow) 100%);
             border: none; border-radius: 14px;
             font-family: 'Inter', sans-serif;
-            font-size: clamp(15px,3.8vw,20px); font-weight: 800; letter-spacing: 0.5px;
+            font-size: clamp(15px, 3.8vw, 20px);
+            font-weight: 800; letter-spacing: 0.5px;
             color: #fff; text-decoration: none;
             text-shadow: 0 1px 3px rgba(0,0,0,0.25);
             box-shadow: 0 6px 24px rgba(155,81,224,0.4);
@@ -134,6 +140,43 @@
             z-index: 3; line-height: 0;
         }
         .hero-wave svg { display: block; width: 100%; }
+
+        /* =============================================
+           DESKTOP HERO — 768px+
+           Logo anchors left, CTA constrained to 480px
+        ============================================= */
+        @media (min-width: 768px) {
+            .hero-content {
+                padding: clamp(16px,3vw,32px) clamp(40px,6vw,80px) clamp(48px,6vw,72px);
+            }
+            .hero-logo {
+                width: clamp(420px, 55vw, 780px);
+                margin-left: 0;
+                margin-top: 0;
+            }
+            .hero-bottom {
+                max-width: 520px; /* keeps CTA from stretching full desktop width */
+            }
+            .reserve-heading {
+                font-size: clamp(20px, 2.8vw, 28px);
+            }
+            .cta-btn {
+                font-size: clamp(16px, 2vw, 22px);
+                min-height: 64px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .hero-content {
+                padding: 40px 96px 72px;
+            }
+            .hero-logo {
+                width: clamp(560px, 48vw, 820px);
+            }
+            .hero-bottom {
+                max-width: 560px;
+            }
+        }
 
         /* =============================================
            PAGE BODY
@@ -203,14 +246,11 @@
             font-size: clamp(11px,1.2vw,14px); color: rgba(155,81,224,0.6);
             text-decoration: none; display: block;
         }
-
-        /* PHOENIX PILL — deep orange matching court icon */
         .phoenix-pill {
             display: inline-flex; align-items: center; justify-content: center;
             text-align: center;
             background: var(--orange-deep);
-            border: none;
-            border-radius: 20px;
+            border: none; border-radius: 20px;
             padding: clamp(8px,1.2vw,12px) clamp(12px,1.8vw,18px);
             font-size: clamp(12px,1.4vw,15px); font-weight: 700;
             color: rgba(255,255,255,0.95);
@@ -218,7 +258,6 @@
             flex-shrink: 0; align-self: flex-start; line-height: 1.4;
             box-shadow: 0 3px 14px rgba(255,115,0,0.4);
         }
-
         .phoenix-body-text {
             font-size: clamp(14px,1.7vw,18px); line-height: 1.65;
             color: rgba(26,10,46,0.72); margin-bottom: 14px;
@@ -232,11 +271,8 @@
         /* BTB */
         .btb-inner { padding: clamp(18px,2.5vw,32px); }
         .btb-top {
-            display: flex;
-            align-items: flex-end;  /* aligns icon bottom with text bottom */
-            justify-content: space-between;
-            gap: 16px;
-            margin-bottom: 14px;
+            display: flex; align-items: flex-end;
+            justify-content: space-between; gap: 16px; margin-bottom: 14px;
         }
         .btb-text { flex: 1; }
         .btb-eyebrow {
@@ -259,12 +295,9 @@
             font-size: clamp(13px,1.6vw,17px);
             color: rgba(26,10,46,0.6); line-height: 1.65;
         }
-
-        /* court icon — larger, bottom-aligned with "Baseline" */
         .ball-wrap {
             width: clamp(110px,22vw,160px);
-            flex-shrink: 0;
-            margin-bottom: 4px; /* fine-tune baseline alignment */
+            flex-shrink: 0; margin-bottom: 4px;
         }
 
         /* INVITE */
