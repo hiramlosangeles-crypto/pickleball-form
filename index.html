@@ -64,36 +64,16 @@
         .hero-wave { position: absolute; bottom: -2px; left: 0; right: 0; z-index: 3; line-height: 0; }
         .hero-wave svg { display: block; width: 100%; }
 
-        /* ============================================
-           DESKTOP HERO — centers the bottom block
-           Mobile styles above are completely unchanged
-           ============================================ */
+        /* DESKTOP HERO */
         @media (min-width: 768px) {
             .hero-content {
                 padding: clamp(16px,3vw,32px) clamp(40px,6vw,80px) clamp(48px,6vw,72px);
-                /* Center the bottom block horizontally */
                 align-items: center;
             }
-            .hero-logo {
-                width: clamp(420px, 55vw, 780px);
-                margin-left: 0;
-                margin-top: 0;
-            }
-            .hero-bottom {
-                max-width: 520px;
-                width: 100%;
-                /* Center within the hero and align text */
-                margin: 0 auto;
-                text-align: center;
-            }
-            .cta-btn {
-                font-size: clamp(16px, 2vw, 22px);
-                min-height: 64px;
-                /* Full width of the centered hero-bottom container */
-                width: 100%;
-            }
+            .hero-logo { width: clamp(420px, 55vw, 780px); margin-left: 0; margin-top: 0; }
+            .hero-bottom { max-width: 520px; width: 100%; margin: 0 auto; text-align: center; }
+            .cta-btn { font-size: clamp(16px, 2vw, 22px); min-height: 64px; width: 100%; }
         }
-
         @media (min-width: 1200px) {
             .hero-content { padding: 40px 96px 72px; align-items: center; }
             .hero-logo { width: clamp(560px, 48vw, 820px); }
@@ -332,7 +312,8 @@
 
             <!-- INVITE -->
             <div class="card invite-card">
-                <a href="https://hiramlosangeles-crypto.github.io/Beyond-the-Baseline/#the-invitation"
+                <!-- FIXED: #the-invitation → #join to match the actual section id on the BTB page -->
+                <a href="https://hiramlosangeles-crypto.github.io/Beyond-the-Baseline/#join"
                    target="_blank" rel="noopener noreferrer"
                    class="invite-cta card-cta">
                     How Invitations Work
