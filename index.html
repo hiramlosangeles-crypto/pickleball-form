@@ -32,55 +32,117 @@
         html { scroll-behavior: smooth; }
         body { font-family: 'Inter', sans-serif; background: var(--light-bg); color: var(--text-dark); min-height: 100vh; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
 
-        /* HERO */
+        /* ── HERO ── */
         .hero { position: relative; width: 100%; min-height: 100svh; display: flex; flex-direction: column; overflow: hidden; }
         .hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 25% top; z-index: 0; }
         @media (min-width: 768px) { .hero-image { object-position: center top; } }
         .hero-overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,0,21,0.12) 0%, rgba(10,0,21,0.04) 20%, rgba(10,0,21,0.00) 38%, rgba(10,0,21,0.42) 60%, rgba(10,0,21,0.84) 78%, rgba(10,0,21,0.97) 100%); z-index: 1; }
-        .hero-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; min-height: 100svh; width: 100%; padding: clamp(6px,2vw,16px) clamp(12px,3vw,24px) clamp(40px,5vw,56px); }
-        .hero-logo { width: clamp(320px, 98vw, 98vw); max-width: none; height: auto; display: block; mix-blend-mode: screen; animation: fadeDown 0.7s ease both; margin-left: clamp(-12px, -1.5vw, -4px); margin-top: -4px; }
+
+        .hero-content {
+            position: relative; z-index: 2;
+            display: flex; flex-direction: column; justify-content: space-between;
+            min-height: 100svh; width: 100%;
+            /* MORE breathing room at top so logo lifts away from the edge */
+            padding: clamp(20px,4vw,36px) clamp(12px,3vw,24px) clamp(40px,5vw,56px);
+        }
+
+        /* LOGO — slightly larger, lighter shadow, cleaner feel */
+        .hero-logo {
+            /* wider max on mobile; bigger clamp range on desktop */
+            width: clamp(340px, 100vw, 100vw);
+            max-width: none;
+            height: auto;
+            display: block;
+            mix-blend-mode: screen;
+            /* reduced glow — was too heavy */
+            filter: drop-shadow(0 2px 12px rgba(255,229,0,0.18));
+            animation: fadeDown 0.7s ease both;
+            margin-left: clamp(-12px, -1.5vw, -4px);
+            margin-top: 0; /* was -4px, now flush */
+        }
         @keyframes fadeDown { from {opacity:0; transform:translateY(-14px);} to {opacity:1; transform:translateY(0);} }
+
         .hero-bottom { animation: fadeUp 0.8s 0.3s ease both; }
         @keyframes fadeUp { from {opacity:0; transform:translateY(16px);} to {opacity:1; transform:translateY(0);} }
+
+        /* RESERVE YOUR SPOT — smaller, softer, supporting role */
         .reserve-heading {
-            font-size: clamp(28px, 8vw, 52px);
-            font-weight: 900;
-            letter-spacing: 1px;
+            /* reduced from clamp(28px,8vw,52px) */
+            font-size: clamp(22px, 5.5vw, 38px);
+            font-weight: 800; /* was 900 — slightly less aggressive */
+            letter-spacing: 0.5px;
             display: block;
-            margin-bottom: 16px;
+            /* tighter gap to button — was 16px */
+            margin-bottom: 10px;
             line-height: 1.05;
             white-space: nowrap;
             text-align: center;
         }
         .word-reserve {
             color: var(--yellow);
-            text-shadow: 0 0 28px rgba(255, 229, 0, 0.5),
-                         0 0 60px rgba(255, 229, 0, 0.25);
+            /* reduced glow — was 0.5 / 0.25 */
+            text-shadow: 0 0 18px rgba(255,229,0,0.32),
+                         0 0 40px rgba(255,229,0,0.14);
         }
-        .word-your { color: rgba(255,255,255,0.88); }
-        .word-spot { color: rgba(255,255,255,0.88); }
-        .cta-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 58px; padding: 16px 24px; background: linear-gradient(90deg, var(--purple) 0%, var(--magenta) 30%, var(--pink) 55%, var(--orange) 80%, var(--yellow) 100%); border: none; border-radius: 100px; font-family: 'Inter', sans-serif; font-size: clamp(15px, 3.8vw, 20px); font-weight: 800; letter-spacing: 0.5px; color: #fff; text-decoration: none; text-shadow: 0 1px 3px rgba(0,0,0,0.25); box-shadow: 0 6px 24px rgba(155,81,224,0.4); -webkit-tap-highlight-color: transparent; transition: transform 0.15s ease; }
+        /* softer whites — was 0.88 */
+        .word-your { color: rgba(255,255,255,0.72); }
+        .word-spot { color: rgba(255,255,255,0.72); }
+
+        /* CTA BUTTON — slimmer, quieter shadow */
+        .cta-btn {
+            display: flex; align-items: center; justify-content: center;
+            width: 100%;
+            /* reduced from 58px */
+            min-height: 50px;
+            /* reduced vertical padding */
+            padding: 12px 24px;
+            background: linear-gradient(90deg, var(--purple) 0%, var(--magenta) 30%, var(--pink) 55%, var(--orange) 80%, var(--yellow) 100%);
+            border: none; border-radius: 100px;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(13px, 3.2vw, 17px); /* reduced from clamp(15px,3.8vw,20px) */
+            font-weight: 700; /* was 800 */
+            letter-spacing: 0.4px;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            /* toned-down glow — was 0 6px 24px at 0.4 */
+            box-shadow: 0 4px 16px rgba(155,81,224,0.22);
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .cta-btn:hover { box-shadow: 0 6px 22px rgba(155,81,224,0.35); }
         .cta-btn:active { transform: scale(0.98); }
+
         .hero-wave { position: absolute; bottom: -2px; left: 0; right: 0; z-index: 3; line-height: 0; }
         .hero-wave svg { display: block; width: 100%; }
 
-        /* DESKTOP HERO */
+        /* ── DESKTOP HERO — centered, logo bigger ── */
         @media (min-width: 768px) {
             .hero-content {
-                padding: clamp(16px,3vw,32px) clamp(40px,6vw,80px) clamp(48px,6vw,72px);
+                padding: clamp(28px,4vw,48px) clamp(40px,6vw,80px) clamp(48px,6vw,72px);
                 align-items: center;
             }
-            .hero-logo { width: clamp(420px, 55vw, 780px); margin-left: 0; margin-top: 0; }
-            .hero-bottom { max-width: 520px; width: 100%; margin: 0 auto; text-align: center; }
-            .cta-btn { font-size: clamp(16px, 2vw, 22px); min-height: 64px; width: 100%; }
+            .hero-logo {
+                /* larger than before — was clamp(420px,55vw,780px) */
+                width: clamp(480px, 62vw, 860px);
+                margin-left: 0; margin-top: 0;
+                filter: drop-shadow(0 2px 14px rgba(255,229,0,0.16));
+            }
+            .hero-bottom {
+                max-width: 480px; /* slightly narrower than before (was 520px) */
+                width: 100%;
+                margin: 0 auto;
+                text-align: center;
+            }
+            .cta-btn { font-size: clamp(14px, 1.7vw, 18px); min-height: 54px; width: 100%; }
         }
         @media (min-width: 1200px) {
-            .hero-content { padding: 40px 96px 72px; align-items: center; }
-            .hero-logo { width: clamp(560px, 48vw, 820px); }
-            .hero-bottom { max-width: 560px; width: 100%; margin: 0 auto; text-align: center; }
+            .hero-content { padding: 48px 96px 72px; align-items: center; }
+            .hero-logo { width: clamp(600px, 52vw, 920px); }
+            .hero-bottom { max-width: 500px; width: 100%; margin: 0 auto; text-align: center; }
         }
 
-        /* PAGE BODY */
+        /* ── PAGE BODY ── */
         .page-body { background: var(--light-bg); padding: 24px 16px 48px; }
         .card-wrap { width: 100%; max-width: 600px; margin: 0 auto; }
         @media (min-width: 680px)  { .card-wrap { max-width: 680px; } }
@@ -89,7 +151,7 @@
 
         .card { background: #fff; border-radius: 20px; box-shadow: 0 2px 20px rgba(155,81,224,0.09); margin-bottom: 16px; overflow: hidden; position: relative; }
 
-        /* INFO CARDS */
+        /* INFO */
         .info-inner { display: grid; grid-template-columns: repeat(3,1fr); padding: 20px 12px; }
         .info-col { text-align: center; padding: 4px clamp(8px,2vw,20px); }
         .info-col:not(:last-child) { border-right: 1.5px solid rgba(155,81,224,0.13); }
@@ -97,10 +159,9 @@
         .info-label { font-size: clamp(9px,1.2vw,12px); font-weight: 700; letter-spacing: 2px; color: var(--purple); text-transform: uppercase; display: block; margin-bottom: 4px; }
         .info-value { font-size: clamp(14px,2vw,20px); font-weight: 800; color: var(--text-dark); display: block; line-height: 1.3; }
 
-        /* SHARED TOP-RIGHT CARD CTA POSITIONING */
-        .card-cta { position: absolute; top: clamp(20px, 3.2vw, 36px); right: clamp(20px, 2.8vw, 28px); z-index: 5; }
+        .card-cta { position: absolute; top: clamp(20px,3.2vw,36px); right: clamp(20px,2.8vw,28px); z-index: 5; }
 
-        /* PHOENIX CARD */
+        /* PHOENIX */
         .phoenix-card { background: var(--warm-white); }
         .phoenix-inner { padding: clamp(22px,3vw,40px); padding-right: clamp(20px,2.5vw,40px); }
         .phoenix-top { margin-bottom: clamp(16px,2.5vw,24px); }
@@ -117,7 +178,7 @@
         .phoenix-body-text { font-size: clamp(14px,1.7vw,18px); line-height: 1.65; color: rgba(26,10,46,0.78); max-width: 52ch; margin-bottom: clamp(22px,3vw,32px); }
         .phoenix-quote { border-left: 3px solid var(--orange-deep); padding: 4px 0 4px 16px; font-style: italic; font-size: clamp(14px,1.55vw,17px); color: var(--orange-deep); line-height: 1.65; max-width: 52ch; }
 
-        /* BTB CARD */
+        /* BTB */
         .btb-card { background: var(--warm-white); }
         .btb-inner { padding: clamp(22px,3vw,40px); padding-right: clamp(20px,2.5vw,40px); }
         .btb-top { display: flex; align-items: flex-start; gap: 16px; margin-bottom: clamp(14px,2vw,20px); }
@@ -131,74 +192,27 @@
         .btb-divider { height: 1px; background: linear-gradient(90deg, var(--orange-deep) 0%, var(--purple) 40%, transparent 90%); margin: 0 0 clamp(16px,2.5vw,22px); opacity: 0.55; }
         .btb-desc { font-size: clamp(14px,1.7vw,18px); line-height: 1.65; color: rgba(26,10,46,0.78); max-width: 52ch; }
 
-        /* INVITE CARD */
+        /* INVITE */
         .invite-card { background: var(--warm-white); }
-        .invite-inner {
-            display: flex;
-            align-items: center;
-            gap: clamp(14px, 2.5vw, 24px);
-            padding: clamp(22px, 3vw, 36px);
-            padding-left: clamp(14px, 2vw, 24px);
-            padding-right: clamp(140px, 18vw, 200px);
-        }
-        .invite-icon-wrap {
-            position: relative;
-            width: clamp(64px, 9vw, 88px);
-            height: clamp(64px, 9vw, 88px);
-            flex-shrink: 0;
-            border-radius: 50%;
-            padding: 3px;
-            background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 50%, var(--purple) 100%);
-        }
-        .invite-icon-inner {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            background: var(--warm-white);
-            display: flex; align-items: center; justify-content: center;
-        }
+        .invite-inner { display: flex; align-items: center; gap: clamp(14px,2.5vw,24px); padding: clamp(22px,3vw,36px); padding-left: clamp(14px,2vw,24px); padding-right: clamp(140px,18vw,200px); }
+        .invite-icon-wrap { position: relative; width: clamp(64px,9vw,88px); height: clamp(64px,9vw,88px); flex-shrink: 0; border-radius: 50%; padding: 3px; background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 50%, var(--purple) 100%); }
+        .invite-icon-inner { width: 100%; height: 100%; border-radius: 50%; background: var(--warm-white); display: flex; align-items: center; justify-content: center; }
         .invite-icon-inner svg { width: 60%; height: 60%; display: block; }
         .invite-content { flex: 1; min-width: 0; }
-        .invite-eyebrow { font-size: clamp(10px, 1.2vw, 13px); font-weight: 700; letter-spacing: 3px; color: var(--purple); text-transform: uppercase; display: block; margin-bottom: 8px; }
-        .invite-main { font-size: clamp(15px, 1.9vw, 21px); font-weight: 700; color: var(--text-dark); line-height: 1.3; margin-bottom: 6px; }
-        .invite-sub { font-size: clamp(12px, 1.4vw, 15px); color: rgba(26,10,46,0.55); line-height: 1.5; }
-        .invite-cta {
-            background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 60%, var(--yellow) 100%);
-            padding: clamp(8px,1.1vw,12px) clamp(14px,1.8vw,20px);
-            border-radius: 100px;
-            color: #fff;
-            font-weight: 700;
-            font-size: clamp(11px,1.3vw,14px);
-            text-decoration: none;
-            display: inline-flex; align-items: center;
-            box-shadow: 0 3px 14px rgba(255,107,157,0.4);
-            white-space: nowrap;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.12);
-            line-height: 1.35;
-            -webkit-tap-highlight-color: transparent;
-            transition: transform 0.15s ease;
-        }
+        .invite-eyebrow { font-size: clamp(10px,1.2vw,13px); font-weight: 700; letter-spacing: 3px; color: var(--purple); text-transform: uppercase; display: block; margin-bottom: 8px; }
+        .invite-main { font-size: clamp(15px,1.9vw,21px); font-weight: 700; color: var(--text-dark); line-height: 1.3; margin-bottom: 6px; }
+        .invite-sub { font-size: clamp(12px,1.4vw,15px); color: rgba(26,10,46,0.55); line-height: 1.5; }
+        .invite-cta { background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 60%, var(--yellow) 100%); padding: clamp(8px,1.1vw,12px) clamp(14px,1.8vw,20px); border-radius: 100px; color: #fff; font-weight: 700; font-size: clamp(11px,1.3vw,14px); text-decoration: none; display: inline-flex; align-items: center; box-shadow: 0 3px 14px rgba(255,107,157,0.4); white-space: nowrap; text-shadow: 0 1px 2px rgba(0,0,0,0.12); line-height: 1.35; -webkit-tap-highlight-color: transparent; transition: transform 0.15s ease; }
         .invite-cta:active { transform: scale(0.97); }
         @media (max-width: 600px) {
-            .invite-inner {
-                padding: clamp(18px, 4vw, 26px);
-                padding-top: 60px;
-                padding-left: clamp(14px, 4vw, 20px);
-                padding-right: clamp(18px, 4vw, 26px);
-                gap: 14px;
-            }
+            .invite-inner { padding: clamp(18px,4vw,26px); padding-top: 60px; padding-left: clamp(14px,4vw,20px); padding-right: clamp(18px,4vw,26px); gap: 14px; }
             .invite-cta { font-size: 12px; padding: 8px 14px; }
         }
 
         /* NO GROUP */
-        .no-group-row {
-            display: flex; align-items: center; justify-content: center;
-            gap: 12px;
-            padding: clamp(12px, 2vw, 20px) 16px;
-            margin-top: clamp(8px, 1.5vw, 16px);
-            margin-bottom: clamp(16px, 3vw, 28px);
-        }
+        .no-group-row { display: flex; align-items: center; justify-content: center; gap: 12px; padding: clamp(12px,2vw,20px) 16px; margin-top: clamp(8px,1.5vw,16px); margin-bottom: clamp(16px,3vw,28px); }
         .no-group-icon { font-size: clamp(16px,2.2vw,22px); opacity: 0.65; }
-        .no-group-text { font-size: clamp(16px, 1.8vw, 18px); font-weight: 700; letter-spacing: 4px; color: var(--purple); opacity: 0.55; }
+        .no-group-text { font-size: clamp(16px,1.8vw,18px); font-weight: 700; letter-spacing: 4px; color: var(--purple); opacity: 0.55; }
 
         /* FOOTER CTA */
         .footer-cta { display: flex; align-items: center; justify-content: center; width: 100%; min-height: clamp(58px,7vw,72px); padding: 16px 24px; background: linear-gradient(90deg, var(--purple) 0%, var(--magenta) 30%, var(--pink) 55%, var(--orange) 80%, var(--yellow) 100%); border-radius: 100px; font-family: 'Inter', sans-serif; font-size: clamp(16px,2.5vw,22px); font-weight: 800; letter-spacing: 0.5px; color: #fff; text-decoration: none; text-shadow: 0 1px 3px rgba(0,0,0,0.2); box-shadow: 0 6px 24px rgba(155,81,224,0.3); -webkit-tap-highlight-color: transparent; }
@@ -288,7 +302,7 @@
                 </div>
             </div>
 
-            <!-- BTB -->
+            <!-- BTB — links to TOP of Beyond the Baseline -->
             <div class="card btb-card">
                 <a href="https://hiramlosangeles-crypto.github.io/Beyond-the-Baseline/"
                    target="_blank" rel="noopener noreferrer"
@@ -310,9 +324,8 @@
                 </div>
             </div>
 
-            <!-- INVITE -->
+            <!-- INVITE — links to #join section of Beyond the Baseline -->
             <div class="card invite-card">
-                <!-- FIXED: #the-invitation → #join to match the actual section id on the BTB page -->
                 <a href="https://hiramlosangeles-crypto.github.io/Beyond-the-Baseline/#join"
                    target="_blank" rel="noopener noreferrer"
                    class="invite-cta card-cta">
