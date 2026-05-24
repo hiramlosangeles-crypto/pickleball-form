@@ -47,7 +47,8 @@
             font-weight: 900;
             letter-spacing: 1px;
             display: block;
-            margin-bottom: 4px;
+            /* CHANGE 1: more breathing room above CTA button — was 4px */
+            margin-bottom: 16px;
             line-height: 1.05;
             white-space: nowrap;
             text-align: center;
@@ -59,7 +60,8 @@
         }
         .word-your { color: rgba(255,255,255,0.88); }
         .word-spot { color: rgba(255,255,255,0.88); }
-        .cta-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 58px; padding: 16px 24px; background: linear-gradient(90deg, var(--purple) 0%, var(--magenta) 30%, var(--pink) 55%, var(--orange) 80%, var(--yellow) 100%); border: none; border-radius: 14px; font-family: 'Inter', sans-serif; font-size: clamp(15px, 3.8vw, 20px); font-weight: 800; letter-spacing: 0.5px; color: #fff; text-decoration: none; text-shadow: 0 1px 3px rgba(0,0,0,0.25); box-shadow: 0 6px 24px rgba(155,81,224,0.4); -webkit-tap-highlight-color: transparent; transition: transform 0.15s ease; }
+        /* CHANGE 2: pill-shaped border-radius to match other pill buttons — was 14px */
+        .cta-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 58px; padding: 16px 24px; background: linear-gradient(90deg, var(--purple) 0%, var(--magenta) 30%, var(--pink) 55%, var(--orange) 80%, var(--yellow) 100%); border: none; border-radius: 100px; font-family: 'Inter', sans-serif; font-size: clamp(15px, 3.8vw, 20px); font-weight: 800; letter-spacing: 0.5px; color: #fff; text-decoration: none; text-shadow: 0 1px 3px rgba(0,0,0,0.25); box-shadow: 0 6px 24px rgba(155,81,224,0.4); -webkit-tap-highlight-color: transparent; transition: transform 0.15s ease; }
         .cta-btn:active { transform: scale(0.98); }
         .hero-wave { position: absolute; bottom: -2px; left: 0; right: 0; z-index: 3; line-height: 0; }
         .hero-wave svg { display: block; width: 100%; }
@@ -99,7 +101,8 @@
         .phoenix-card { background: var(--warm-white); }
         .phoenix-inner { padding: clamp(22px,3vw,40px); padding-right: clamp(20px,2.5vw,40px); }
         .phoenix-top { margin-bottom: clamp(16px,2.5vw,24px); }
-        .phoenix-logo-circle { position: relative; width: clamp(72px,10vw,96px); height: clamp(72px,10vw,96px); border-radius: 50%; background: #1a0505; border: 2.5px solid var(--orange-deep); display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: clamp(28px,4vw,40px); box-shadow: 0 0 0 6px rgba(255,115,0,0.08), 0 0 0 12px rgba(255,115,0,0.04), 0 0 28px rgba(255,115,0,0.35), 0 0 56px rgba(155,81,224,0.18); }
+        /* CHANGE 3: remove black fill — keep only border/glow, transparent bg so bird shows clean */
+        .phoenix-logo-circle { position: relative; width: clamp(72px,10vw,96px); height: clamp(72px,10vw,96px); border-radius: 50%; background: transparent; border: 2.5px solid var(--orange-deep); display: flex; align-items: center; justify-content: center; overflow: hidden; font-size: clamp(28px,4vw,40px); box-shadow: 0 0 0 6px rgba(255,115,0,0.08), 0 0 0 12px rgba(255,115,0,0.04), 0 0 28px rgba(255,115,0,0.35), 0 0 56px rgba(155,81,224,0.18); }
         .phoenix-logo-circle img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
         .phoenix-info { margin-bottom: clamp(14px,2vw,20px); }
         .phoenix-eyebrow { font-size: clamp(10px,1.2vw,13px); font-weight: 700; letter-spacing: 3px; color: var(--orange-deep); text-transform: uppercase; display: block; margin-bottom: 6px; }
@@ -107,7 +110,8 @@
         .phoenix-url { display: inline-flex; align-items: center; gap: 4px; font-size: clamp(12px,1.4vw,15px); color: var(--purple); text-decoration: none; font-weight: 500; }
         .phoenix-url:hover { opacity: 0.75; }
         .phoenix-divider { height: 1px; background: linear-gradient(90deg, var(--orange-deep) 0%, var(--purple) 40%, transparent 90%); margin: 0 0 clamp(16px,2.5vw,22px); opacity: 0.55; }
-        .phoenix-pill { background: var(--orange-deep); border: none; border-radius: 18px; padding: clamp(8px,1.1vw,12px) clamp(14px,1.8vw,20px); font-size: clamp(11px,1.3vw,14px); font-weight: 700; color: rgba(255,255,255,0.95); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; text-align: center; line-height: 1.35; box-shadow: 0 3px 14px rgba(255,115,0,0.4); -webkit-tap-highlight-color: transparent; transition: transform 0.15s ease; }
+        /* CHANGE 4: phoenix pill enlarged slightly — bigger padding + font */
+        .phoenix-pill { background: var(--orange-deep); border: none; border-radius: 100px; padding: clamp(10px,1.3vw,14px) clamp(18px,2.2vw,26px); font-size: clamp(12px,1.4vw,15px); font-weight: 700; color: rgba(255,255,255,0.95); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; text-align: center; line-height: 1.35; box-shadow: 0 3px 14px rgba(255,115,0,0.4); -webkit-tap-highlight-color: transparent; transition: transform 0.15s ease; }
         .phoenix-pill:active { transform: scale(0.97); }
         .phoenix-body-text { font-size: clamp(14px,1.7vw,18px); line-height: 1.65; color: rgba(26,10,46,0.78); max-width: 52ch; margin-bottom: clamp(22px,3vw,32px); }
         .phoenix-quote { border-left: 3px solid var(--orange-deep); padding: 4px 0 4px 16px; font-style: italic; font-size: clamp(14px,1.55vw,17px); color: var(--orange-deep); line-height: 1.65; max-width: 52ch; }
@@ -115,19 +119,18 @@
         /* BTB CARD */
         .btb-card { background: var(--warm-white); }
         .btb-inner { padding: clamp(22px,3vw,40px); padding-right: clamp(20px,2.5vw,40px); }
-        .btb-top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: clamp(14px,2vw,20px); }
+        /* CHANGE 5: btb-top no longer needs space-between since court icon is removed */
+        .btb-top { display: flex; align-items: flex-start; gap: 16px; margin-bottom: clamp(14px,2vw,20px); }
         .btb-text { flex: 1; }
         .btb-eyebrow { font-size: clamp(10px,1.2vw,13px); font-weight: 700; letter-spacing: 3px; color: var(--purple); text-transform: uppercase; display: block; margin-bottom: 6px; }
         .btb-title { font-size: clamp(34px,7vw,60px); font-weight: 900; letter-spacing: -1.5px; color: var(--text-dark); line-height: 1; display: block; }
         .btb-title span { color: var(--purple); display: block; }
-        .btb-cta { background: transparent; border: 2px solid var(--purple); border-radius: 22px; padding: clamp(8px,1.1vw,12px) clamp(16px,2vw,22px); font-size: clamp(12px,1.4vw,15px); font-weight: 700; color: var(--purple); text-decoration: none; display: inline-flex; align-items: center; gap: 8px; line-height: 1.2; white-space: nowrap; -webkit-tap-highlight-color: transparent; transition: all 0.2s ease; }
-        .btb-cta:hover { background: var(--purple); color: #fff; }
+        /* CHANGE 6: btb-cta now matches orange pill style (like phoenix-pill), soft white text, no arrow */
+        .btb-cta { background: var(--orange-deep); border: none; border-radius: 100px; padding: clamp(10px,1.3vw,14px) clamp(18px,2.2vw,26px); font-size: clamp(12px,1.4vw,15px); font-weight: 700; color: rgba(255,255,255,0.95); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; line-height: 1.35; white-space: nowrap; box-shadow: 0 3px 14px rgba(255,115,0,0.4); -webkit-tap-highlight-color: transparent; transition: transform 0.15s ease; }
+        .btb-cta:hover { filter: brightness(1.08); }
         .btb-cta:active { transform: scale(0.97); }
-        .btb-cta-arrow { display: inline-block; transition: transform 0.2s ease; }
-        .btb-cta:hover .btb-cta-arrow { transform: translateX(3px); }
         .btb-divider { height: 1px; background: linear-gradient(90deg, var(--orange-deep) 0%, var(--purple) 40%, transparent 90%); margin: 0 0 clamp(16px,2.5vw,22px); opacity: 0.55; }
         .btb-desc { font-size: clamp(14px,1.7vw,18px); line-height: 1.65; color: rgba(26,10,46,0.78); max-width: 52ch; }
-        .ball-wrap { width: clamp(110px,22vw,160px); flex-shrink: 0; margin-bottom: 4px; }
 
         /* INVITE CARD */
         .invite-card { background: var(--warm-white); }
@@ -136,7 +139,9 @@
             align-items: center;
             gap: clamp(14px, 2.5vw, 24px);
             padding: clamp(22px, 3vw, 36px);
-            padding-right: clamp(140px, 18vw, 200px); /* room for absolute CTA */
+            /* CHANGE 7: reduce left padding slightly to push icon more left */
+            padding-left: clamp(14px, 2vw, 24px);
+            padding-right: clamp(140px, 18vw, 200px);
         }
 
         /* Gradient outline circle */
@@ -162,16 +167,16 @@
         .invite-main { font-size: clamp(15px, 1.9vw, 21px); font-weight: 700; color: var(--text-dark); line-height: 1.3; margin-bottom: 6px; }
         .invite-sub { font-size: clamp(12px, 1.4vw, 15px); color: rgba(26,10,46,0.55); line-height: 1.5; }
 
-        /* Gradient pill CTA — now uses .card-cta positioning */
+        /* CHANGE 8: invite CTA — remove arrow, keep gradient pill */
         .invite-cta {
             background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 60%, var(--yellow) 100%);
             padding: clamp(8px,1.1vw,12px) clamp(14px,1.8vw,20px);
-            border-radius: 22px;
+            border-radius: 100px;
             color: #fff;
             font-weight: 700;
             font-size: clamp(11px,1.3vw,14px);
             text-decoration: none;
-            display: inline-flex; align-items: center; gap: 6px;
+            display: inline-flex; align-items: center;
             box-shadow: 0 3px 14px rgba(255,107,157,0.4);
             white-space: nowrap;
             text-shadow: 0 1px 2px rgba(0,0,0,0.12);
@@ -180,40 +185,43 @@
             transition: transform 0.15s ease;
         }
         .invite-cta:active { transform: scale(0.97); }
-        .invite-cta-arrow { display: inline-block; transition: transform 0.2s ease; }
-        .invite-cta:hover .invite-cta-arrow { transform: translateX(3px); }
 
-        /* Mobile: tighter, stack icon+content into single column, CTA stays absolute */
+        /* Mobile: tighter */
         @media (max-width: 600px) {
             .invite-inner {
                 padding: clamp(18px, 4vw, 26px);
-                padding-top: 60px; /* room for absolute CTA above content */
+                padding-top: 60px;
+                padding-left: clamp(14px, 4vw, 20px);
                 padding-right: clamp(18px, 4vw, 26px);
                 gap: 14px;
             }
             .invite-cta { font-size: 12px; padding: 8px 14px; }
         }
-        /* NO GROUP */
+
+        /* CHANGE 9: NO GROUP — tighter spacing, larger text */
         .no-group-row {
             display: flex; align-items: center; justify-content: center;
             gap: 12px;
-            padding: clamp(20px,3vw,32px) 16px;
-            margin-top: clamp(20px,3vw,36px);
-            margin-bottom: clamp(36px,6vw,64px);
+            /* Reduced padding and margins for tighter feel */
+            padding: clamp(12px, 2vw, 20px) 16px;
+            margin-top: clamp(8px, 1.5vw, 16px);
+            margin-bottom: clamp(16px, 3vw, 28px);
         }
         .no-group-icon {
             font-size: clamp(16px,2.2vw,22px);
             opacity: 0.65;
         }
         .no-group-text {
-            font-size: clamp(12px,1.5vw,16px);
+            /* CHANGE 9b: larger font — was clamp(12px,1.5vw,16px) */
+            font-size: clamp(16px, 1.8vw, 18px);
             font-weight: 700;
             letter-spacing: 4px;
             color: var(--purple);
             opacity: 0.55;
         }
-        /* FOOTER CTA */
-        .footer-cta { display: flex; align-items: center; justify-content: center; width: 100%; min-height: clamp(58px,7vw,72px); padding: 16px 24px; background: linear-gradient(90deg, var(--purple) 0%, var(--magenta) 30%, var(--pink) 55%, var(--orange) 80%, var(--yellow) 100%); border-radius: 16px; font-family: 'Inter', sans-serif; font-size: clamp(16px,2.5vw,22px); font-weight: 800; letter-spacing: 0.5px; color: #fff; text-decoration: none; text-shadow: 0 1px 3px rgba(0,0,0,0.2); box-shadow: 0 6px 24px rgba(155,81,224,0.3); -webkit-tap-highlight-color: transparent; }
+
+        /* FOOTER CTA — pill shaped for consistency */
+        .footer-cta { display: flex; align-items: center; justify-content: center; width: 100%; min-height: clamp(58px,7vw,72px); padding: 16px 24px; background: linear-gradient(90deg, var(--purple) 0%, var(--magenta) 30%, var(--pink) 55%, var(--orange) 80%, var(--yellow) 100%); border-radius: 100px; font-family: 'Inter', sans-serif; font-size: clamp(16px,2.5vw,22px); font-weight: 800; letter-spacing: 0.5px; color: #fff; text-decoration: none; text-shadow: 0 1px 3px rgba(0,0,0,0.2); box-shadow: 0 6px 24px rgba(155,81,224,0.3); -webkit-tap-highlight-color: transparent; }
     </style>
 </head>
 <body>
@@ -275,11 +283,13 @@
 
             <!-- PHOENIX -->
             <div class="card phoenix-card">
+                <!-- CHANGE 4: arrow removed from pill text -->
                 <a href="https://hiramlosangeles-crypto.github.io/pickleball-form/index-old.html" class="phoenix-pill card-cta">
-                    Phoenix member?<br>Sign up here &rarr;
+                    Phoenix member?<br>Sign up here
                 </a>
                 <div class="phoenix-inner">
                     <div class="phoenix-top">
+                        <!-- CHANGE 3: black fill removed — transparent background -->
                         <div class="phoenix-logo-circle">
                             <img src="phoenix-logo.png" alt="The Phoenix"
                                  onerror="this.style.display='none'; this.parentElement.innerHTML='&#x1F525;';">
@@ -302,10 +312,11 @@
 
             <!-- BTB -->
             <div class="card btb-card">
+                <!-- CHANGE 6: orange pill style, no arrow, soft white text -->
                 <a href="https://hiramlosangeles-crypto.github.io/Beyond-the-Baseline/"
                    target="_blank" rel="noopener noreferrer"
                    class="btb-cta card-cta">
-                    Our Story <span class="btb-cta-arrow">&rarr;</span>
+                    Our Story
                 </a>
                 <div class="btb-inner">
                     <div class="btb-top">
@@ -313,10 +324,7 @@
                             <span class="btb-eyebrow">About Us</span>
                             <span class="btb-title">Beyond The <span>Baseline</span></span>
                         </div>
-                        <div class="ball-wrap">
-                            <img src="pickleball_court.png" alt="Pickleball court"
-                                 style="width:100%; height:auto; display:block;">
-                        </div>
+                        <!-- CHANGE 5: court icon (ball-wrap) removed entirely -->
                     </div>
                     <div class="btb-divider"></div>
                     <p class="btb-desc">
@@ -328,11 +336,13 @@
 
             <!-- INVITE -->
             <div class="card invite-card">
+                <!-- CHANGE 8: arrow removed from invite CTA -->
                 <a href="https://hiramlosangeles-crypto.github.io/Beyond-the-Baseline/#the-invitation"
                    target="_blank" rel="noopener noreferrer"
                    class="invite-cta card-cta">
-                    How Invitations Work <span class="invite-cta-arrow">&rarr;</span>
+                    How Invitations Work
                 </a>
+                <!-- CHANGE 7: reduced padding-left so icon sits slightly further left -->
                 <div class="invite-inner">
                     <div class="invite-icon-wrap">
                         <div class="invite-icon-inner">
@@ -361,7 +371,7 @@
                 </div>
             </div>
 
-            <!-- NO GROUP -->
+            <!-- NO GROUP — CHANGE 9: tighter spacing, larger text (via CSS above) -->
             <div class="no-group-row">
                 <span class="no-group-icon">&#128683;</span>
                 <span class="no-group-text">NO GROUP TEXT. EVER.</span>
